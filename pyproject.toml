@@ -1,0 +1,46 @@
+[tool.poetry]
+name = "fortitudo.tech"
+version = "0.1"
+description = "Investment and risk technologies maintained by Fortitudo Technologies."
+authors = ["Fortitudo Technologies <software@fortitudo.tech>"]
+license = "GPL-3.0-or-later"
+readme = "README.rst"
+homepage = "https://fortitudo.tech"
+repository = "https://github.com/fortitudo-tech/fortitudo.tech"
+documentation = "https://os.fortitudo.tech"
+keywords = ["mathematical finance", "quant", "stress-testing", "portfolio optimization", "investment technologies"]
+classifiers = [
+    "Intended Audience :: Education",
+    "Intended Audience :: Financial and Insurance Industry",
+    "Intended Audience :: Science/Research",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.7",
+    "Topic :: Office/Business :: Financial",
+    "Topic :: Office/Business :: Financial :: Investment",
+    "Topic :: Scientific/Engineering :: Mathematics"]
+packages = [
+    { include = "fortitudo/tech" }
+]
+
+[tool.poetry.urls]
+"Issues" = "https://github.com/fortitudo-tech/fortitudo.tech/issues"
+
+[tool.poetry.dependencies]
+python = "^3.7.1, <3.10"
+scipy = "^1.6"
+cvxopt = "^1.2"
+pandas = {version = "^1.3.3", optional = true}
+
+[tool.poetry.dev-dependencies]
+pytest-cov = "^3.0.0"
+sphinx-rtd-theme = "^1.0.0"
+sphinx-autodoc-typehints = "^1.12.0"
+sphinxcontrib-bibtex = "^2.4.1"
+
+[tool.poetry.extras]
+pandas = ["pandas"]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

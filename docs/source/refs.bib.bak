@@ -1,0 +1,43 @@
+% Encoding: UTF-8
+
+@Article{EntropyPooling,
+  author  = {A. Meucci},
+  journal = {Risk},
+  title   = {Fully Flexible Views: Theory and Practice},
+  year    = {2008},
+  number  = {10},
+  pages   = {97-102},
+  volume  = {21},
+  url     = {https://ssrn.com/abstract=1213325},
+}
+
+@Article{SeqEntropyPooling,
+  author  = {A. Vorobets},
+  journal = {SSRN},
+  title   = {Sequential Entropy Pooling Heuristics},
+  year    = {2021},
+  url     = {https://ssrn.com/abstract_id=3936392},
+}
+
+@Article{optCVaR,
+  author  = {R. Tyrrell Rockafellar and Stanislav Uryasev},
+  journal = {Journal of Risk},
+  title   = {Optimization of Conditional Value-at-Risk},
+  year    = {2000},
+  number  = {3},
+  pages   = {21-41},
+  volume  = {2},
+  url     = {https://www.risk.net/journal-risk/2161159/optimization-conditional-value-risk},
+}
+
+@Article{compCVaR,
+  author  = {Künzi-Bay, A. and Mayer, J},
+  journal = {CMS},
+  title   = {Computational aspects of minimizing conditional value-at-risk},
+  year    = {2006},
+  pages   = {3–27},
+  volume  = {3},
+  url     = {https://doi.org/10.1007/s10287-005-0042-0},
+}
+
+@Comment{jabref-meta: databaseType:bibtex;}

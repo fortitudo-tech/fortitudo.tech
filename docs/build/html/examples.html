@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Examples &mdash; fortitudo.tech  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/default.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Contributing" href="contributing.html" />
+    <link rel="prev" title="Optimization" href="optimization.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> fortitudo.tech
+          </a>
+              <div class="version">
+                0.1
+              </div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="documentation.html">Documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="entropy_pooling.html">Entropy Pooling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="optimization.html">Optimization</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="references.html">References</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">fortitudo.tech</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="documentation.html">Documentation</a> &raquo;</li>
+      <li>Examples</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="examples">
+<h1>Examples<a class="headerlink" href="#examples" title="Permalink to this headline"></a></h1>
+<p>This example walks through the mean-CVaR and Entropy Pooling functionality
+and illustrates how these two technologies can be combined.</p>
+<p>We first load the necessary packages, data, and print some P&amp;L stats:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">fortitudo.tech</span> <span class="k">as</span> <span class="nn">ft</span>
+
+<span class="n">R</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;pnl.csv&#39;</span><span class="p">)</span>
+<span class="n">instrument_names</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">R</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+<span class="n">means</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">R</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">vols</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">R</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">stats_prior</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">means</span><span class="p">,</span> <span class="n">vols</span><span class="p">))</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">instrument_names</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Mean&#39;</span><span class="p">,</span> <span class="s1">&#39;Volatility&#39;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">stats_prior</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>This gives the following result:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>                <span class="n">Mean</span>  <span class="n">Volatility</span>
+<span class="n">Gov</span> <span class="o">&amp;</span> <span class="n">MBS</span>       <span class="o">-</span><span class="mf">0.7</span>         <span class="mf">3.2</span>
+<span class="n">Corp</span> <span class="n">IG</span>         <span class="o">-</span><span class="mf">0.4</span>         <span class="mf">3.4</span>
+<span class="n">Corp</span> <span class="n">HY</span>          <span class="mf">1.9</span>         <span class="mf">6.1</span>
+<span class="n">EM</span> <span class="n">Debt</span>          <span class="mf">2.7</span>         <span class="mf">7.5</span>
+<span class="n">DM</span> <span class="n">Equity</span>        <span class="mf">6.4</span>        <span class="mf">14.9</span>
+<span class="n">EM</span> <span class="n">Equity</span>        <span class="mf">8.0</span>        <span class="mf">26.9</span>
+<span class="n">Private</span> <span class="n">Equity</span>  <span class="mf">13.7</span>        <span class="mf">27.8</span>
+<span class="n">Infrastructure</span>   <span class="mf">5.9</span>        <span class="mf">10.8</span>
+<span class="n">Real</span> <span class="n">Estate</span>      <span class="mf">4.3</span>         <span class="mf">8.1</span>
+<span class="n">Hedge</span> <span class="n">Funds</span>      <span class="mf">4.8</span>         <span class="mf">7.2</span>
+</pre></div>
+</div>
+<p>Next, we extract P&amp;L dimension parameters <span class="math notranslate nohighlight">\(S\)</span> and <span class="math notranslate nohighlight">\(I\)</span>, specify a prior
+probability vector <span class="math notranslate nohighlight">\(p\)</span>, and create some portfolio constraints:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">S</span><span class="p">,</span> <span class="n">I</span> <span class="o">=</span> <span class="n">R</span><span class="o">.</span><span class="n">shape</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">S</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span> <span class="o">/</span> <span class="n">S</span>
+<span class="n">G_pf</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">I</span><span class="p">),</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">I</span><span class="p">)))</span>
+<span class="n">h_pf</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="mf">0.25</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">I</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">I</span><span class="p">)))</span>
+</pre></div>
+</div>
+<p>The above portfolio constraints simply specify that it is a long-only portfolio
+with an upper bound of 25% for individual assets. This ensures that the optimized
+portfolios are invested in at least 4 assets and imposes some diversification.</p>
+<p>The next step is to input the P&amp;L, constraints, and probability vector into the
+MeanCVaR object as well as optimize portfolios:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ft</span><span class="o">.</span><span class="n">cvar_options</span><span class="p">[</span><span class="s1">&#39;demean&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="n">R</span> <span class="o">=</span> <span class="n">R</span><span class="o">.</span><span class="n">values</span>
+<span class="n">cvar_opt</span> <span class="o">=</span> <span class="n">ft</span><span class="o">.</span><span class="n">MeanCVaR</span><span class="p">(</span><span class="n">R</span><span class="p">,</span> <span class="n">G</span><span class="o">=</span><span class="n">G_pf</span><span class="p">,</span> <span class="n">h</span><span class="o">=</span><span class="n">h_pf</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="n">p</span><span class="p">)</span>
+<span class="n">w_min</span> <span class="o">=</span> <span class="n">cvar_opt</span><span class="o">.</span><span class="n">efficient_portfolio</span><span class="p">()</span>
+<span class="n">w_target</span> <span class="o">=</span> <span class="n">cvar_opt</span><span class="o">.</span><span class="n">efficient_portfolio</span><span class="p">(</span><span class="n">return_target</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Note that the MeanCVaR object uses demeaned P&amp;L by default when optimizing the
+portfolio’s CVaR, as we believe it is best not to rely on the expected return
+estimates in both the risk and the expectation. In the above example, we
+illustrate how you can disable this feature and specify that the optimization
+should compute portfolio CVaR including its expected return.</p>
+<p>Let us now assume that we have done some analysis and concluded that the mean
+of Private Equity should be 10%, while its volatility should be greater than
+or equal to 33%. Entropy Pooling allows us to incorporate this market view
+into our P&amp;L assumption in a way that introduces the least amount of spurious
+structure, which is measured by the relative entropy between our prior and
+posterior probability vectors.</p>
+<p>The above views for Private Equity are implemented below:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">expected_return_row</span> <span class="o">=</span> <span class="n">R</span><span class="p">[:,</span> <span class="mi">6</span><span class="p">][</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">,</span> <span class="p">:]</span>
+<span class="n">variance_row</span> <span class="o">=</span> <span class="p">(</span><span class="n">expected_return_row</span> <span class="o">-</span> <span class="mf">0.1</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">expected_return_row</span> <span class="o">-</span> <span class="mf">0.1</span><span class="p">)</span>
+<span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="n">S</span><span class="p">)),</span> <span class="n">expected_return_row</span><span class="p">))</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">]])</span>
+<span class="n">G</span> <span class="o">=</span> <span class="o">-</span><span class="n">variance_row</span>
+<span class="n">h</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="o">-</span><span class="mf">0.33</span><span class="o">**</span><span class="mi">2</span><span class="p">]])</span>
+<span class="n">q</span> <span class="o">=</span> <span class="n">ft</span><span class="o">.</span><span class="n">entropy_pooling</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">G</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span>
+
+<span class="n">means_post</span> <span class="o">=</span> <span class="n">q</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">R</span>
+<span class="n">vols_post</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">q</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="p">(</span><span class="n">R</span> <span class="o">-</span> <span class="n">means_post</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">stats_post</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">means_post</span><span class="p">,</span> <span class="n">vols_post</span><span class="p">))</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">instrument_names</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Mean&#39;</span><span class="p">,</span> <span class="s1">&#39;Volatility&#39;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">stats_post</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Which gives the following posterior means and volatilities:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>                <span class="n">Mean</span>  <span class="n">Volatility</span>
+<span class="n">Gov</span> <span class="o">&amp;</span> <span class="n">MBS</span>       <span class="o">-</span><span class="mf">0.5</span>         <span class="mf">3.2</span>
+<span class="n">Corp</span> <span class="n">IG</span>         <span class="o">-</span><span class="mf">0.5</span>         <span class="mf">3.4</span>
+<span class="n">Corp</span> <span class="n">HY</span>          <span class="mf">1.2</span>         <span class="mf">6.4</span>
+<span class="n">EM</span> <span class="n">Debt</span>          <span class="mf">2.3</span>         <span class="mf">7.6</span>
+<span class="n">DM</span> <span class="n">Equity</span>        <span class="mf">4.4</span>        <span class="mf">16.4</span>
+<span class="n">EM</span> <span class="n">Equity</span>        <span class="mf">5.2</span>        <span class="mf">29.2</span>
+<span class="n">Private</span> <span class="n">Equity</span>  <span class="mf">10.0</span>        <span class="mf">33.0</span>
+<span class="n">Infrastructure</span>   <span class="mf">5.1</span>        <span class="mf">11.1</span>
+<span class="n">Real</span> <span class="n">Estate</span>      <span class="mf">3.6</span>         <span class="mf">8.5</span>
+<span class="n">Hedge</span> <span class="n">Funds</span>      <span class="mf">3.8</span>         <span class="mf">8.0</span>
+</pre></div>
+</div>
+<p>We note that our views regarding Private Equity are satisfied. In addition,
+we note that volatilities of the riskier assets have increased, while their
+expected returns have decreased. This illustrates how Entropy Pooling
+incorporates views/stress-tests in a way that tries to respect the dependencies
+of the prior distribution.</p>
+<p>With the posterior probabilities at hand, we want to examine the effect of our
+views on the efficient CVaR portfolios. This is easy to do by simply specifying
+that the posterior probability vector <span class="math notranslate nohighlight">\(q\)</span> should be used in the CVaR
+optimization:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cvar_opt_post</span> <span class="o">=</span> <span class="n">ft</span><span class="o">.</span><span class="n">MeanCVaR</span><span class="p">(</span><span class="n">R</span><span class="p">,</span> <span class="n">G</span><span class="o">=</span><span class="n">G_pf</span><span class="p">,</span> <span class="n">h</span><span class="o">=</span><span class="n">h_pf</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="n">q</span><span class="p">)</span>
+<span class="n">w_min_post</span> <span class="o">=</span> <span class="n">cvar_opt_post</span><span class="o">.</span><span class="n">efficient_portfolio</span><span class="p">()</span>
+<span class="n">w_target_post</span> <span class="o">=</span> <span class="n">cvar_opt_post</span><span class="o">.</span><span class="n">efficient_portfolio</span><span class="p">(</span><span class="n">return_target</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We can then print the results of the optimization and compare allocations.
+First for the minimum risk portfolios:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">min_risk_pfs</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+<span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">w_min</span><span class="p">,</span> <span class="n">w_min_post</span><span class="p">)),</span> <span class="n">index</span><span class="o">=</span><span class="n">instrument_names</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Prior&#39;</span><span class="p">,</span> <span class="s1">&#39;Posterior&#39;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">min_risk_pfs</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Which gives the following output:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>                <span class="n">Prior</span>  <span class="n">Posterior</span>
+<span class="n">Gov</span> <span class="o">&amp;</span> <span class="n">MBS</span>       <span class="mf">25.00</span>      <span class="mf">25.00</span>
+<span class="n">Corp</span> <span class="n">IG</span>         <span class="mf">25.00</span>      <span class="mf">25.00</span>
+<span class="n">Corp</span> <span class="n">HY</span>          <span class="mf">0.50</span>       <span class="mf">6.45</span>
+<span class="n">EM</span> <span class="n">Debt</span>          <span class="mf">3.87</span>       <span class="mf">5.00</span>
+<span class="n">DM</span> <span class="n">Equity</span>        <span class="mf">0.00</span>       <span class="mf">0.00</span>
+<span class="n">EM</span> <span class="n">Equity</span>       <span class="o">-</span><span class="mf">0.00</span>       <span class="mf">0.00</span>
+<span class="n">Private</span> <span class="n">Equity</span>  <span class="o">-</span><span class="mf">0.00</span>       <span class="mf">0.00</span>
+<span class="n">Infrastructure</span>   <span class="mf">6.89</span>       <span class="mf">6.87</span>
+<span class="n">Real</span> <span class="n">Estate</span>     <span class="mf">14.50</span>      <span class="mf">17.65</span>
+<span class="n">Hedge</span> <span class="n">Funds</span>     <span class="mf">24.25</span>      <span class="mf">14.02</span>
+</pre></div>
+</div>
+<p>And then for the portfolios with an expected return target of 5%:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">target_return_pfs</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+<span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">w_target</span><span class="p">,</span> <span class="n">w_target_post</span><span class="p">)),</span> <span class="n">index</span><span class="o">=</span><span class="n">instrument_names</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Prior&#39;</span><span class="p">,</span> <span class="s1">&#39;Posterior&#39;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">target_return_pfs</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Which gives the following output:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>                <span class="n">Prior</span>  <span class="n">Posterior</span>
+<span class="n">Gov</span> <span class="o">&amp;</span> <span class="n">MBS</span>        <span class="mf">0.00</span>      <span class="o">-</span><span class="mf">0.00</span>
+<span class="n">Corp</span> <span class="n">IG</span>          <span class="mf">0.00</span>       <span class="mf">0.00</span>
+<span class="n">Corp</span> <span class="n">HY</span>          <span class="mf">0.00</span>       <span class="mf">0.00</span>
+<span class="n">EM</span> <span class="n">Debt</span>         <span class="mf">19.81</span>       <span class="mf">8.08</span>
+<span class="n">DM</span> <span class="n">Equity</span>        <span class="mf">0.00</span>       <span class="mf">0.00</span>
+<span class="n">EM</span> <span class="n">Equity</span>        <span class="mf">0.00</span>       <span class="mf">0.00</span>
+<span class="n">Private</span> <span class="n">Equity</span>   <span class="mf">5.19</span>      <span class="mf">16.92</span>
+<span class="n">Infrastructure</span>  <span class="mf">25.00</span>      <span class="mf">25.00</span>
+<span class="n">Real</span> <span class="n">Estate</span>     <span class="mf">25.00</span>      <span class="mf">25.00</span>
+<span class="n">Hedge</span> <span class="n">Funds</span>     <span class="mf">25.00</span>      <span class="mf">25.00</span>
+</pre></div>
+</div>
+<p>It should be straightforward to make sense of these results. In the minimum
+risk case, we see that we allocate less to the riskier assets that now have a
+higher risk due to the higher volatility view. In the 5% target return case,
+we note that we must allocate more to the riskier assets in order to reach
+the 5% expected return target.</p>
+<p>From the allocation results, we note that the portfolios suffer from the
+well-known issues of concentrated portfolios. There are several ways of
+addressing this issue in practice, e.g., take parameter uncertainty into
+account and introduce transaction costs or turnover constraints with an
+initially diversified portfolio. These topics are however beyond the
+scope of this example and package.</p>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="optimization.html" class="btn btn-neutral float-left" title="Optimization" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="contributing.html" class="btn btn-neutral float-right" title="Contributing" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, Fortitudo Technologies ApS.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
