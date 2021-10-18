@@ -73,6 +73,8 @@ class MeanCVaR:
 
         self._set_options(kwargs.get('options', globals()['cvar_options']))
         self.mean = self.p @ R
+        self._expected_return_row = matrix(np.hstack((
+            -self.mean_scalar * self.mean, np.zeros((1, 2)))))
         if self.demean:
             self.losses = -self.R_scalar * (R - self.mean)
         else:
@@ -189,9 +191,7 @@ class MeanCVaR:
             G = copy(self.G)
             h = copy(self.h)
         else:
-            G = sparse([
-                self.G,
-                matrix(np.hstack((-self.mean_scalar * self.mean, np.zeros((1, 2)))))])
+            G = sparse([self.G, self._expected_return_row])
             h = matrix([self.h, -self.mean_scalar * return_target])
         solution = self._benders_algorithm(G, h)
         return solution[0:-2]
