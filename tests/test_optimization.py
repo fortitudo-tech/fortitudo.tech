@@ -38,6 +38,8 @@ def test_long_short():
     assert np.abs(np.sum(min_risk_pf) - 1) <= tol
     assert np.abs(np.sum(target_return_pf) - 1) <= tol
     assert np.abs(np.mean(p.T @ pnl @ target_return_pf) - 0.06) <= tol
+    with pytest.raises(ValueError):
+        opt._calculate_max_expected_return()
 
 
 def test_long_only():

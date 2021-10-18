@@ -195,3 +195,19 @@ class MeanCVaR:
             h = matrix([self.h, -self.mean_scalar * return_target])
         solution = self._benders_algorithm(G, h)
         return solution[0:-2]
+
+    def _calculate_max_expected_return(self) -> float:
+        """Method for calculating the highest expected return and checking feasibility/boundness.
+
+        Returns:
+            Highest expected return for the given constraints.
+
+        Raises:
+            ValueError: If constraints are infeasible or _max_expected_return unbounded.
+        """
+        solution = solvers.lp(
+            c=self._expected_return_row.T, G=self.G, h=self.h, A=self.A, b=self.b, solver='glpk')
+        if solution['status'] == 'optimal':
+            return -solution['primal objective']
+        else:
+            raise ValueError('Constraints are infeasible or _max_expected_return is unbounded.')
