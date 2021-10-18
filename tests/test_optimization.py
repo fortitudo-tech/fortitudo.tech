@@ -38,6 +38,8 @@ def test_long_short():
     assert np.abs(np.sum(min_risk_pf) - 1) <= tol
     assert np.abs(np.sum(target_return_pf) - 1) <= tol
     assert np.abs(np.mean(p.T @ pnl @ target_return_pf) - 0.06) <= tol
+    with pytest.raises(ValueError):
+        opt.efficient_frontier()
 
 
 def test_long_only():
@@ -47,6 +49,9 @@ def test_long_only():
     assert np.abs(np.sum(min_risk_lo) - 1) <= tol
     assert np.abs(np.sum(target_return_lo) - 1) <= tol
     assert np.abs(np.mean(pnl @ target_return_lo) - 0.06) <= tol
+    frontier_lo = opt2.efficient_frontier(4)
+    assert frontier_lo.shape == (I, 4)
+    assert np.max(np.abs(frontier_lo[:, 0] - min_risk_lo[:, 0])) <= tol
 
 
 def test_equality_constraint():
@@ -59,6 +64,9 @@ def test_equality_constraint():
     assert np.abs(np.mean(pnl @ target_return_eq) - 0.06) <= tol
     assert np.abs(min_risk_eq[6, 0] - b[0]) <= tol
     assert np.abs(target_return_eq[6, 0] - b[0]) <= tol
+    frontier_eq = opt3.efficient_frontier()
+    assert frontier_eq.shape == (I, 9)
+    assert np.max(np.abs(frontier_eq[:, 0] - min_risk_eq[:, 0])) <= tol
 
 
 def test_inputs():
