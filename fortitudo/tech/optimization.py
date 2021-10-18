@@ -178,7 +178,7 @@ class MeanCVaR:
             return False
 
     def efficient_portfolio(self, return_target: float = None) -> np.ndarray:
-        """Method for estimating an efficient portfolio with return target.
+        """Method for computing an efficient portfolio with return target.
 
         Args:
             return_target: Return target for the efficient portfolio. If given
