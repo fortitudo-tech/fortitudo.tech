@@ -208,6 +208,32 @@ class MeanCVaR:
         solution = solvers.lp(
             c=self._expected_return_row.T, G=self.G, h=self.h, A=self.A, b=self.b, solver='glpk')
         if solution['status'] == 'optimal':
-            return -solution['primal objective']
+            return -solution['primal objective'] / self.mean_scalar
         else:
             raise ValueError('Constraints are infeasible or _max_expected_return is unbounded.')
+
+    def efficient_frontier(self, num_portfolios: float = None) -> np.ndarray:
+        """Method for computing the efficient frontier.
+
+        Args:
+            num_portfolios: Number of portfolios used to span the efficient frontier. Default: 9.
+
+        Returns:
+            Efficient frontier with shape (I, num_portfolios).
+
+        Raises:
+            ValueError: If constraints are infeasible or _max_expected_return unbounded.
+        """
+        if num_portfolios is None:
+            num_portfolios = 9
+
+        _max_expected_return = self._calculate_max_expected_return()
+        frontier = np.full((self.I, num_portfolios), np.nan)
+        frontier[:, 0] = self.efficient_portfolio()[:, 0]
+        _min_expected_return = float(self.mean @ frontier[:, 0])
+        _delta = (_max_expected_return - _min_expected_return) / (num_portfolios - 1)
+
+        for p in range(1, num_portfolios):
+            frontier[:, p] = self.efficient_portfolio(_min_expected_return + _delta * p)[:, 0]
+
+        return frontier
