@@ -27,6 +27,7 @@ R = R.values
 cvar_opt = ft.MeanCVaR(R, G=G_pf, h=h_pf, p=p)
 w_min = cvar_opt.efficient_portfolio()
 w_target = cvar_opt.efficient_portfolio(return_target=0.05)
+front = cvar_opt.efficient_frontier()
 
 # Stress-test P&L assumptions with Entropy Pooling
 expected_return_row = R[:, 6][np.newaxis, :]
@@ -48,11 +49,14 @@ print(np.round(stats_post * 100, 1))
 cvar_opt_post = ft.MeanCVaR(R, G=G_pf, h=h_pf, p=q)
 w_min_post = cvar_opt_post.efficient_portfolio()
 w_target_post = cvar_opt_post.efficient_portfolio(return_target=0.05)
+front_post = cvar_opt_post.efficient_frontier()
 
 # Compare portfolios
 min_risk_pfs = pd.DataFrame(
     np.hstack((w_min, w_min_post)), index=instrument_names, columns=['Prior', 'Posterior'])
-print(np.round(min_risk_pfs * 100, 2))
+print(np.round(min_risk_pfs * 100, 1))
 target_return_pfs = pd.DataFrame(
     np.hstack((w_target, w_target_post)), index=instrument_names, columns=['Prior', 'Posterior'])
-print(np.round(target_return_pfs * 100, 2))
+print(np.round(target_return_pfs * 100, 1))
+print(np.round(pd.DataFrame(front * 100, index=instrument_names), 1))
+print(np.round(pd.DataFrame(front_post * 100, index=instrument_names), 1))
