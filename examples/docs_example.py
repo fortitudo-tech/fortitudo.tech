@@ -3,7 +3,7 @@ import pandas as pd
 import fortitudo.tech as ft
 
 # Load data
-R = pd.read_csv('pnl.csv')
+R = ft.load_pnl()
 instrument_names = list(R.columns)
 
 # Compute prior stats

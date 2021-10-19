@@ -16,10 +16,6 @@
 
 import os
 import sys
-from numpy import loadtxt
-
-filepath = os.path.dirname(__file__)
-pnl = loadtxt(filepath + '/test_pnl.csv', delimiter=',')
-
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-from fortitudo.tech import entropy_pooling, MeanCVaR, cvar_options
+from fortitudo.tech import entropy_pooling, MeanCVaR, cvar_options, load_pnl
+pnl = load_pnl().values

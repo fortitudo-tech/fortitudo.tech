@@ -14,7 +14,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-__all__ = ['entropy_pooling', 'MeanCVaR', 'cvar_options']
+__all__ = ['entropy_pooling', 'MeanCVaR', 'cvar_options', 'load_pnl']
 
 from fortitudo.tech.entropy_pooling import entropy_pooling
 from fortitudo.tech.optimization import MeanCVaR, cvar_options
+from fortitudo.tech.data import load_pnl
