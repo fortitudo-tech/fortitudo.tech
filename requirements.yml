@@ -31,13 +31,13 @@ dependencies:
   - metis=5.1.0=h58526e2_1006
   - mkl=2021.3.0=h06a4308_520
   - mkl-service=2.4.0=py39h7f8727e_0
-  - mkl_fft=1.3.0=py39h42c9631_2
+  - mkl_fft=1.3.1=py39hd3c417c_0
   - mkl_random=1.2.2=py39h51133e4_0
   - more-itertools=8.8.0=pyhd3eb1b0_0
   - mpfr=4.1.0=h9202a9a_1
   - ncurses=6.2=he6710b0_1
-  - numpy=1.20.3=py39hf144106_0
-  - numpy-base=1.20.3=py39h74d4b33_0
+  - numpy=1.21.2=py39h20f2e39_0
+  - numpy-base=1.21.2=py39h79a1101_0
   - openssl=1.1.1l=h7f8727e_0
   - packaging=21.0=pyhd3eb1b0_0
   - pip=21.2.4=py39h06a4308_0
@@ -67,19 +67,22 @@ dependencies:
     - charset-normalizer==2.0.7
     - docutils==0.17.1
     - flake8==4.0.1
-    - idna==3.2
+    - fortitudo-tech==0.2
+    - idna==3.3
     - imagesize==1.2.0
     - jinja2==3.0.2
     - latexcodec==2.0.1
     - markupsafe==2.0.1
     - mccabe==0.6.1
+    - pandas==1.3.4
     - pybtex==0.24.0
     - pybtex-docutils==1.0.1
     - pycodestyle==2.8.0
     - pyflakes==2.4.0
     - pygments==2.10.0
+    - python-dateutil==2.8.2
     - pytz==2021.3
-    - pyyaml==5.4.1
+    - pyyaml==6.0
     - requests==2.26.0
     - snowballstemmer==2.1.0
     - sphinx==4.2.0
