@@ -14,6 +14,12 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+"""
+This file gives an example of how Entropy Pooling can be combined with
+CVaR optimization. For a walkthrough with additional comments, please
+visit https://os.fortitudo.tech.
+"""
+
 import numpy as np
 import pandas as pd
 import fortitudo.tech as ft
