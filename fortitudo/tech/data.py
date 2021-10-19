@@ -20,5 +20,10 @@ import pandas as pd
 
 
 def load_pnl() -> pd.DataFrame:
+    """Function for loading the P&L simulation from Sequential Entropy Pooling Heuristics article.
+
+    Returns:
+        DataFrame with P&L simulation.
+    """
     pnl_string = StringIO(get_data('fortitudo.tech', 'data/pnl.csv').decode())
     return pd.read_csv(pnl_string)
