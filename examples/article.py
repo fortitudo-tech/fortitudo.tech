@@ -13,12 +13,3 @@
 
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
-from pkgutil import get_data
-from io import StringIO
-import pandas as pd
-
-
-def load_pnl() -> pd.DataFrame:
-    pnl_string = StringIO(get_data('fortitudo.tech', 'data/pnl.csv').decode())
-    return pd.read_csv(pnl_string)
