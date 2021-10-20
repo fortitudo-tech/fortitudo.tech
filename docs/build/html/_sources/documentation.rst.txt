@@ -2,21 +2,19 @@ Documentation
 -------------
 
 The left sidebar contains links to the documentation of the main modules of
-this package as well as an example of how to combine views/stress-testing with
-CVaR optimization.
+this package as well as two examples:
 
-The example code uses pandas, which is an optional package that can be installed
-simultaneously with this package::
+1) How to combine Entropy Pooling views / stress-tests with CVaR optimization.
+2) A replication of the results from :cite:t:`SeqEntropyPooling` for the original
+   Entropy Pooling method.
 
-    pip install fortitudo.tech[pandas]
-
-The data used in the example is the simulation from :cite:t:`SeqEntropyPooling`.
-You can verify that the prior means and volatilities are the same by `downloading
-the article using this link <https://ssrn.com/abstract_id=3936392>`_.
+The data used in all of the example is the simulation from :cite:t:`SeqEntropyPooling`.
+You can load this data using the load_pnl() function.
 
 .. toctree::
     :hidden:
 
+    data
     entropy_pooling
     optimization
     examples
