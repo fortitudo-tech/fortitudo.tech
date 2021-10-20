@@ -67,7 +67,6 @@ dependencies:
     - charset-normalizer==2.0.7
     - docutils==0.17.1
     - flake8==4.0.1
-    - fortitudo-tech==0.2
     - idna==3.3
     - imagesize==1.2.0
     - jinja2==3.0.2
