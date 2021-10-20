@@ -1,5 +1,8 @@
 Examples
---------
+========
+
+General
+-------
 
 This example walks through the mean-CVaR and Entropy Pooling functionality
 and illustrates how these two technologies can be combined.
@@ -223,5 +226,145 @@ The gives the following output::
     Infrastructure   6.9  12.4  15.9  23.8  25.0  25.0  25.0  25.0  25.0
     Real Estate     17.7  17.0  19.7  22.8  25.0  25.0  25.0  25.0  -0.0
     Hedge Funds     14.0  22.6  25.0  25.0  25.0  25.0  25.0  25.0   0.0
+
+
+Entropy Pooling
+---------------
+
+Entropy pooling can be used when you want to calculate the posterior 
+probabilities given some views. Let us illustrate with an example.
+
+We first load the necessary packages and P&L data. The dimensions of the data 
+are stored in S and I, and we specify a prior probability vector :math:`p`.
+
+.. code-block:: python
+
+    import numpy as np
+    import fortitudo.tech as ft
+
+    R = ft.load_pnl()
+    instrument_names = R.columns
+    R = R.values
+    S, I = R.shape
+    p = np.ones((S, 1)) / S
+
+Next we compute the prior means, volatilies, skewness, kurtosis and also the
+correlation matrix of the instruments.
+
+.. code-block:: python
+
+    means_prior = p.T @ R
+    vols_prior = np.sqrt(p.T @ (R - means_prior)**2)
+    skews_prior = p.T @ ((R - means_prior) / vols_prior)**3
+    kurts_prior = p.T @ ((R - means_prior) / vols_prior)**4
+    corr_prior = np.corrcoef(R.T)
+
+    data_prior = np.hstack((
+        np.round(means_prior.T * 100, 1),
+        np.round(vols_prior.T * 100, 1),
+        np.round(skews_prior.T, 2),
+        np.round(kurts_prior.T, 2)))
+
+    print(pd.DataFrame(
+        data_prior,
+        index=instrument_names,
+        columns=['Mean', 'Volatility', 'Skewness', 'Kurtosis']))
+    
+    print(pd.DataFrame(np.round(corr_prior * 100), index=instrument_names)) # CHANGETHIS
+
+This gives the following output::
+
+                    Mean  Volatility  Skewness  Kurtosis
+    Gov & MBS       -0.7         3.2      0.10      3.02
+    Corp IG         -0.4         3.4      0.11      3.11
+    Corp HY          1.9         6.1      0.17      2.97
+    EM Debt          2.7         7.5      0.22      3.06
+    DM Equity        6.4        14.9      0.40      3.15
+    EM Equity        8.0        26.9      0.77      4.10
+    Private Equity  13.7        27.8      0.72      3.76
+    Infrastructure   5.9        10.8      0.31      3.19
+    Real Estate      4.3         8.1      0.23      3.09
+    Hedge Funds      4.8         7.2      0.20      3.05
+
+# INSERT OUTPUT OF CORR MATRIX
+
+| Now suppose we have the following views:
+| Correlation between EM Debt and Corp HY = 50%
+| Private Equity mean = 10.0%
+| EM Equity volatility = 20.0%
+| DM Equity skewness = -0.75
+| DM Equity kurtosis = 3.50
+
+| These views must be incorporated into the optimization matrices A, b, G and h.
+| Note that volatilities are nonlinear in their variables, so the means and
+  volatilities must be kept fixed during entropy pooling.
+
+.. code-block:: python
+
+    A = np.vstack((np.ones((1, S)), mean_rows, vol_rows[0:-1, :], corr_row[np.newaxis, :]))
+    b = np.vstack(([1], means_prior[:, 2:6].T, [0.1], vols_prior[:, 2:5].T**2,
+                [0.5 * vols_prior[0, 2] * vols_prior[0, 3]]))
+    G = np.vstack((vol_rows[-1, :], skew_row, -kurt_row))
+    h = np.array([[0.2**2], [-0.75], [-3.5]])
+
+Now we are ready to calculate the posterior probabilities :math:`q`, relative
+entropy and effective number of scenarios.
+
+.. code-block:: python
+
+    q = ft.entropy_pooling(p, A, b, G, h)
+    relative_entropy = q.T @ (np.log(q) - np.log(p))
+    effective_number_scenarios = np.exp(-relative_entropy)
+
+Using the posterior probabilities the means, volatilities, skewness, kurtosis 
+and correlation matrices are recalculated.
+
+.. code-block:: python
+
+    means_post = q.T @ R
+    vols_post = np.sqrt(q.T @ (R - means_post)**2)
+    skews_post = q.T @ ((R - means_post) / vols_post)**3
+    kurts_post = q.T @ ((R - means_post) / vols_post)**4
+    cov_post = np.zeros((I, I))
+    for s in range(S):
+        cov_post += q[s, 0] * (R[s, :] - means_post).T @ (R[s, :] - means_post)
+    vols_inverse = np.diag(vols_post[0, :]**-1)
+    corr_post = vols_inverse @ cov_post @ vols_inverse
+
+Let's print the posterior data.
+
+.. code-block:: python
+
+    data_post = np.hstack((
+        np.round(means_post.T * 100, 1),
+        np.round(vols_post.T * 100, 1),
+        np.round(skews_post.T, 2),
+        np.round(kurts_post.T, 2)))
+
+    print(pd.DataFrame(
+        data_post,
+        index=instrument_names,
+        columns=['Mean', 'Volatility', 'Skewness', 'Kurtosis']))
+
+    print(pd.DataFrame(np.round(corr_post * 100), index=instrument_names)) # CHANGETHIS
+
+Which gives the following output::
+
+                    Mean  Volatility  Skewness  Kurtosis
+    Gov & MBS       -0.6         3.2      0.06      2.91
+    Corp IG         -0.5         3.4      0.14      3.12
+    Corp HY          1.9         6.1     -0.06      2.97
+    EM Debt          2.7         7.5      0.13      3.07
+    DM Equity        6.4        14.9     -0.75      3.50
+    EM Equity        8.0        20.0     -0.22      3.34
+    Private Equity  10.0        24.3      0.12      3.17
+    Infrastructure   5.7        10.6      0.28      3.16
+    Real Estate      3.7         8.0      0.13      3.02
+    Hedge Funds      4.6         7.0     -0.62      3.81
+
+# INSERT OUTPUT OF CORR MATRIX #
+
+
+
 
 

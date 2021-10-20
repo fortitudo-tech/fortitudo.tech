@@ -21,6 +21,7 @@ available on https://ssrn.com/abstract=3936392.
 """
 
 import numpy as np
+import pandas as pd
 import fortitudo.tech as ft
 
 # Load P&L
@@ -37,12 +38,27 @@ skews_prior = p.T @ ((R - means_prior) / vols_prior)**3
 kurts_prior = p.T @ ((R - means_prior) / vols_prior)**4
 corr_prior = np.corrcoef(R.T)
 
+# Print prior data
+data_prior = np.hstack((
+    np.round(means_prior.T * 100, 1),
+    np.round(vols_prior.T * 100, 1),
+    np.round(skews_prior.T, 2),
+    np.round(kurts_prior.T, 2)))
+
+print(pd.DataFrame(
+    data_prior,
+    index=instrument_names,
+    columns=['Mean', 'Volatility', 'Skewness', 'Kurtosis']))
+
+print(pd.DataFrame(np.round(corr_prior * 100), index=instrument_names))
+
 # Create views matrices and vectors
 mean_rows = R[:, 2:7].T
 vol_rows = (R[:, 2:6] - means_prior[:, 2:6]).T**2
 skew_row = ((R[:, 4] - means_prior[:, 4]) / vols_prior[:, 4])**3
 kurt_row = ((R[:, 4] - means_prior[:, 4]) / vols_prior[:, 4])**4
 corr_row = (R[:, 2] - means_prior[:, 2]) * (R[:, 3] - means_prior[:, 3])
+
 A = np.vstack((np.ones((1, S)), mean_rows, vol_rows[0:-1, :], corr_row[np.newaxis, :]))
 b = np.vstack(([1], means_prior[:, 2:6].T, [0.1], vols_prior[:, 2:5].T**2,
                [0.5 * vols_prior[0, 2] * vols_prior[0, 3]]))
@@ -64,3 +80,17 @@ for s in range(S):
     cov_post += q[s, 0] * (R[s, :] - means_post).T @ (R[s, :] - means_post)
 vols_inverse = np.diag(vols_post[0, :]**-1)
 corr_post = vols_inverse @ cov_post @ vols_inverse
+
+
+data_post = np.hstack((
+    np.round(means_post.T * 100, 1),
+    np.round(vols_post.T * 100, 1),
+    np.round(skews_post.T, 2),
+    np.round(kurts_post.T, 2)))
+
+print(pd.DataFrame(
+    data_post,
+    index=instrument_names,
+    columns=['Mean', 'Volatility', 'Skewness', 'Kurtosis']))
+
+print(pd.DataFrame(np.round(corr_post * 100), index=instrument_names))
