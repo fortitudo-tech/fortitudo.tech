@@ -38,7 +38,7 @@ copyright = '2021, Fortitudo Technologies ApS'
 author = 'Fortitudo Technologies ApS'
 
 # The full version, including alpha/beta/rc tags
-version = '0.1'
+version = '0.2'
 
 
 # -- General configuration ---------------------------------------------------
@@ -83,5 +83,4 @@ html_theme_options = {'display_version': True}
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['.static']
-
 html_css_files = ["default.css"]
