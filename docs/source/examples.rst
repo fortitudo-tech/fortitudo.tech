@@ -77,7 +77,7 @@ The above views for Private Equity are implemented below:
 .. code-block:: python
 
     expected_return_row = R[:, 6][np.newaxis, :]
-    variance_row = (expected_return_row - 0.1) * (expected_return_row - 0.1)
+    variance_row = (expected_return_row - 0.1)**2
     A = np.vstack((np.ones((1, S)), expected_return_row))
     b = np.array([[1], [0.1]])
     G = -variance_row
@@ -128,21 +128,21 @@ First for the minimum risk portfolios:
 
     min_risk_pfs = pd.DataFrame(
     np.hstack((w_min, w_min_post)), index=instrument_names, columns=['Prior', 'Posterior'])
-    print(np.round(min_risk_pfs * 100, 2))
+    print(np.round(min_risk_pfs * 100, 1))
 
 Which gives the following output::
 
                     Prior  Posterior
-    Gov & MBS       25.00      25.00
-    Corp IG         25.00      25.00
-    Corp HY          0.50       6.45
-    EM Debt          3.87       5.00
-    DM Equity        0.00       0.00
-    EM Equity       -0.00       0.00
-    Private Equity  -0.00       0.00
-    Infrastructure   6.89       6.87
-    Real Estate     14.50      17.65
-    Hedge Funds     24.25      14.02
+    Gov & MBS        25.0       25.0
+    Corp IG          25.0       25.0
+    Corp HY           0.5        6.5
+    EM Debt           3.9        5.0
+    DM Equity         0.0        0.0
+    EM Equity        -0.0        0.0
+    Private Equity   -0.0        0.0
+    Infrastructure    6.9        6.9
+    Real Estate      14.5       17.7
+    Hedge Funds      24.2       14.0
 
 And then for the portfolios with an expected return target of 5%:
 
@@ -150,21 +150,21 @@ And then for the portfolios with an expected return target of 5%:
 
     target_return_pfs = pd.DataFrame(
     np.hstack((w_target, w_target_post)), index=instrument_names, columns=['Prior', 'Posterior'])
-    print(np.round(target_return_pfs * 100, 2))
+    print(np.round(target_return_pfs * 100, 1))
 
 Which gives the following output::
 
                     Prior  Posterior
-    Gov & MBS        0.00      -0.00
-    Corp IG          0.00       0.00
-    Corp HY          0.00       0.00
-    EM Debt         19.81       8.08
-    DM Equity        0.00       0.00
-    EM Equity        0.00       0.00
-    Private Equity   5.19      16.92
-    Infrastructure  25.00      25.00
-    Real Estate     25.00      25.00
-    Hedge Funds     25.00      25.00
+    Gov & MBS         0.0       -0.0
+    Corp IG           0.0        0.0
+    Corp HY           0.0        0.0
+    EM Debt          19.8        8.1
+    DM Equity         0.0        0.0
+    EM Equity         0.0        0.0
+    Private Equity    5.2       16.9
+    Infrastructure   25.0       25.0
+    Real Estate      25.0       25.0
+    Hedge Funds      25.0       25.0
 
 It should be straightforward to make sense of these results. In the minimum
 risk case, we see that we allocate less to the riskier assets that now have a
@@ -178,3 +178,50 @@ addressing this issue in practice, e.g., take parameter uncertainty into
 account and introduce transaction costs or turnover constraints with an
 initially diversified portfolio. These topics are however beyond the
 scope of this example and package.
+
+We can also compute an efficient frontier for the prior probabilies. The number
+of portfolios used to span the frontier is by default set to 9:
+
+.. code-block:: python 
+
+    front = cvar_opt.efficient_frontier()
+    print(np.round(pd.DataFrame(front * 100, index=instrument_names), 1))
+
+
+The gives the following output::
+
+                    0     1     2     3     4     5     6     7     8
+    Gov & MBS       25.0  25.0  18.8   5.6   0.0   0.0   0.0  -0.0   0.0
+    Corp IG         25.0   8.3   0.0   0.0   0.0   0.0   0.0   0.0   0.0
+    Corp HY          0.5   0.0   0.0   0.0   0.0   0.0  -0.0   0.0   0.0
+    EM Debt          3.9   9.6  12.8  18.1  17.4  12.7   7.1  -0.0   0.0
+    DM Equity        0.0   0.0   0.0   0.0   0.0   0.0   0.0  20.9  25.0
+    EM Equity       -0.0   0.0   0.0  -0.0  -0.0   0.0   0.0   2.2  25.0
+    Private Equity  -0.0  -0.0   0.7   2.2   7.6  15.4  23.1  25.0  25.0
+    Infrastructure   6.9  12.9  18.9  24.1  25.0  25.0  25.0  25.0  25.0
+    Real Estate     14.5  19.2  23.9  25.0  25.0  21.9  19.9   2.0   0.0
+    Hedge Funds     24.2  25.0  25.0  25.0  25.0  25.0  25.0  25.0   0.0
+
+
+The efficient frontier for the posterior probabilies is calculated:
+
+.. code-block:: python
+
+    front_post = cvar_opt_post.efficient_frontier()
+    print(np.round(pd.DataFrame(front_post * 100, index=instrument_names), 1))
+
+The gives the following output::
+
+                       0     1     2     3     4     5     6     7     8
+    Gov & MBS       25.0  25.0  25.0  14.1   0.0  -0.0  -0.0   0.0  -0.0
+    Corp IG         25.0  16.0   0.8   0.0   0.0   0.0   0.0   0.0   0.0
+    Corp HY          6.5   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0
+    EM Debt          5.0   6.9  13.5  14.3  23.3  15.6   8.0   0.3   0.0
+    DM Equity        0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0  25.0
+    EM Equity        0.0  -0.0  -0.0   0.0   0.0   0.0   0.0   0.0  25.0
+    Private Equity   0.0   0.0  -0.0  -0.0   1.7   9.4  17.0  24.7  25.0
+    Infrastructure   6.9  12.4  15.9  23.8  25.0  25.0  25.0  25.0  25.0
+    Real Estate     17.7  17.0  19.7  22.8  25.0  25.0  25.0  25.0  -0.0
+    Hedge Funds     14.0  22.6  25.0  25.0  25.0  25.0  25.0  25.0   0.0
+
+
