@@ -53,7 +53,7 @@ front = cvar_opt.efficient_frontier()
 
 # Stress-test P&L assumptions with Entropy Pooling
 expected_return_row = R[:, 6][np.newaxis, :]
-variance_row = (expected_return_row - 0.1) * (expected_return_row - 0.1)
+variance_row = (expected_return_row - 0.1)**2
 A = np.vstack((np.ones((1, S)), expected_return_row))
 b = np.array([[1], [0.1]])
 G = -variance_row
