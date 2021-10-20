@@ -212,7 +212,7 @@ class MeanCVaR:
         else:
             raise ValueError('Constraints are infeasible or _max_expected_return is unbounded.')
 
-    def efficient_frontier(self, num_portfolios: float = None) -> np.ndarray:
+    def efficient_frontier(self, num_portfolios: int = None) -> np.ndarray:
         """Method for computing the efficient frontier.
 
         Args:

@@ -1,9 +1,31 @@
+# fortitudo.tech investment and risk technologies
+# Copyright (C) 2021 Fortitudo Technologies ApS
+
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+"""
+This file gives an example of how Entropy Pooling can be combined with
+CVaR optimization. For a walkthrough with additional comments, please
+visit https://os.fortitudo.tech.
+"""
+
 import numpy as np
 import pandas as pd
 import fortitudo.tech as ft
 
 # Load data
-R = pd.read_csv('pnl.csv')
+R = ft.load_pnl()
 instrument_names = list(R.columns)
 
 # Compute prior stats
@@ -27,6 +49,7 @@ R = R.values
 cvar_opt = ft.MeanCVaR(R, G=G_pf, h=h_pf, p=p)
 w_min = cvar_opt.efficient_portfolio()
 w_target = cvar_opt.efficient_portfolio(return_target=0.05)
+front = cvar_opt.efficient_frontier()
 
 # Stress-test P&L assumptions with Entropy Pooling
 expected_return_row = R[:, 6][np.newaxis, :]
@@ -48,11 +71,14 @@ print(np.round(stats_post * 100, 1))
 cvar_opt_post = ft.MeanCVaR(R, G=G_pf, h=h_pf, p=q)
 w_min_post = cvar_opt_post.efficient_portfolio()
 w_target_post = cvar_opt_post.efficient_portfolio(return_target=0.05)
+front_post = cvar_opt_post.efficient_frontier()
 
 # Compare portfolios
 min_risk_pfs = pd.DataFrame(
     np.hstack((w_min, w_min_post)), index=instrument_names, columns=['Prior', 'Posterior'])
-print(np.round(min_risk_pfs * 100, 2))
+print(np.round(min_risk_pfs * 100, 1))
 target_return_pfs = pd.DataFrame(
     np.hstack((w_target, w_target_post)), index=instrument_names, columns=['Prior', 'Posterior'])
-print(np.round(target_return_pfs * 100, 2))
+print(np.round(target_return_pfs * 100, 1))
+print(np.round(pd.DataFrame(front * 100, index=instrument_names), 1))
+print(np.round(pd.DataFrame(front_post * 100, index=instrument_names), 1))

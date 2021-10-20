@@ -14,8 +14,16 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-__all__ = ['entropy_pooling', 'MeanCVaR', 'cvar_options', 'load_pnl']
+from pkgutil import get_data
+from io import StringIO
+import pandas as pd
 
-from fortitudo.tech.entropy_pooling import entropy_pooling
-from fortitudo.tech.optimization import MeanCVaR, cvar_options
-from fortitudo.tech.data import load_pnl
+
+def load_pnl() -> pd.DataFrame:
+    """Function for loading the P&L simulation from Sequential Entropy Pooling Heuristics article.
+
+    Returns:
+        DataFrame with P&L simulation.
+    """
+    pnl_string = StringIO(get_data('fortitudo.tech', 'data/pnl.csv').decode())
+    return pd.read_csv(pnl_string)
