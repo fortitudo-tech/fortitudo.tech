@@ -38,19 +38,20 @@ skews_prior = p.T @ ((R - means_prior) / vols_prior)**3
 kurts_prior = p.T @ ((R - means_prior) / vols_prior)**4
 corr_prior = np.corrcoef(R.T)
 
-# Print prior data
+# Print prior stats
 data_prior = np.hstack((
-    np.round(means_prior.T * 100, 1),
-    np.round(vols_prior.T * 100, 1),
-    np.round(skews_prior.T, 2),
-    np.round(kurts_prior.T, 2)))
+    np.round(means_prior.T * 100, 1), np.round(vols_prior.T * 100, 1),
+    np.round(skews_prior.T, 2), np.round(kurts_prior.T, 2)))
+prior_df = pd.DataFrame(
+    data_prior, index=instrument_names,
+    columns=['Mean', 'Volatility', 'Skewness', 'Kurtosis'])
+print(prior_df)
 
-print(pd.DataFrame(
-    data_prior,
-    index=instrument_names,
-    columns=['Mean', 'Volatility', 'Skewness', 'Kurtosis']))
-
-print(pd.DataFrame(np.round(corr_prior * 100), index=instrument_names))
+corr_prior_df = pd.DataFrame(
+    np.intc(np.round(corr_prior * 100)),
+    index=enumerate(instrument_names, start=1),
+    columns=range(1, I + 1))
+print(corr_prior_df)
 
 # Create views matrices and vectors
 mean_rows = R[:, 2:7].T
@@ -81,16 +82,20 @@ for s in range(S):
 vols_inverse = np.diag(vols_post[0, :]**-1)
 corr_post = vols_inverse @ cov_post @ vols_inverse
 
-
+# Print posterior stats
 data_post = np.hstack((
-    np.round(means_post.T * 100, 1),
-    np.round(vols_post.T * 100, 1),
-    np.round(skews_post.T, 2),
-    np.round(kurts_post.T, 2)))
+    np.round(means_post.T * 100, 1), np.round(vols_post.T * 100, 1),
+    np.round(skews_post.T, 2), np.round(kurts_post.T, 2)))
+post_df = pd.DataFrame(
+    data_post, index=instrument_names,
+    columns=['Mean', 'Volatility', 'Skewness', 'Kurtosis'])
+print(post_df)
 
-print(pd.DataFrame(
-    data_post,
-    index=instrument_names,
-    columns=['Mean', 'Volatility', 'Skewness', 'Kurtosis']))
+print(f'ENS = {np.round(effective_number_scenarios[0, 0] * 100, 2)}%.')
+print(f'RE = {np.round(relative_entropy[0, 0] * 100, 2)}%.')
 
-print(pd.DataFrame(np.round(corr_post * 100), index=instrument_names))
+corr_post_df = pd.DataFrame(
+    np.intc(np.round(corr_post * 100)),
+    index=enumerate(instrument_names, start=1),
+    columns=range(1, I + 1))
+print(corr_post_df)
