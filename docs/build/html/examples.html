@@ -39,7 +39,11 @@
 <li class="toctree-l1 current"><a class="reference internal" href="documentation.html">Documentation</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="entropy_pooling.html">Entropy Pooling</a></li>
 <li class="toctree-l2"><a class="reference internal" href="optimization.html">Optimization</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Examples</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#general">General</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#entropy-pooling">Entropy Pooling</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
@@ -72,6 +76,8 @@
              
   <section id="examples">
 <h1>Examples<a class="headerlink" href="#examples" title="Permalink to this headline"></a></h1>
+<section id="general">
+<h2>General<a class="headerlink" href="#general" title="Permalink to this headline"></a></h2>
 <p>This example walks through the mean-CVaR and Entropy Pooling functionality
 and illustrates how these two technologies can be combined.</p>
 <p>We first load the necessary packages, data, and print some P&amp;L stats:</p>
@@ -268,6 +274,131 @@ of portfolios used to span the frontier is by default set to 9:</p>
 <span class="n">Hedge</span> <span class="n">Funds</span>     <span class="mf">14.0</span>  <span class="mf">22.6</span>  <span class="mf">25.0</span>  <span class="mf">25.0</span>  <span class="mf">25.0</span>  <span class="mf">25.0</span>  <span class="mf">25.0</span>  <span class="mf">25.0</span>   <span class="mf">0.0</span>
 </pre></div>
 </div>
+</section>
+<section id="entropy-pooling">
+<h2>Entropy Pooling<a class="headerlink" href="#entropy-pooling" title="Permalink to this headline"></a></h2>
+<p>Entropy pooling can be used when you want to calculate the posterior
+probabilities given some views. Let us illustrate with an example.</p>
+<p>We first load the necessary packages and P&amp;L data. The dimensions of the data
+are stored in S and I, and we specify a prior probability vector <span class="math notranslate nohighlight">\(p\)</span>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">fortitudo.tech</span> <span class="k">as</span> <span class="nn">ft</span>
+
+<span class="n">R</span> <span class="o">=</span> <span class="n">ft</span><span class="o">.</span><span class="n">load_pnl</span><span class="p">()</span>
+<span class="n">instrument_names</span> <span class="o">=</span> <span class="n">R</span><span class="o">.</span><span class="n">columns</span>
+<span class="n">R</span> <span class="o">=</span> <span class="n">R</span><span class="o">.</span><span class="n">values</span>
+<span class="n">S</span><span class="p">,</span> <span class="n">I</span> <span class="o">=</span> <span class="n">R</span><span class="o">.</span><span class="n">shape</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">S</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span> <span class="o">/</span> <span class="n">S</span>
+</pre></div>
+</div>
+<p>Next we compute the prior means, volatilies, skewness, kurtosis and also the
+correlation matrix of the instruments.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">means_prior</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">R</span>
+<span class="n">vols_prior</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="p">(</span><span class="n">R</span> <span class="o">-</span> <span class="n">means_prior</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">skews_prior</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="p">((</span><span class="n">R</span> <span class="o">-</span> <span class="n">means_prior</span><span class="p">)</span> <span class="o">/</span> <span class="n">vols_prior</span><span class="p">)</span><span class="o">**</span><span class="mi">3</span>
+<span class="n">kurts_prior</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="p">((</span><span class="n">R</span> <span class="o">-</span> <span class="n">means_prior</span><span class="p">)</span> <span class="o">/</span> <span class="n">vols_prior</span><span class="p">)</span><span class="o">**</span><span class="mi">4</span>
+<span class="n">corr_prior</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">corrcoef</span><span class="p">(</span><span class="n">R</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+
+<span class="n">data_prior</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">means_prior</span><span class="o">.</span><span class="n">T</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">vols_prior</span><span class="o">.</span><span class="n">T</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">skews_prior</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">kurts_prior</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="mi">2</span><span class="p">)))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="n">data_prior</span><span class="p">,</span>
+    <span class="n">index</span><span class="o">=</span><span class="n">instrument_names</span><span class="p">,</span>
+    <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Mean&#39;</span><span class="p">,</span> <span class="s1">&#39;Volatility&#39;</span><span class="p">,</span> <span class="s1">&#39;Skewness&#39;</span><span class="p">,</span> <span class="s1">&#39;Kurtosis&#39;</span><span class="p">]))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">corr_prior</span> <span class="o">*</span> <span class="mi">100</span><span class="p">),</span> <span class="n">index</span><span class="o">=</span><span class="n">instrument_names</span><span class="p">))</span> <span class="c1"># CHANGETHIS</span>
+</pre></div>
+</div>
+<p>This gives the following output:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>                <span class="n">Mean</span>  <span class="n">Volatility</span>  <span class="n">Skewness</span>  <span class="n">Kurtosis</span>
+<span class="n">Gov</span> <span class="o">&amp;</span> <span class="n">MBS</span>       <span class="o">-</span><span class="mf">0.7</span>         <span class="mf">3.2</span>      <span class="mf">0.10</span>      <span class="mf">3.02</span>
+<span class="n">Corp</span> <span class="n">IG</span>         <span class="o">-</span><span class="mf">0.4</span>         <span class="mf">3.4</span>      <span class="mf">0.11</span>      <span class="mf">3.11</span>
+<span class="n">Corp</span> <span class="n">HY</span>          <span class="mf">1.9</span>         <span class="mf">6.1</span>      <span class="mf">0.17</span>      <span class="mf">2.97</span>
+<span class="n">EM</span> <span class="n">Debt</span>          <span class="mf">2.7</span>         <span class="mf">7.5</span>      <span class="mf">0.22</span>      <span class="mf">3.06</span>
+<span class="n">DM</span> <span class="n">Equity</span>        <span class="mf">6.4</span>        <span class="mf">14.9</span>      <span class="mf">0.40</span>      <span class="mf">3.15</span>
+<span class="n">EM</span> <span class="n">Equity</span>        <span class="mf">8.0</span>        <span class="mf">26.9</span>      <span class="mf">0.77</span>      <span class="mf">4.10</span>
+<span class="n">Private</span> <span class="n">Equity</span>  <span class="mf">13.7</span>        <span class="mf">27.8</span>      <span class="mf">0.72</span>      <span class="mf">3.76</span>
+<span class="n">Infrastructure</span>   <span class="mf">5.9</span>        <span class="mf">10.8</span>      <span class="mf">0.31</span>      <span class="mf">3.19</span>
+<span class="n">Real</span> <span class="n">Estate</span>      <span class="mf">4.3</span>         <span class="mf">8.1</span>      <span class="mf">0.23</span>      <span class="mf">3.09</span>
+<span class="n">Hedge</span> <span class="n">Funds</span>      <span class="mf">4.8</span>         <span class="mf">7.2</span>      <span class="mf">0.20</span>      <span class="mf">3.05</span>
+</pre></div>
+</div>
+<p># INSERT OUTPUT OF CORR MATRIX</p>
+<div class="line-block">
+<div class="line">Now suppose we have the following views:</div>
+<div class="line">Correlation between EM Debt and Corp HY = 50%</div>
+<div class="line">Private Equity mean = 10.0%</div>
+<div class="line">EM Equity volatility = 20.0%</div>
+<div class="line">DM Equity skewness = -0.75</div>
+<div class="line">DM Equity kurtosis = 3.50</div>
+</div>
+<div class="line-block">
+<div class="line">These views must be incorporated into the optimization matrices A, b, G and h.</div>
+<div class="line">Note that volatilities are nonlinear in their variables, so the means and
+volatilities must be kept fixed during entropy pooling.</div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="n">S</span><span class="p">)),</span> <span class="n">mean_rows</span><span class="p">,</span> <span class="n">vol_rows</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">:],</span> <span class="n">corr_row</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">,</span> <span class="p">:]))</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">(([</span><span class="mi">1</span><span class="p">],</span> <span class="n">means_prior</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">:</span><span class="mi">6</span><span class="p">]</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">],</span> <span class="n">vols_prior</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">:</span><span class="mi">5</span><span class="p">]</span><span class="o">.</span><span class="n">T</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span>
+            <span class="p">[</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">vols_prior</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="n">vols_prior</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">]]))</span>
+<span class="n">G</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">vol_rows</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">:],</span> <span class="n">skew_row</span><span class="p">,</span> <span class="o">-</span><span class="n">kurt_row</span><span class="p">))</span>
+<span class="n">h</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">0.2</span><span class="o">**</span><span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.75</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mf">3.5</span><span class="p">]])</span>
+</pre></div>
+</div>
+<p>Now we are ready to calculate the posterior probabilities <span class="math notranslate nohighlight">\(q\)</span>, relative
+entropy and effective number of scenarios.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">q</span> <span class="o">=</span> <span class="n">ft</span><span class="o">.</span><span class="n">entropy_pooling</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">G</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span>
+<span class="n">relative_entropy</span> <span class="o">=</span> <span class="n">q</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">q</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">p</span><span class="p">))</span>
+<span class="n">effective_number_scenarios</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">relative_entropy</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Using the posterior probabilities the means, volatilities, skewness, kurtosis
+and correlation matrices are recalculated.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">means_post</span> <span class="o">=</span> <span class="n">q</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">R</span>
+<span class="n">vols_post</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">q</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="p">(</span><span class="n">R</span> <span class="o">-</span> <span class="n">means_post</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">skews_post</span> <span class="o">=</span> <span class="n">q</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="p">((</span><span class="n">R</span> <span class="o">-</span> <span class="n">means_post</span><span class="p">)</span> <span class="o">/</span> <span class="n">vols_post</span><span class="p">)</span><span class="o">**</span><span class="mi">3</span>
+<span class="n">kurts_post</span> <span class="o">=</span> <span class="n">q</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="p">((</span><span class="n">R</span> <span class="o">-</span> <span class="n">means_post</span><span class="p">)</span> <span class="o">/</span> <span class="n">vols_post</span><span class="p">)</span><span class="o">**</span><span class="mi">4</span>
+<span class="n">cov_post</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">I</span><span class="p">,</span> <span class="n">I</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">S</span><span class="p">):</span>
+    <span class="n">cov_post</span> <span class="o">+=</span> <span class="n">q</span><span class="p">[</span><span class="n">s</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">R</span><span class="p">[</span><span class="n">s</span><span class="p">,</span> <span class="p">:]</span> <span class="o">-</span> <span class="n">means_post</span><span class="p">)</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="p">(</span><span class="n">R</span><span class="p">[</span><span class="n">s</span><span class="p">,</span> <span class="p">:]</span> <span class="o">-</span> <span class="n">means_post</span><span class="p">)</span>
+<span class="n">vols_inverse</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">vols_post</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:]</span><span class="o">**-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">corr_post</span> <span class="o">=</span> <span class="n">vols_inverse</span> <span class="o">@</span> <span class="n">cov_post</span> <span class="o">@</span> <span class="n">vols_inverse</span>
+</pre></div>
+</div>
+<p>Let’s print the posterior data.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">data_post</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">means_post</span><span class="o">.</span><span class="n">T</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">vols_post</span><span class="o">.</span><span class="n">T</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">skews_post</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">kurts_post</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="mi">2</span><span class="p">)))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="n">data_post</span><span class="p">,</span>
+    <span class="n">index</span><span class="o">=</span><span class="n">instrument_names</span><span class="p">,</span>
+    <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Mean&#39;</span><span class="p">,</span> <span class="s1">&#39;Volatility&#39;</span><span class="p">,</span> <span class="s1">&#39;Skewness&#39;</span><span class="p">,</span> <span class="s1">&#39;Kurtosis&#39;</span><span class="p">]))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">corr_post</span> <span class="o">*</span> <span class="mi">100</span><span class="p">),</span> <span class="n">index</span><span class="o">=</span><span class="n">instrument_names</span><span class="p">))</span> <span class="c1"># CHANGETHIS</span>
+</pre></div>
+</div>
+<p>Which gives the following output:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>                <span class="n">Mean</span>  <span class="n">Volatility</span>  <span class="n">Skewness</span>  <span class="n">Kurtosis</span>
+<span class="n">Gov</span> <span class="o">&amp;</span> <span class="n">MBS</span>       <span class="o">-</span><span class="mf">0.6</span>         <span class="mf">3.2</span>      <span class="mf">0.06</span>      <span class="mf">2.91</span>
+<span class="n">Corp</span> <span class="n">IG</span>         <span class="o">-</span><span class="mf">0.5</span>         <span class="mf">3.4</span>      <span class="mf">0.14</span>      <span class="mf">3.12</span>
+<span class="n">Corp</span> <span class="n">HY</span>          <span class="mf">1.9</span>         <span class="mf">6.1</span>     <span class="o">-</span><span class="mf">0.06</span>      <span class="mf">2.97</span>
+<span class="n">EM</span> <span class="n">Debt</span>          <span class="mf">2.7</span>         <span class="mf">7.5</span>      <span class="mf">0.13</span>      <span class="mf">3.07</span>
+<span class="n">DM</span> <span class="n">Equity</span>        <span class="mf">6.4</span>        <span class="mf">14.9</span>     <span class="o">-</span><span class="mf">0.75</span>      <span class="mf">3.50</span>
+<span class="n">EM</span> <span class="n">Equity</span>        <span class="mf">8.0</span>        <span class="mf">20.0</span>     <span class="o">-</span><span class="mf">0.22</span>      <span class="mf">3.34</span>
+<span class="n">Private</span> <span class="n">Equity</span>  <span class="mf">10.0</span>        <span class="mf">24.3</span>      <span class="mf">0.12</span>      <span class="mf">3.17</span>
+<span class="n">Infrastructure</span>   <span class="mf">5.7</span>        <span class="mf">10.6</span>      <span class="mf">0.28</span>      <span class="mf">3.16</span>
+<span class="n">Real</span> <span class="n">Estate</span>      <span class="mf">3.7</span>         <span class="mf">8.0</span>      <span class="mf">0.13</span>      <span class="mf">3.02</span>
+<span class="n">Hedge</span> <span class="n">Funds</span>      <span class="mf">4.6</span>         <span class="mf">7.0</span>     <span class="o">-</span><span class="mf">0.62</span>      <span class="mf">3.81</span>
+</pre></div>
+</div>
+<p># INSERT OUTPUT OF CORR MATRIX</p>
+</section>
 </section>
 
 
