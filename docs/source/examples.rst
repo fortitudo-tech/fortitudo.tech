@@ -175,21 +175,13 @@ higher risk due to the higher volatility view. In the 5% target return case,
 we note that we must allocate more to the riskier assets in order to reach
 the 5% expected return target.
 
-From the allocation results, we note that the portfolios suffer from the 
-well-known issues of concentrated portfolios. There are several ways of 
-addressing this issue in practice, e.g., take parameter uncertainty into
-account and introduce transaction costs or turnover constraints with an
-initially diversified portfolio. These topics are however beyond the
-scope of this example and package.
-
-We can also compute an efficient frontier for the prior probabilies. The number
-of portfolios used to span the frontier is by default set to 9:
+We can also compute efficient frontiers for the prior and posterior probabilies.
+First the prior probabilities:
 
 .. code-block:: python 
 
     front = cvar_opt.efficient_frontier()
     print(np.round(pd.DataFrame(front * 100, index=instrument_names), 1))
-
 
 The gives the following output::
 
@@ -205,8 +197,7 @@ The gives the following output::
     Real Estate     14.5  19.2  23.9  25.0  25.0  21.9  19.9   2.0   0.0
     Hedge Funds     24.2  25.0  25.0  25.0  25.0  25.0  25.0  25.0   0.0
 
-
-The efficient frontier for the posterior probabilies is calculated:
+And then the posterior probabilities:
 
 .. code-block:: python
 
@@ -227,19 +218,27 @@ The gives the following output::
     Real Estate     17.7  17.0  19.7  22.8  25.0  25.0  25.0  25.0  -0.0
     Hedge Funds     14.0  22.6  25.0  25.0  25.0  25.0  25.0  25.0   0.0
 
+From the allocation results, we note that the portfolios suffer from the 
+well-known issues of concentrated portfolios. There are several ways of 
+addressing this issue in practice, e.g., take parameter uncertainty into
+account and introduce transaction costs or turnover constraints with an
+initially diversified portfolio. These topics are however beyond the
+scope of this example and package.
 
 Entropy Pooling
 ---------------
 
-Entropy pooling can be used when you want to calculate the posterior 
-probabilities given some views. Let us illustrate with an example.
+This example replicates Table 4 and Table 7 in :cite:t:`SeqEntropyPooling`.
+You can `download the article using this link <https://ssrn.com/abstract_id=3936392>`_
+and compare the results.
 
-We first load the necessary packages and P&L data. The dimensions of the data 
-are stored in S and I, and we specify a prior probability vector :math:`p`.
+We first load the necessary packages and P&L data as well as create a prior
+probability vector :math:`p`:
 
 .. code-block:: python
 
     import numpy as np
+    import pandas as pd
     import fortitudo.tech as ft
 
     R = ft.load_pnl()
@@ -248,8 +247,7 @@ are stored in S and I, and we specify a prior probability vector :math:`p`.
     S, I = R.shape
     p = np.ones((S, 1)) / S
 
-Next we compute the prior means, volatilies, skewness, kurtosis and also the
-correlation matrix of the instruments.
+Next we compute and print some prior stats:
 
 .. code-block:: python
 
@@ -260,19 +258,21 @@ correlation matrix of the instruments.
     corr_prior = np.corrcoef(R.T)
 
     data_prior = np.hstack((
-        np.round(means_prior.T * 100, 1),
-        np.round(vols_prior.T * 100, 1),
-        np.round(skews_prior.T, 2),
-        np.round(kurts_prior.T, 2)))
+        np.round(means_prior.T * 100, 1), np.round(vols_prior.T * 100, 1),
+        np.round(skews_prior.T, 2), np.round(kurts_prior.T, 2)))
+    prior_df = pd.DataFrame(
+        data_prior, index=instrument_names,
+        columns=['Mean', 'Volatility', 'Skewness', 'Kurtosis'])
+    print(prior_df)
 
-    print(pd.DataFrame(
-        data_prior,
-        index=instrument_names,
-        columns=['Mean', 'Volatility', 'Skewness', 'Kurtosis']))
-    
-    print(pd.DataFrame(np.round(corr_prior * 100), index=instrument_names)) # CHANGETHIS
+    corr_prior_df = pd.DataFrame(
+        np.intc(np.round(corr_prior * 100)),
+        index=enumerate(instrument_names, start=1),
+        columns=range(1, I + 1))
+    print(corr_prior_df)
 
-This gives the following output::
+This gives the following output (Table 1 and Table 5 in
+:cite:t:`SeqEntropyPooling`)::
 
                     Mean  Volatility  Skewness  Kurtosis
     Gov & MBS       -0.7         3.2      0.10      3.02
@@ -286,20 +286,30 @@ This gives the following output::
     Real Estate      4.3         8.1      0.23      3.09
     Hedge Funds      4.8         7.2      0.20      3.05
 
-# INSERT OUTPUT OF CORR MATRIX
+                          1    2    3    4    5    6    7    8    9    10
+    (1, Gov & MBS)       100   60    0   30  -20  -10  -30  -10  -20  -20
+    (2, Corp IG)          60  100   50   60   10   20   10   10   10   30
+    (3, Corp HY)           0   50  100   60   60   69   59   30   30   70
+    (4, EM Debt)          30   60   60  100   40   59   30   20   20   40
+    (5, DM Equity)       -20   10   60   40  100   69   79   40   40   80
+    (6, EM Equity)       -10   20   69   59   69  100   69   30   39   79
+    (7, Private Equity)  -30   10   59   30   79   69  100   39   49   79
+    (8, Infrastructure)  -10   10   30   20   40   30   39  100   40   40
+    (9, Real Estate)     -20   10   30   20   40   39   49   40  100   50
+    (10, Hedge Funds)    -20   30   70   40   80   79   79   40   50  100
 
-| Now suppose we have the following views:
-| Correlation between EM Debt and Corp HY = 50%
-| Private Equity mean = 10.0%
-| EM Equity volatility = 20.0%
-| DM Equity skewness = -0.75
-| DM Equity kurtosis = 3.50
-
-| These views must be incorporated into the optimization matrices A, b, G and h.
-| Note that volatilities are nonlinear in their variables, so the means and
-  volatilities must be kept fixed during entropy pooling.
+We then specify the same views as the article: mean of Private Equity is 10%,
+volatility of EM Equity is less than or equal to 20%, skewness of DM Equity is
+less than or equal to −0.75, kurtosis of DM Equity is greater than or equal to
+3.5, and correlation between Corp HY and EM Debt is 50%.
 
 .. code-block:: python
+
+    mean_rows = R[:, 2:7].T
+    vol_rows = (R[:, 2:6] - means_prior[:, 2:6]).T**2
+    skew_row = ((R[:, 4] - means_prior[:, 4]) / vols_prior[:, 4])**3
+    kurt_row = ((R[:, 4] - means_prior[:, 4]) / vols_prior[:, 4])**4
+    corr_row = (R[:, 2] - means_prior[:, 2]) * (R[:, 3] - means_prior[:, 3])
 
     A = np.vstack((np.ones((1, S)), mean_rows, vol_rows[0:-1, :], corr_row[np.newaxis, :]))
     b = np.vstack(([1], means_prior[:, 2:6].T, [0.1], vols_prior[:, 2:5].T**2,
@@ -308,7 +318,7 @@ This gives the following output::
     h = np.array([[0.2**2], [-0.75], [-3.5]])
 
 Now we are ready to calculate the posterior probabilities :math:`q`, relative
-entropy and effective number of scenarios.
+entropy (RE), and effective number of scenarios (ENS).
 
 .. code-block:: python
 

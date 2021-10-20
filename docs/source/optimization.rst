@@ -1,5 +1,5 @@
 Optimization
-------------
+============
 
 The MeanCVaR object can solve the problem
 

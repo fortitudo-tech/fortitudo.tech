@@ -1,5 +1,5 @@
 Entropy Pooling
----------------
+===============
 
 The Entropy Pooling method solves the problem
 
