@@ -1,8 +1,8 @@
 Examples
 ========
 
-General
--------
+General Overview
+----------------
 
 This example walks through the mean-CVaR and Entropy Pooling functionality
 and illustrates how these two technologies can be combined.
@@ -175,17 +175,18 @@ higher risk due to the higher volatility view. In the 5% target return case,
 we note that we must allocate more to the riskier assets in order to reach
 the 5% expected return target.
 
-We can also compute efficient frontiers for the prior and posterior probabilies.
-First the prior probabilities:
+We can also compute efficient frontiers for the prior and posterior probabilities:
 
 .. code-block:: python 
 
     front = cvar_opt.efficient_frontier()
     print(np.round(pd.DataFrame(front * 100, index=instrument_names), 1))
+    front_post = cvar_opt_post.efficient_frontier()
+    print(np.round(pd.DataFrame(front_post * 100, index=instrument_names), 1))
 
 The gives the following output::
 
-                    0     1     2     3     4     5     6     7     8
+                       0     1     2     3     4     5     6     7     8
     Gov & MBS       25.0  25.0  18.8   5.6   0.0   0.0   0.0  -0.0   0.0
     Corp IG         25.0   8.3   0.0   0.0   0.0   0.0   0.0   0.0   0.0
     Corp HY          0.5   0.0   0.0   0.0   0.0   0.0  -0.0   0.0   0.0
@@ -196,15 +197,6 @@ The gives the following output::
     Infrastructure   6.9  12.9  18.9  24.1  25.0  25.0  25.0  25.0  25.0
     Real Estate     14.5  19.2  23.9  25.0  25.0  21.9  19.9   2.0   0.0
     Hedge Funds     24.2  25.0  25.0  25.0  25.0  25.0  25.0  25.0   0.0
-
-And then the posterior probabilities:
-
-.. code-block:: python
-
-    front_post = cvar_opt_post.efficient_frontier()
-    print(np.round(pd.DataFrame(front_post * 100, index=instrument_names), 1))
-
-The gives the following output::
 
                        0     1     2     3     4     5     6     7     8
     Gov & MBS       25.0  25.0  25.0  14.1   0.0  -0.0  -0.0   0.0  -0.0
@@ -247,7 +239,7 @@ probability vector :math:`p`:
     S, I = R.shape
     p = np.ones((S, 1)) / S
 
-Next we compute and print some prior stats:
+Next, we compute and print some prior stats:
 
 .. code-block:: python
 
@@ -313,12 +305,12 @@ less than or equal to −0.75, kurtosis of DM Equity is greater than or equal to
 
     A = np.vstack((np.ones((1, S)), mean_rows, vol_rows[0:-1, :], corr_row[np.newaxis, :]))
     b = np.vstack(([1], means_prior[:, 2:6].T, [0.1], vols_prior[:, 2:5].T**2,
-                [0.5 * vols_prior[0, 2] * vols_prior[0, 3]]))
+                   [0.5 * vols_prior[0, 2] * vols_prior[0, 3]]))
     G = np.vstack((vol_rows[-1, :], skew_row, -kurt_row))
     h = np.array([[0.2**2], [-0.75], [-3.5]])
 
-Now we are ready to calculate the posterior probabilities :math:`q`, relative
-entropy (RE), and effective number of scenarios (ENS).
+Next, we calculate the posterior probabilities :math:`q`, relative entropy (RE),
+and effective number of scenarios (ENS).
 
 .. code-block:: python
 
@@ -326,8 +318,8 @@ entropy (RE), and effective number of scenarios (ENS).
     relative_entropy = q.T @ (np.log(q) - np.log(p))
     effective_number_scenarios = np.exp(-relative_entropy)
 
-Using the posterior probabilities the means, volatilities, skewness, kurtosis 
-and correlation matrices are recalculated.
+Means, volatilities, skewness, kurtosis, and the correlation matrix are then
+recalculated using the posterior probabilities.
 
 .. code-block:: python
 
@@ -341,24 +333,28 @@ and correlation matrices are recalculated.
     vols_inverse = np.diag(vols_post[0, :]**-1)
     corr_post = vols_inverse @ cov_post @ vols_inverse
 
-Let's print the posterior data.
+Finally, we print the posterior results:
 
 .. code-block:: python
 
     data_post = np.hstack((
-        np.round(means_post.T * 100, 1),
-        np.round(vols_post.T * 100, 1),
-        np.round(skews_post.T, 2),
-        np.round(kurts_post.T, 2)))
+        np.round(means_post.T * 100, 1), np.round(vols_post.T * 100, 1),
+        np.round(skews_post.T, 2), np.round(kurts_post.T, 2)))
+    post_df = pd.DataFrame(
+        data_post, index=instrument_names,
+        columns=['Mean', 'Volatility', 'Skewness', 'Kurtosis'])
+    print(post_df)
 
-    print(pd.DataFrame(
-        data_post,
-        index=instrument_names,
-        columns=['Mean', 'Volatility', 'Skewness', 'Kurtosis']))
+    print(f'ENS = {np.round(effective_number_scenarios[0, 0] * 100, 2)}%.')
+    print(f'RE = {np.round(relative_entropy[0, 0] * 100, 2)}%.')
 
-    print(pd.DataFrame(np.round(corr_post * 100), index=instrument_names)) # CHANGETHIS
+    corr_post_df = pd.DataFrame(
+        np.intc(np.round(corr_post * 100)),
+        index=enumerate(instrument_names, start=1),
+        columns=range(1, I + 1))
+    print(corr_post_df)
 
-Which gives the following output::
+Which gives the following output (Table 4 and Table 7)::
 
                     Mean  Volatility  Skewness  Kurtosis
     Gov & MBS       -0.6         3.2      0.06      2.91
@@ -372,9 +368,24 @@ Which gives the following output::
     Real Estate      3.7         8.0      0.13      3.02
     Hedge Funds      4.6         7.0     -0.62      3.81
 
-# INSERT OUTPUT OF CORR MATRIX #
+    ENS = 70.92%.
+    RE = 34.36%.
 
+                          1    2    3    4    5    6    7    8    9    10
+    (1, Gov & MBS)       100   60   -2   35  -23  -10  -34  -10  -20  -24
+    (2, Corp IG)          60  100   51   63    9   20    7    9   11   29
+    (3, Corp HY)          -2   51  100   50   57   64   55   27   27   67
+    (4, EM Debt)          35   63   50  100   31   51   16   16   15   29
+    (5, DM Equity)       -23    9   57   31  100   66   76   37   38   79
+    (6, EM Equity)       -10   20   64   51   66  100   62   27   36   75
+    (7, Private Equity)  -34    7   55   16   76   62  100   38   47   76
+    (8, Infrastructure)  -10    9   27   16   37   27   38  100   39   38
+    (9, Real Estate)     -20   11   27   15   38   36   47   39  100   49
+    (10, Hedge Funds)    -24   29   67   29   79   75   76   38   49  100
 
-
-
-
+The results for the sequential heuristics are not replicated, as they are a
+part of Fortitudo Technologies' proprietary software, which also contains an
+elegant interface for handling the different views instead of manually specifying
+them through :math:`A`, :math:`b`, :math:`G`, and :math:`h`. The interested
+reader can replicate the results of the sequential heuristics by using the P&L
+simulation that follows with this package and the Entropy Pooling technology.

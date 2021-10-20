@@ -90,6 +90,10 @@ post_df = pd.DataFrame(
     data_post, index=instrument_names,
     columns=['Mean', 'Volatility', 'Skewness', 'Kurtosis'])
 print(post_df)
+
+print(f'ENS = {np.round(effective_number_scenarios[0, 0] * 100, 2)}%.')
+print(f'RE = {np.round(relative_entropy[0, 0] * 100, 2)}%.')
+
 corr_post_df = pd.DataFrame(
     np.intc(np.round(corr_post * 100)),
     index=enumerate(instrument_names, start=1),
