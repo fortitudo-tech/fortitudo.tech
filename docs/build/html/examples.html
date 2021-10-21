@@ -32,14 +32,19 @@
             <a href="index.html" class="icon icon-home"> fortitudo.tech
           </a>
               <div class="version">
-                0.1
+                0.2
               </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="documentation.html">Documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="data.html">Data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="entropy_pooling.html">Entropy Pooling</a></li>
 <li class="toctree-l2"><a class="reference internal" href="optimization.html">Optimization</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Examples</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#general-overview">General Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#entropy-pooling">Entropy Pooling</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
@@ -72,6 +77,8 @@
              
   <section id="examples">
 <h1>Examples<a class="headerlink" href="#examples" title="Permalink to this headline"></a></h1>
+<section id="general-overview">
+<h2>General Overview<a class="headerlink" href="#general-overview" title="Permalink to this headline"></a></h2>
 <p>This example walks through the mean-CVaR and Entropy Pooling functionality
 and illustrates how these two technologies can be combined.</p>
 <p>We first load the necessary packages, data, and print some P&amp;L stats:</p>
@@ -135,7 +142,7 @@ structure, which is measured by the relative entropy between our prior and
 posterior probability vectors.</p>
 <p>The above views for Private Equity are implemented below:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">expected_return_row</span> <span class="o">=</span> <span class="n">R</span><span class="p">[:,</span> <span class="mi">6</span><span class="p">][</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">,</span> <span class="p">:]</span>
-<span class="n">variance_row</span> <span class="o">=</span> <span class="p">(</span><span class="n">expected_return_row</span> <span class="o">-</span> <span class="mf">0.1</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">expected_return_row</span> <span class="o">-</span> <span class="mf">0.1</span><span class="p">)</span>
+<span class="n">variance_row</span> <span class="o">=</span> <span class="p">(</span><span class="n">expected_return_row</span> <span class="o">-</span> <span class="mf">0.1</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
 <span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="n">S</span><span class="p">)),</span> <span class="n">expected_return_row</span><span class="p">))</span>
 <span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">]])</span>
 <span class="n">G</span> <span class="o">=</span> <span class="o">-</span><span class="n">variance_row</span>
@@ -181,41 +188,41 @@ optimization:</p>
 First for the minimum risk portfolios:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">min_risk_pfs</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
 <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">w_min</span><span class="p">,</span> <span class="n">w_min_post</span><span class="p">)),</span> <span class="n">index</span><span class="o">=</span><span class="n">instrument_names</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Prior&#39;</span><span class="p">,</span> <span class="s1">&#39;Posterior&#39;</span><span class="p">])</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">min_risk_pfs</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">min_risk_pfs</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
 </pre></div>
 </div>
 <p>Which gives the following output:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>                <span class="n">Prior</span>  <span class="n">Posterior</span>
-<span class="n">Gov</span> <span class="o">&amp;</span> <span class="n">MBS</span>       <span class="mf">25.00</span>      <span class="mf">25.00</span>
-<span class="n">Corp</span> <span class="n">IG</span>         <span class="mf">25.00</span>      <span class="mf">25.00</span>
-<span class="n">Corp</span> <span class="n">HY</span>          <span class="mf">0.50</span>       <span class="mf">6.45</span>
-<span class="n">EM</span> <span class="n">Debt</span>          <span class="mf">3.87</span>       <span class="mf">5.00</span>
-<span class="n">DM</span> <span class="n">Equity</span>        <span class="mf">0.00</span>       <span class="mf">0.00</span>
-<span class="n">EM</span> <span class="n">Equity</span>       <span class="o">-</span><span class="mf">0.00</span>       <span class="mf">0.00</span>
-<span class="n">Private</span> <span class="n">Equity</span>  <span class="o">-</span><span class="mf">0.00</span>       <span class="mf">0.00</span>
-<span class="n">Infrastructure</span>   <span class="mf">6.89</span>       <span class="mf">6.87</span>
-<span class="n">Real</span> <span class="n">Estate</span>     <span class="mf">14.50</span>      <span class="mf">17.65</span>
-<span class="n">Hedge</span> <span class="n">Funds</span>     <span class="mf">24.25</span>      <span class="mf">14.02</span>
+<span class="n">Gov</span> <span class="o">&amp;</span> <span class="n">MBS</span>        <span class="mf">25.0</span>       <span class="mf">25.0</span>
+<span class="n">Corp</span> <span class="n">IG</span>          <span class="mf">25.0</span>       <span class="mf">25.0</span>
+<span class="n">Corp</span> <span class="n">HY</span>           <span class="mf">0.5</span>        <span class="mf">6.5</span>
+<span class="n">EM</span> <span class="n">Debt</span>           <span class="mf">3.9</span>        <span class="mf">5.0</span>
+<span class="n">DM</span> <span class="n">Equity</span>         <span class="mf">0.0</span>        <span class="mf">0.0</span>
+<span class="n">EM</span> <span class="n">Equity</span>        <span class="o">-</span><span class="mf">0.0</span>        <span class="mf">0.0</span>
+<span class="n">Private</span> <span class="n">Equity</span>   <span class="o">-</span><span class="mf">0.0</span>        <span class="mf">0.0</span>
+<span class="n">Infrastructure</span>    <span class="mf">6.9</span>        <span class="mf">6.9</span>
+<span class="n">Real</span> <span class="n">Estate</span>      <span class="mf">14.5</span>       <span class="mf">17.7</span>
+<span class="n">Hedge</span> <span class="n">Funds</span>      <span class="mf">24.2</span>       <span class="mf">14.0</span>
 </pre></div>
 </div>
 <p>And then for the portfolios with an expected return target of 5%:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">target_return_pfs</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
 <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">w_target</span><span class="p">,</span> <span class="n">w_target_post</span><span class="p">)),</span> <span class="n">index</span><span class="o">=</span><span class="n">instrument_names</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Prior&#39;</span><span class="p">,</span> <span class="s1">&#39;Posterior&#39;</span><span class="p">])</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">target_return_pfs</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">target_return_pfs</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
 </pre></div>
 </div>
 <p>Which gives the following output:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>                <span class="n">Prior</span>  <span class="n">Posterior</span>
-<span class="n">Gov</span> <span class="o">&amp;</span> <span class="n">MBS</span>        <span class="mf">0.00</span>      <span class="o">-</span><span class="mf">0.00</span>
-<span class="n">Corp</span> <span class="n">IG</span>          <span class="mf">0.00</span>       <span class="mf">0.00</span>
-<span class="n">Corp</span> <span class="n">HY</span>          <span class="mf">0.00</span>       <span class="mf">0.00</span>
-<span class="n">EM</span> <span class="n">Debt</span>         <span class="mf">19.81</span>       <span class="mf">8.08</span>
-<span class="n">DM</span> <span class="n">Equity</span>        <span class="mf">0.00</span>       <span class="mf">0.00</span>
-<span class="n">EM</span> <span class="n">Equity</span>        <span class="mf">0.00</span>       <span class="mf">0.00</span>
-<span class="n">Private</span> <span class="n">Equity</span>   <span class="mf">5.19</span>      <span class="mf">16.92</span>
-<span class="n">Infrastructure</span>  <span class="mf">25.00</span>      <span class="mf">25.00</span>
-<span class="n">Real</span> <span class="n">Estate</span>     <span class="mf">25.00</span>      <span class="mf">25.00</span>
-<span class="n">Hedge</span> <span class="n">Funds</span>     <span class="mf">25.00</span>      <span class="mf">25.00</span>
+<span class="n">Gov</span> <span class="o">&amp;</span> <span class="n">MBS</span>         <span class="mf">0.0</span>       <span class="o">-</span><span class="mf">0.0</span>
+<span class="n">Corp</span> <span class="n">IG</span>           <span class="mf">0.0</span>        <span class="mf">0.0</span>
+<span class="n">Corp</span> <span class="n">HY</span>           <span class="mf">0.0</span>        <span class="mf">0.0</span>
+<span class="n">EM</span> <span class="n">Debt</span>          <span class="mf">19.8</span>        <span class="mf">8.1</span>
+<span class="n">DM</span> <span class="n">Equity</span>         <span class="mf">0.0</span>        <span class="mf">0.0</span>
+<span class="n">EM</span> <span class="n">Equity</span>         <span class="mf">0.0</span>        <span class="mf">0.0</span>
+<span class="n">Private</span> <span class="n">Equity</span>    <span class="mf">5.2</span>       <span class="mf">16.9</span>
+<span class="n">Infrastructure</span>   <span class="mf">25.0</span>       <span class="mf">25.0</span>
+<span class="n">Real</span> <span class="n">Estate</span>      <span class="mf">25.0</span>       <span class="mf">25.0</span>
+<span class="n">Hedge</span> <span class="n">Funds</span>      <span class="mf">25.0</span>       <span class="mf">25.0</span>
 </pre></div>
 </div>
 <p>It should be straightforward to make sense of these results. In the minimum
@@ -223,12 +230,205 @@ risk case, we see that we allocate less to the riskier assets that now have a
 higher risk due to the higher volatility view. In the 5% target return case,
 we note that we must allocate more to the riskier assets in order to reach
 the 5% expected return target.</p>
+<p>We can also compute efficient frontiers for the prior and posterior probabilities:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">front</span> <span class="o">=</span> <span class="n">cvar_opt</span><span class="o">.</span><span class="n">efficient_frontier</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">front</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">instrument_names</span><span class="p">),</span> <span class="mi">1</span><span class="p">))</span>
+<span class="n">front_post</span> <span class="o">=</span> <span class="n">cvar_opt_post</span><span class="o">.</span><span class="n">efficient_frontier</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">front_post</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">instrument_names</span><span class="p">),</span> <span class="mi">1</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>The gives the following output:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>                   <span class="mi">0</span>     <span class="mi">1</span>     <span class="mi">2</span>     <span class="mi">3</span>     <span class="mi">4</span>     <span class="mi">5</span>     <span class="mi">6</span>     <span class="mi">7</span>     <span class="mi">8</span>
+<span class="n">Gov</span> <span class="o">&amp;</span> <span class="n">MBS</span>       <span class="mf">25.0</span>  <span class="mf">25.0</span>  <span class="mf">18.8</span>   <span class="mf">5.6</span>   <span class="mf">0.0</span>   <span class="mf">0.0</span>   <span class="mf">0.0</span>  <span class="o">-</span><span class="mf">0.0</span>   <span class="mf">0.0</span>
+<span class="n">Corp</span> <span class="n">IG</span>         <span class="mf">25.0</span>   <span class="mf">8.3</span>   <span class="mf">0.0</span>   <span class="mf">0.0</span>   <span class="mf">0.0</span>   <span class="mf">0.0</span>   <span class="mf">0.0</span>   <span class="mf">0.0</span>   <span class="mf">0.0</span>
+<span class="n">Corp</span> <span class="n">HY</span>          <span class="mf">0.5</span>   <span class="mf">0.0</span>   <span class="mf">0.0</span>   <span class="mf">0.0</span>   <span class="mf">0.0</span>   <span class="mf">0.0</span>  <span class="o">-</span><span class="mf">0.0</span>   <span class="mf">0.0</span>   <span class="mf">0.0</span>
+<span class="n">EM</span> <span class="n">Debt</span>          <span class="mf">3.9</span>   <span class="mf">9.6</span>  <span class="mf">12.8</span>  <span class="mf">18.1</span>  <span class="mf">17.4</span>  <span class="mf">12.7</span>   <span class="mf">7.1</span>  <span class="o">-</span><span class="mf">0.0</span>   <span class="mf">0.0</span>
+<span class="n">DM</span> <span class="n">Equity</span>        <span class="mf">0.0</span>   <span class="mf">0.0</span>   <span class="mf">0.0</span>   <span class="mf">0.0</span>   <span class="mf">0.0</span>   <span class="mf">0.0</span>   <span class="mf">0.0</span>  <span class="mf">20.9</span>  <span class="mf">25.0</span>
+<span class="n">EM</span> <span class="n">Equity</span>       <span class="o">-</span><span class="mf">0.0</span>   <span class="mf">0.0</span>   <span class="mf">0.0</span>  <span class="o">-</span><span class="mf">0.0</span>  <span class="o">-</span><span class="mf">0.0</span>   <span class="mf">0.0</span>   <span class="mf">0.0</span>   <span class="mf">2.2</span>  <span class="mf">25.0</span>
+<span class="n">Private</span> <span class="n">Equity</span>  <span class="o">-</span><span class="mf">0.0</span>  <span class="o">-</span><span class="mf">0.0</span>   <span class="mf">0.7</span>   <span class="mf">2.2</span>   <span class="mf">7.6</span>  <span class="mf">15.4</span>  <span class="mf">23.1</span>  <span class="mf">25.0</span>  <span class="mf">25.0</span>
+<span class="n">Infrastructure</span>   <span class="mf">6.9</span>  <span class="mf">12.9</span>  <span class="mf">18.9</span>  <span class="mf">24.1</span>  <span class="mf">25.0</span>  <span class="mf">25.0</span>  <span class="mf">25.0</span>  <span class="mf">25.0</span>  <span class="mf">25.0</span>
+<span class="n">Real</span> <span class="n">Estate</span>     <span class="mf">14.5</span>  <span class="mf">19.2</span>  <span class="mf">23.9</span>  <span class="mf">25.0</span>  <span class="mf">25.0</span>  <span class="mf">21.9</span>  <span class="mf">19.9</span>   <span class="mf">2.0</span>   <span class="mf">0.0</span>
+<span class="n">Hedge</span> <span class="n">Funds</span>     <span class="mf">24.2</span>  <span class="mf">25.0</span>  <span class="mf">25.0</span>  <span class="mf">25.0</span>  <span class="mf">25.0</span>  <span class="mf">25.0</span>  <span class="mf">25.0</span>  <span class="mf">25.0</span>   <span class="mf">0.0</span>
+
+                   <span class="mi">0</span>     <span class="mi">1</span>     <span class="mi">2</span>     <span class="mi">3</span>     <span class="mi">4</span>     <span class="mi">5</span>     <span class="mi">6</span>     <span class="mi">7</span>     <span class="mi">8</span>
+<span class="n">Gov</span> <span class="o">&amp;</span> <span class="n">MBS</span>       <span class="mf">25.0</span>  <span class="mf">25.0</span>  <span class="mf">25.0</span>  <span class="mf">14.1</span>   <span class="mf">0.0</span>  <span class="o">-</span><span class="mf">0.0</span>  <span class="o">-</span><span class="mf">0.0</span>   <span class="mf">0.0</span>  <span class="o">-</span><span class="mf">0.0</span>
+<span class="n">Corp</span> <span class="n">IG</span>         <span class="mf">25.0</span>  <span class="mf">16.0</span>   <span class="mf">0.8</span>   <span class="mf">0.0</span>   <span class="mf">0.0</span>   <span class="mf">0.0</span>   <span class="mf">0.0</span>   <span class="mf">0.0</span>   <span class="mf">0.0</span>
+<span class="n">Corp</span> <span class="n">HY</span>          <span class="mf">6.5</span>   <span class="mf">0.0</span>   <span class="mf">0.0</span>   <span class="mf">0.0</span>   <span class="mf">0.0</span>   <span class="mf">0.0</span>   <span class="mf">0.0</span>   <span class="mf">0.0</span>   <span class="mf">0.0</span>
+<span class="n">EM</span> <span class="n">Debt</span>          <span class="mf">5.0</span>   <span class="mf">6.9</span>  <span class="mf">13.5</span>  <span class="mf">14.3</span>  <span class="mf">23.3</span>  <span class="mf">15.6</span>   <span class="mf">8.0</span>   <span class="mf">0.3</span>   <span class="mf">0.0</span>
+<span class="n">DM</span> <span class="n">Equity</span>        <span class="mf">0.0</span>   <span class="mf">0.0</span>   <span class="mf">0.0</span>   <span class="mf">0.0</span>   <span class="mf">0.0</span>   <span class="mf">0.0</span>   <span class="mf">0.0</span>   <span class="mf">0.0</span>  <span class="mf">25.0</span>
+<span class="n">EM</span> <span class="n">Equity</span>        <span class="mf">0.0</span>  <span class="o">-</span><span class="mf">0.0</span>  <span class="o">-</span><span class="mf">0.0</span>   <span class="mf">0.0</span>   <span class="mf">0.0</span>   <span class="mf">0.0</span>   <span class="mf">0.0</span>   <span class="mf">0.0</span>  <span class="mf">25.0</span>
+<span class="n">Private</span> <span class="n">Equity</span>   <span class="mf">0.0</span>   <span class="mf">0.0</span>  <span class="o">-</span><span class="mf">0.0</span>  <span class="o">-</span><span class="mf">0.0</span>   <span class="mf">1.7</span>   <span class="mf">9.4</span>  <span class="mf">17.0</span>  <span class="mf">24.7</span>  <span class="mf">25.0</span>
+<span class="n">Infrastructure</span>   <span class="mf">6.9</span>  <span class="mf">12.4</span>  <span class="mf">15.9</span>  <span class="mf">23.8</span>  <span class="mf">25.0</span>  <span class="mf">25.0</span>  <span class="mf">25.0</span>  <span class="mf">25.0</span>  <span class="mf">25.0</span>
+<span class="n">Real</span> <span class="n">Estate</span>     <span class="mf">17.7</span>  <span class="mf">17.0</span>  <span class="mf">19.7</span>  <span class="mf">22.8</span>  <span class="mf">25.0</span>  <span class="mf">25.0</span>  <span class="mf">25.0</span>  <span class="mf">25.0</span>  <span class="o">-</span><span class="mf">0.0</span>
+<span class="n">Hedge</span> <span class="n">Funds</span>     <span class="mf">14.0</span>  <span class="mf">22.6</span>  <span class="mf">25.0</span>  <span class="mf">25.0</span>  <span class="mf">25.0</span>  <span class="mf">25.0</span>  <span class="mf">25.0</span>  <span class="mf">25.0</span>   <span class="mf">0.0</span>
+</pre></div>
+</div>
 <p>From the allocation results, we note that the portfolios suffer from the
 well-known issues of concentrated portfolios. There are several ways of
 addressing this issue in practice, e.g., take parameter uncertainty into
 account and introduce transaction costs or turnover constraints with an
 initially diversified portfolio. These topics are however beyond the
 scope of this example and package.</p>
+</section>
+<section id="entropy-pooling">
+<h2>Entropy Pooling<a class="headerlink" href="#entropy-pooling" title="Permalink to this headline"></a></h2>
+<p>This example replicates Table 4 and Table 7 in <span id="id1">Vorobets [<a class="reference internal" href="references.html#id3" title="A. Vorobets. Sequential entropy pooling heuristics. SSRN, 2021. URL: https://ssrn.com/abstract_id=3936392.">2021</a>]</span>.
+You can <a class="reference external" href="https://ssrn.com/abstract_id=3936392">download the article using this link</a>
+and compare the results.</p>
+<p>We first load the necessary packages and P&amp;L data as well as create a prior
+probability vector <span class="math notranslate nohighlight">\(p\)</span>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">fortitudo.tech</span> <span class="k">as</span> <span class="nn">ft</span>
+
+<span class="n">R</span> <span class="o">=</span> <span class="n">ft</span><span class="o">.</span><span class="n">load_pnl</span><span class="p">()</span>
+<span class="n">instrument_names</span> <span class="o">=</span> <span class="n">R</span><span class="o">.</span><span class="n">columns</span>
+<span class="n">R</span> <span class="o">=</span> <span class="n">R</span><span class="o">.</span><span class="n">values</span>
+<span class="n">S</span><span class="p">,</span> <span class="n">I</span> <span class="o">=</span> <span class="n">R</span><span class="o">.</span><span class="n">shape</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">S</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span> <span class="o">/</span> <span class="n">S</span>
+</pre></div>
+</div>
+<p>Next, we compute and print some prior stats:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">means_prior</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">R</span>
+<span class="n">vols_prior</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="p">(</span><span class="n">R</span> <span class="o">-</span> <span class="n">means_prior</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">skews_prior</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="p">((</span><span class="n">R</span> <span class="o">-</span> <span class="n">means_prior</span><span class="p">)</span> <span class="o">/</span> <span class="n">vols_prior</span><span class="p">)</span><span class="o">**</span><span class="mi">3</span>
+<span class="n">kurts_prior</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="p">((</span><span class="n">R</span> <span class="o">-</span> <span class="n">means_prior</span><span class="p">)</span> <span class="o">/</span> <span class="n">vols_prior</span><span class="p">)</span><span class="o">**</span><span class="mi">4</span>
+<span class="n">corr_prior</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">corrcoef</span><span class="p">(</span><span class="n">R</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+
+<span class="n">data_prior</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">means_prior</span><span class="o">.</span><span class="n">T</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">vols_prior</span><span class="o">.</span><span class="n">T</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">skews_prior</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">kurts_prior</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="mi">2</span><span class="p">)))</span>
+<span class="n">prior_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="n">data_prior</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">instrument_names</span><span class="p">,</span>
+    <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Mean&#39;</span><span class="p">,</span> <span class="s1">&#39;Volatility&#39;</span><span class="p">,</span> <span class="s1">&#39;Skewness&#39;</span><span class="p">,</span> <span class="s1">&#39;Kurtosis&#39;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">prior_df</span><span class="p">)</span>
+
+<span class="n">corr_prior_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">intc</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">corr_prior</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)),</span>
+    <span class="n">index</span><span class="o">=</span><span class="nb">enumerate</span><span class="p">(</span><span class="n">instrument_names</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+    <span class="n">columns</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">I</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">corr_prior_df</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This gives the following output (Table 1 and Table 5 in
+<span id="id2">Vorobets [<a class="reference internal" href="references.html#id3" title="A. Vorobets. Sequential entropy pooling heuristics. SSRN, 2021. URL: https://ssrn.com/abstract_id=3936392.">2021</a>]</span>):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>                <span class="n">Mean</span>  <span class="n">Volatility</span>  <span class="n">Skewness</span>  <span class="n">Kurtosis</span>
+<span class="n">Gov</span> <span class="o">&amp;</span> <span class="n">MBS</span>       <span class="o">-</span><span class="mf">0.7</span>         <span class="mf">3.2</span>      <span class="mf">0.10</span>      <span class="mf">3.02</span>
+<span class="n">Corp</span> <span class="n">IG</span>         <span class="o">-</span><span class="mf">0.4</span>         <span class="mf">3.4</span>      <span class="mf">0.11</span>      <span class="mf">3.11</span>
+<span class="n">Corp</span> <span class="n">HY</span>          <span class="mf">1.9</span>         <span class="mf">6.1</span>      <span class="mf">0.17</span>      <span class="mf">2.97</span>
+<span class="n">EM</span> <span class="n">Debt</span>          <span class="mf">2.7</span>         <span class="mf">7.5</span>      <span class="mf">0.22</span>      <span class="mf">3.06</span>
+<span class="n">DM</span> <span class="n">Equity</span>        <span class="mf">6.4</span>        <span class="mf">14.9</span>      <span class="mf">0.40</span>      <span class="mf">3.15</span>
+<span class="n">EM</span> <span class="n">Equity</span>        <span class="mf">8.0</span>        <span class="mf">26.9</span>      <span class="mf">0.77</span>      <span class="mf">4.10</span>
+<span class="n">Private</span> <span class="n">Equity</span>  <span class="mf">13.7</span>        <span class="mf">27.8</span>      <span class="mf">0.72</span>      <span class="mf">3.76</span>
+<span class="n">Infrastructure</span>   <span class="mf">5.9</span>        <span class="mf">10.8</span>      <span class="mf">0.31</span>      <span class="mf">3.19</span>
+<span class="n">Real</span> <span class="n">Estate</span>      <span class="mf">4.3</span>         <span class="mf">8.1</span>      <span class="mf">0.23</span>      <span class="mf">3.09</span>
+<span class="n">Hedge</span> <span class="n">Funds</span>      <span class="mf">4.8</span>         <span class="mf">7.2</span>      <span class="mf">0.20</span>      <span class="mf">3.05</span>
+
+                      <span class="mi">1</span>    <span class="mi">2</span>    <span class="mi">3</span>    <span class="mi">4</span>    <span class="mi">5</span>    <span class="mi">6</span>    <span class="mi">7</span>    <span class="mi">8</span>    <span class="mi">9</span>    <span class="mi">10</span>
+<span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">Gov</span> <span class="o">&amp;</span> <span class="n">MBS</span><span class="p">)</span>       <span class="mi">100</span>   <span class="mi">60</span>    <span class="mi">0</span>   <span class="mi">30</span>  <span class="o">-</span><span class="mi">20</span>  <span class="o">-</span><span class="mi">10</span>  <span class="o">-</span><span class="mi">30</span>  <span class="o">-</span><span class="mi">10</span>  <span class="o">-</span><span class="mi">20</span>  <span class="o">-</span><span class="mi">20</span>
+<span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">Corp</span> <span class="n">IG</span><span class="p">)</span>          <span class="mi">60</span>  <span class="mi">100</span>   <span class="mi">50</span>   <span class="mi">60</span>   <span class="mi">10</span>   <span class="mi">20</span>   <span class="mi">10</span>   <span class="mi">10</span>   <span class="mi">10</span>   <span class="mi">30</span>
+<span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">Corp</span> <span class="n">HY</span><span class="p">)</span>           <span class="mi">0</span>   <span class="mi">50</span>  <span class="mi">100</span>   <span class="mi">60</span>   <span class="mi">60</span>   <span class="mi">69</span>   <span class="mi">59</span>   <span class="mi">30</span>   <span class="mi">30</span>   <span class="mi">70</span>
+<span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="n">EM</span> <span class="n">Debt</span><span class="p">)</span>          <span class="mi">30</span>   <span class="mi">60</span>   <span class="mi">60</span>  <span class="mi">100</span>   <span class="mi">40</span>   <span class="mi">59</span>   <span class="mi">30</span>   <span class="mi">20</span>   <span class="mi">20</span>   <span class="mi">40</span>
+<span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">DM</span> <span class="n">Equity</span><span class="p">)</span>       <span class="o">-</span><span class="mi">20</span>   <span class="mi">10</span>   <span class="mi">60</span>   <span class="mi">40</span>  <span class="mi">100</span>   <span class="mi">69</span>   <span class="mi">79</span>   <span class="mi">40</span>   <span class="mi">40</span>   <span class="mi">80</span>
+<span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="n">EM</span> <span class="n">Equity</span><span class="p">)</span>       <span class="o">-</span><span class="mi">10</span>   <span class="mi">20</span>   <span class="mi">69</span>   <span class="mi">59</span>   <span class="mi">69</span>  <span class="mi">100</span>   <span class="mi">69</span>   <span class="mi">30</span>   <span class="mi">39</span>   <span class="mi">79</span>
+<span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="n">Private</span> <span class="n">Equity</span><span class="p">)</span>  <span class="o">-</span><span class="mi">30</span>   <span class="mi">10</span>   <span class="mi">59</span>   <span class="mi">30</span>   <span class="mi">79</span>   <span class="mi">69</span>  <span class="mi">100</span>   <span class="mi">39</span>   <span class="mi">49</span>   <span class="mi">79</span>
+<span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="n">Infrastructure</span><span class="p">)</span>  <span class="o">-</span><span class="mi">10</span>   <span class="mi">10</span>   <span class="mi">30</span>   <span class="mi">20</span>   <span class="mi">40</span>   <span class="mi">30</span>   <span class="mi">39</span>  <span class="mi">100</span>   <span class="mi">40</span>   <span class="mi">40</span>
+<span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="n">Real</span> <span class="n">Estate</span><span class="p">)</span>     <span class="o">-</span><span class="mi">20</span>   <span class="mi">10</span>   <span class="mi">30</span>   <span class="mi">20</span>   <span class="mi">40</span>   <span class="mi">39</span>   <span class="mi">49</span>   <span class="mi">40</span>  <span class="mi">100</span>   <span class="mi">50</span>
+<span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">Hedge</span> <span class="n">Funds</span><span class="p">)</span>    <span class="o">-</span><span class="mi">20</span>   <span class="mi">30</span>   <span class="mi">70</span>   <span class="mi">40</span>   <span class="mi">80</span>   <span class="mi">79</span>   <span class="mi">79</span>   <span class="mi">40</span>   <span class="mi">50</span>  <span class="mi">100</span>
+</pre></div>
+</div>
+<p>We then specify the same views as the article: mean of Private Equity is 10%,
+volatility of EM Equity is less than or equal to 20%, skewness of DM Equity is
+less than or equal to −0.75, kurtosis of DM Equity is greater than or equal to
+3.5, and correlation between Corp HY and EM Debt is 50%.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mean_rows</span> <span class="o">=</span> <span class="n">R</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">:</span><span class="mi">7</span><span class="p">]</span><span class="o">.</span><span class="n">T</span>
+<span class="n">vol_rows</span> <span class="o">=</span> <span class="p">(</span><span class="n">R</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">:</span><span class="mi">6</span><span class="p">]</span> <span class="o">-</span> <span class="n">means_prior</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">:</span><span class="mi">6</span><span class="p">])</span><span class="o">.</span><span class="n">T</span><span class="o">**</span><span class="mi">2</span>
+<span class="n">skew_row</span> <span class="o">=</span> <span class="p">((</span><span class="n">R</span><span class="p">[:,</span> <span class="mi">4</span><span class="p">]</span> <span class="o">-</span> <span class="n">means_prior</span><span class="p">[:,</span> <span class="mi">4</span><span class="p">])</span> <span class="o">/</span> <span class="n">vols_prior</span><span class="p">[:,</span> <span class="mi">4</span><span class="p">])</span><span class="o">**</span><span class="mi">3</span>
+<span class="n">kurt_row</span> <span class="o">=</span> <span class="p">((</span><span class="n">R</span><span class="p">[:,</span> <span class="mi">4</span><span class="p">]</span> <span class="o">-</span> <span class="n">means_prior</span><span class="p">[:,</span> <span class="mi">4</span><span class="p">])</span> <span class="o">/</span> <span class="n">vols_prior</span><span class="p">[:,</span> <span class="mi">4</span><span class="p">])</span><span class="o">**</span><span class="mi">4</span>
+<span class="n">corr_row</span> <span class="o">=</span> <span class="p">(</span><span class="n">R</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">means_prior</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">])</span> <span class="o">*</span> <span class="p">(</span><span class="n">R</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">-</span> <span class="n">means_prior</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">])</span>
+
+<span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="n">S</span><span class="p">)),</span> <span class="n">mean_rows</span><span class="p">,</span> <span class="n">vol_rows</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">:],</span> <span class="n">corr_row</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">,</span> <span class="p">:]))</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">(([</span><span class="mi">1</span><span class="p">],</span> <span class="n">means_prior</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">:</span><span class="mi">6</span><span class="p">]</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">],</span> <span class="n">vols_prior</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">:</span><span class="mi">5</span><span class="p">]</span><span class="o">.</span><span class="n">T</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span>
+               <span class="p">[</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">vols_prior</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="n">vols_prior</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">]]))</span>
+<span class="n">G</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">vol_rows</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">:],</span> <span class="n">skew_row</span><span class="p">,</span> <span class="o">-</span><span class="n">kurt_row</span><span class="p">))</span>
+<span class="n">h</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">0.2</span><span class="o">**</span><span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.75</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mf">3.5</span><span class="p">]])</span>
+</pre></div>
+</div>
+<p>Next, we calculate the posterior probabilities <span class="math notranslate nohighlight">\(q\)</span>, relative entropy (RE),
+and effective number of scenarios (ENS).</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">q</span> <span class="o">=</span> <span class="n">ft</span><span class="o">.</span><span class="n">entropy_pooling</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">G</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span>
+<span class="n">relative_entropy</span> <span class="o">=</span> <span class="n">q</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">q</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">p</span><span class="p">))</span>
+<span class="n">effective_number_scenarios</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">relative_entropy</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Means, volatilities, skewness, kurtosis, and the correlation matrix are then
+recalculated using the posterior probabilities.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">means_post</span> <span class="o">=</span> <span class="n">q</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">R</span>
+<span class="n">vols_post</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">q</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="p">(</span><span class="n">R</span> <span class="o">-</span> <span class="n">means_post</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">skews_post</span> <span class="o">=</span> <span class="n">q</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="p">((</span><span class="n">R</span> <span class="o">-</span> <span class="n">means_post</span><span class="p">)</span> <span class="o">/</span> <span class="n">vols_post</span><span class="p">)</span><span class="o">**</span><span class="mi">3</span>
+<span class="n">kurts_post</span> <span class="o">=</span> <span class="n">q</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="p">((</span><span class="n">R</span> <span class="o">-</span> <span class="n">means_post</span><span class="p">)</span> <span class="o">/</span> <span class="n">vols_post</span><span class="p">)</span><span class="o">**</span><span class="mi">4</span>
+<span class="n">cov_post</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">I</span><span class="p">,</span> <span class="n">I</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">S</span><span class="p">):</span>
+    <span class="n">cov_post</span> <span class="o">+=</span> <span class="n">q</span><span class="p">[</span><span class="n">s</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">R</span><span class="p">[</span><span class="n">s</span><span class="p">,</span> <span class="p">:]</span> <span class="o">-</span> <span class="n">means_post</span><span class="p">)</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="p">(</span><span class="n">R</span><span class="p">[</span><span class="n">s</span><span class="p">,</span> <span class="p">:]</span> <span class="o">-</span> <span class="n">means_post</span><span class="p">)</span>
+<span class="n">vols_inverse</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">vols_post</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:]</span><span class="o">**-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">corr_post</span> <span class="o">=</span> <span class="n">vols_inverse</span> <span class="o">@</span> <span class="n">cov_post</span> <span class="o">@</span> <span class="n">vols_inverse</span>
+</pre></div>
+</div>
+<p>Finally, we print the posterior results:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">data_post</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">means_post</span><span class="o">.</span><span class="n">T</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">vols_post</span><span class="o">.</span><span class="n">T</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">skews_post</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">kurts_post</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="mi">2</span><span class="p">)))</span>
+<span class="n">post_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="n">data_post</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">instrument_names</span><span class="p">,</span>
+    <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Mean&#39;</span><span class="p">,</span> <span class="s1">&#39;Volatility&#39;</span><span class="p">,</span> <span class="s1">&#39;Skewness&#39;</span><span class="p">,</span> <span class="s1">&#39;Kurtosis&#39;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">post_df</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;ENS = </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">effective_number_scenarios</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s1">%.&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;RE = </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">relative_entropy</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s1">%.&#39;</span><span class="p">)</span>
+
+<span class="n">corr_post_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">intc</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">corr_post</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)),</span>
+    <span class="n">index</span><span class="o">=</span><span class="nb">enumerate</span><span class="p">(</span><span class="n">instrument_names</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+    <span class="n">columns</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">I</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">corr_post_df</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Which gives the following output (Table 4 and Table 7):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>                <span class="n">Mean</span>  <span class="n">Volatility</span>  <span class="n">Skewness</span>  <span class="n">Kurtosis</span>
+<span class="n">Gov</span> <span class="o">&amp;</span> <span class="n">MBS</span>       <span class="o">-</span><span class="mf">0.6</span>         <span class="mf">3.2</span>      <span class="mf">0.06</span>      <span class="mf">2.91</span>
+<span class="n">Corp</span> <span class="n">IG</span>         <span class="o">-</span><span class="mf">0.5</span>         <span class="mf">3.4</span>      <span class="mf">0.14</span>      <span class="mf">3.12</span>
+<span class="n">Corp</span> <span class="n">HY</span>          <span class="mf">1.9</span>         <span class="mf">6.1</span>     <span class="o">-</span><span class="mf">0.06</span>      <span class="mf">2.97</span>
+<span class="n">EM</span> <span class="n">Debt</span>          <span class="mf">2.7</span>         <span class="mf">7.5</span>      <span class="mf">0.13</span>      <span class="mf">3.07</span>
+<span class="n">DM</span> <span class="n">Equity</span>        <span class="mf">6.4</span>        <span class="mf">14.9</span>     <span class="o">-</span><span class="mf">0.75</span>      <span class="mf">3.50</span>
+<span class="n">EM</span> <span class="n">Equity</span>        <span class="mf">8.0</span>        <span class="mf">20.0</span>     <span class="o">-</span><span class="mf">0.22</span>      <span class="mf">3.34</span>
+<span class="n">Private</span> <span class="n">Equity</span>  <span class="mf">10.0</span>        <span class="mf">24.3</span>      <span class="mf">0.12</span>      <span class="mf">3.17</span>
+<span class="n">Infrastructure</span>   <span class="mf">5.7</span>        <span class="mf">10.6</span>      <span class="mf">0.28</span>      <span class="mf">3.16</span>
+<span class="n">Real</span> <span class="n">Estate</span>      <span class="mf">3.7</span>         <span class="mf">8.0</span>      <span class="mf">0.13</span>      <span class="mf">3.02</span>
+<span class="n">Hedge</span> <span class="n">Funds</span>      <span class="mf">4.6</span>         <span class="mf">7.0</span>     <span class="o">-</span><span class="mf">0.62</span>      <span class="mf">3.81</span>
+
+<span class="n">ENS</span> <span class="o">=</span> <span class="mf">70.92</span><span class="o">%.</span>
+<span class="n">RE</span> <span class="o">=</span> <span class="mf">34.36</span><span class="o">%.</span>
+
+                      <span class="mi">1</span>    <span class="mi">2</span>    <span class="mi">3</span>    <span class="mi">4</span>    <span class="mi">5</span>    <span class="mi">6</span>    <span class="mi">7</span>    <span class="mi">8</span>    <span class="mi">9</span>    <span class="mi">10</span>
+<span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">Gov</span> <span class="o">&amp;</span> <span class="n">MBS</span><span class="p">)</span>       <span class="mi">100</span>   <span class="mi">60</span>   <span class="o">-</span><span class="mi">2</span>   <span class="mi">35</span>  <span class="o">-</span><span class="mi">23</span>  <span class="o">-</span><span class="mi">10</span>  <span class="o">-</span><span class="mi">34</span>  <span class="o">-</span><span class="mi">10</span>  <span class="o">-</span><span class="mi">20</span>  <span class="o">-</span><span class="mi">24</span>
+<span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">Corp</span> <span class="n">IG</span><span class="p">)</span>          <span class="mi">60</span>  <span class="mi">100</span>   <span class="mi">51</span>   <span class="mi">63</span>    <span class="mi">9</span>   <span class="mi">20</span>    <span class="mi">7</span>    <span class="mi">9</span>   <span class="mi">11</span>   <span class="mi">29</span>
+<span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">Corp</span> <span class="n">HY</span><span class="p">)</span>          <span class="o">-</span><span class="mi">2</span>   <span class="mi">51</span>  <span class="mi">100</span>   <span class="mi">50</span>   <span class="mi">57</span>   <span class="mi">64</span>   <span class="mi">55</span>   <span class="mi">27</span>   <span class="mi">27</span>   <span class="mi">67</span>
+<span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="n">EM</span> <span class="n">Debt</span><span class="p">)</span>          <span class="mi">35</span>   <span class="mi">63</span>   <span class="mi">50</span>  <span class="mi">100</span>   <span class="mi">31</span>   <span class="mi">51</span>   <span class="mi">16</span>   <span class="mi">16</span>   <span class="mi">15</span>   <span class="mi">29</span>
+<span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">DM</span> <span class="n">Equity</span><span class="p">)</span>       <span class="o">-</span><span class="mi">23</span>    <span class="mi">9</span>   <span class="mi">57</span>   <span class="mi">31</span>  <span class="mi">100</span>   <span class="mi">66</span>   <span class="mi">76</span>   <span class="mi">37</span>   <span class="mi">38</span>   <span class="mi">79</span>
+<span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="n">EM</span> <span class="n">Equity</span><span class="p">)</span>       <span class="o">-</span><span class="mi">10</span>   <span class="mi">20</span>   <span class="mi">64</span>   <span class="mi">51</span>   <span class="mi">66</span>  <span class="mi">100</span>   <span class="mi">62</span>   <span class="mi">27</span>   <span class="mi">36</span>   <span class="mi">75</span>
+<span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="n">Private</span> <span class="n">Equity</span><span class="p">)</span>  <span class="o">-</span><span class="mi">34</span>    <span class="mi">7</span>   <span class="mi">55</span>   <span class="mi">16</span>   <span class="mi">76</span>   <span class="mi">62</span>  <span class="mi">100</span>   <span class="mi">38</span>   <span class="mi">47</span>   <span class="mi">76</span>
+<span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="n">Infrastructure</span><span class="p">)</span>  <span class="o">-</span><span class="mi">10</span>    <span class="mi">9</span>   <span class="mi">27</span>   <span class="mi">16</span>   <span class="mi">37</span>   <span class="mi">27</span>   <span class="mi">38</span>  <span class="mi">100</span>   <span class="mi">39</span>   <span class="mi">38</span>
+<span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="n">Real</span> <span class="n">Estate</span><span class="p">)</span>     <span class="o">-</span><span class="mi">20</span>   <span class="mi">11</span>   <span class="mi">27</span>   <span class="mi">15</span>   <span class="mi">38</span>   <span class="mi">36</span>   <span class="mi">47</span>   <span class="mi">39</span>  <span class="mi">100</span>   <span class="mi">49</span>
+<span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">Hedge</span> <span class="n">Funds</span><span class="p">)</span>    <span class="o">-</span><span class="mi">24</span>   <span class="mi">29</span>   <span class="mi">67</span>   <span class="mi">29</span>   <span class="mi">79</span>   <span class="mi">75</span>   <span class="mi">76</span>   <span class="mi">38</span>   <span class="mi">49</span>  <span class="mi">100</span>
+</pre></div>
+</div>
+<p>The results for the sequential heuristics are not replicated, as they are a
+part of Fortitudo Technologies’ proprietary software, which also contains an
+elegant interface for handling the different views instead of manually specifying
+them through <span class="math notranslate nohighlight">\(A\)</span>, <span class="math notranslate nohighlight">\(b\)</span>, <span class="math notranslate nohighlight">\(G\)</span>, and <span class="math notranslate nohighlight">\(h\)</span>. The interested
+reader can replicate the results of the sequential heuristics by using the P&amp;L
+simulation that follows with this package and the Entropy Pooling technology.</p>
+</section>
 </section>
 
 

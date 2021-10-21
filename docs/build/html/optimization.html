@@ -32,11 +32,12 @@
             <a href="index.html" class="icon icon-home"> fortitudo.tech
           </a>
               <div class="version">
-                0.1
+                0.2
               </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="documentation.html">Documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="data.html">Data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="entropy_pooling.html">Entropy Pooling</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Optimization</a></li>
 <li class="toctree-l2"><a class="reference internal" href="examples.html">Examples</a></li>
@@ -80,7 +81,7 @@
 \[\begin{split}\mu'e&amp;\geq\mu_{target},\\Ae&amp;=b,\\Ge&amp;\leq h.\end{split}\]</div>
 <p>A method for solving this problem was first introduced by <span id="id1">Rockafellar and Uryasev [<a class="reference internal" href="references.html#id4" title="R. Tyrrell Rockafellar and Stanislav Uryasev. Optimization of conditional value-at-risk. Journal of Risk, 2(3):21-41, 2000. URL: https://doi.org/10.21314/JOR.2000.038.">2000</a>]</span>,
 while the implemented algorithm is based on <span id="id2">Künzi-Bay and Mayer [<a class="reference internal" href="references.html#id5" title="A. Künzi-Bay and J Mayer. Computational aspects of minimizing conditional value-at-risk. CMS, 3:3–27, 2006. URL: https://doi.org/10.1007/s10287-005-0042-0.">2006</a>]</span>. The notation
-in relation to P&amp;L simulations <span class="math notranslate nohighlight">\(R\)</span> follows <span id="id3">Vorobets [<a class="reference internal" href="references.html#id3" title="A. Vorobets. Sequential entropy pooling heuristics. SSRN, 2021. URL: https://ssrn.com/abstract_id=3936392.">2021</a>]</span>.</p>
+in relation to the P&amp;L simulations <span class="math notranslate nohighlight">\(R\)</span> follows <span id="id3">Vorobets [<a class="reference internal" href="references.html#id3" title="A. Vorobets. Sequential entropy pooling heuristics. SSRN, 2021. URL: https://ssrn.com/abstract_id=3936392.">2021</a>]</span>.</p>
 <span class="target" id="module-fortitudo.tech.optimization"></span><dl class="py class">
 <dt class="sig sig-object py" id="fortitudo.tech.optimization.MeanCVaR">
 <em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">MeanCVaR</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">R</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">A</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">G</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fortitudo.tech.optimization.MeanCVaR" title="Permalink to this definition"></a></dt>
@@ -101,9 +102,29 @@ Default: np.ones((S, 1)) / S.</p></li>
 </dd>
 </dl>
 <dl class="py method">
+<dt class="sig sig-object py" id="fortitudo.tech.optimization.MeanCVaR.efficient_frontier">
+<span class="sig-name descname"><span class="pre">efficient_frontier</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_portfolios</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fortitudo.tech.optimization.MeanCVaR.efficient_frontier" title="Permalink to this definition"></a></dt>
+<dd><p>Method for computing the efficient frontier.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>num_portfolios</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]) – Number of portfolios used to span the efficient frontier. Default: 9.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Efficient frontier with shape (I, num_portfolios).</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If constraints are infeasible or _max_expected_return unbounded.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="fortitudo.tech.optimization.MeanCVaR.efficient_portfolio">
 <span class="sig-name descname"><span class="pre">efficient_portfolio</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">return_target</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fortitudo.tech.optimization.MeanCVaR.efficient_portfolio" title="Permalink to this definition"></a></dt>
-<dd><p>Method for estimating an efficient portfolio with return target.</p>
+<dd><p>Method for computing an efficient portfolio with return target.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>return_target</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]) – Return target for the efficient portfolio. If given
@@ -148,7 +169,8 @@ Default: <code class="xref py py-const docutils literal notranslate"><span class
 lower bounds. Default: <code class="xref py py-const docutils literal notranslate"><span class="pre">1e-8</span></code>.</p>
 </dd>
 <dt><code class="xref py py-const docutils literal notranslate"><span class="pre">'abstol'</span></code></dt><dd><p>Absolute tolerance for the difference between the currently best upper and
-lower bounds if the lower bound is less than <code class="xref py py-const docutils literal notranslate"><span class="pre">1e-10</span></code>. <code class="xref py py-const docutils literal notranslate"><span class="pre">1e-8</span></code>.</p>
+lower bounds if the lower bound is less than <code class="xref py py-const docutils literal notranslate"><span class="pre">1e-10</span></code>. Default:
+<code class="xref py py-const docutils literal notranslate"><span class="pre">1e-8</span></code>.</p>
 </dd>
 </dl>
 <p>The algorithm stops when one of the <code class="xref py py-const docutils literal notranslate"><span class="pre">'maxiter'</span></code>, <code class="xref py py-const docutils literal notranslate"><span class="pre">'reltol'</span></code>,

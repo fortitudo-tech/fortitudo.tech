@@ -73,6 +73,8 @@ class MeanCVaR:
 
         self._set_options(kwargs.get('options', globals()['cvar_options']))
         self.mean = self.p @ R
+        self._expected_return_row = matrix(np.hstack((
+            -self.mean_scalar * self.mean, np.zeros((1, 2)))))
         if self.demean:
             self.losses = -self.R_scalar * (R - self.mean)
         else:
@@ -176,7 +178,7 @@ class MeanCVaR:
             return False
 
     def efficient_portfolio(self, return_target: float = None) -> np.ndarray:
-        """Method for estimating an efficient portfolio with return target.
+        """Method for computing an efficient portfolio with return target.
 
         Args:
             return_target: Return target for the efficient portfolio. If given
@@ -189,9 +191,49 @@ class MeanCVaR:
             G = copy(self.G)
             h = copy(self.h)
         else:
-            G = sparse([
-                self.G,
-                matrix(np.hstack((-self.mean_scalar * self.mean, np.zeros((1, 2)))))])
+            G = sparse([self.G, self._expected_return_row])
             h = matrix([self.h, -self.mean_scalar * return_target])
         solution = self._benders_algorithm(G, h)
         return solution[0:-2]
+
+    def _calculate_max_expected_return(self) -> float:
+        """Method for calculating the highest expected return and checking feasibility/boundness.
+
+        Returns:
+            Highest expected return for the given constraints.
+
+        Raises:
+            ValueError: If constraints are infeasible or _max_expected_return unbounded.
+        """
+        solution = solvers.lp(
+            c=self._expected_return_row.T, G=self.G, h=self.h, A=self.A, b=self.b, solver='glpk')
+        if solution['status'] == 'optimal':
+            return -solution['primal objective'] / self.mean_scalar
+        else:
+            raise ValueError('Constraints are infeasible or _max_expected_return is unbounded.')
+
+    def efficient_frontier(self, num_portfolios: int = None) -> np.ndarray:
+        """Method for computing the efficient frontier.
+
+        Args:
+            num_portfolios: Number of portfolios used to span the efficient frontier. Default: 9.
+
+        Returns:
+            Efficient frontier with shape (I, num_portfolios).
+
+        Raises:
+            ValueError: If constraints are infeasible or _max_expected_return unbounded.
+        """
+        if num_portfolios is None:
+            num_portfolios = 9
+
+        _max_expected_return = self._calculate_max_expected_return()
+        frontier = np.full((self.I, num_portfolios), np.nan)
+        frontier[:, 0] = self.efficient_portfolio()[:, 0]
+        _min_expected_return = float(self.mean @ frontier[:, 0])
+        _delta = (_max_expected_return - _min_expected_return) / (num_portfolios - 1)
+
+        for p in range(1, num_portfolios):
+            frontier[:, p] = self.efficient_portfolio(_min_expected_return + _delta * p)[:, 0]
+
+        return frontier

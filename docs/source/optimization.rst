@@ -1,5 +1,5 @@
 Optimization
-------------
+============
 
 The MeanCVaR object can solve the problem
 
@@ -11,7 +11,7 @@ subject to the constraints
 
 A method for solving this problem was first introduced by :cite:t:`optCVaR`,
 while the implemented algorithm is based on :cite:t:`compCVaR`. The notation
-in relation to P&L simulations :math:`R` follows :cite:t:`SeqEntropyPooling`.
+in relation to the P&L simulations :math:`R` follows :cite:t:`SeqEntropyPooling`.
 
 .. automodule:: fortitudo.tech.optimization
    :members:
@@ -50,7 +50,8 @@ The following parameters can be accessed:
    lower bounds. Default: :const:`1e-8`.
 :const:`'abstol'`
    Absolute tolerance for the difference between the currently best upper and
-   lower bounds if the lower bound is less than :const:`1e-10`. :const:`1e-8`.
+   lower bounds if the lower bound is less than :const:`1e-10`. Default:
+   :const:`1e-8`.
 
 The algorithm stops when one of the :const:`'maxiter'`, :const:`'reltol'`,
 or :const:`'abstol'` conditions are satisfied. The parameters have been tested

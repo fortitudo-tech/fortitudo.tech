@@ -1,5 +1,5 @@
 Contributing
-------------
+============
 
 You are very welcome to contribute to this package by forking the `github
 repository <https://github.com/fortitudo-tech/fortitudo.tech>`_ and creating
@@ -8,7 +8,9 @@ especially appreciate contributions in relation to packaging, e.g., making
 the package available on conda-forge or improving pip dependencies.
 
 Using the conda environment specified in the requirements.yml file and located
-in the root directory is the easiest way to start contributing to the code.
+in the root directory is the easiest way to start contributing to the code::
+
+    conda env create --file requirements.yml
 
 The style guide mostly follows `PEP 8 <https://www.python.org/dev/peps/pep-0008/>`_,
 but it uses some important modifications that can be found in .vscode/settings.json.
