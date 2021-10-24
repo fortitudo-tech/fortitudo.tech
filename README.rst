@@ -1,7 +1,7 @@
 Fortitudo Technologies Open Source
 ==================================
 
-This package allows you to freely explore open-source implementations of some
+This package allows users to freely explore open-source implementations of some
 of our fundamental technologies under the `GNU General Public License, Version 3 
 <https://www.gnu.org/licenses/gpl-3.0.html>`_.
 
@@ -10,9 +10,9 @@ as well as quantitative and digitalization consultancy to the investment
 management industry. For more information, please visit our `website 
 <https://fortitudo.tech>`_.
 
-The package is meant for advanced users who are comfortable specifying portfolio
-constraints and Entropy Pooling views using matrices and vectors. This gives users
-the full flexibility in relation to how they want to work with these technologies
+The package is intended for advanced users who are comfortable specifying
+portfolio constraints and Entropy Pooling views using matrices and vectors.
+This gives users full flexibility in relation working with these technologies
 and allows them to build their own high-level interfaces if they wish to do so.
 
 Installation Instructions
