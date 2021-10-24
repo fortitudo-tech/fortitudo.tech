@@ -15,11 +15,12 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import numpy as np
-from cvxopt import sparse, matrix, solvers
+from cvxopt import sparse, matrix
+from cvxopt.solvers import lp, options
 from typing import Tuple
 from copy import copy
 
-solvers.options['glpk'] = {'msg_lev': 'GLP_MSG_OFF'}
+options['glpk'] = {'msg_lev': 'GLP_MSG_OFF'}
 cvar_options = {}
 
 
@@ -42,62 +43,62 @@ class MeanCVaR:
             G: np.ndarray = None, h: np.ndarray = None, p: np.ndarray = None,
             alpha: float = None, **kwargs: dict):
 
-        self.S, self.I = R.shape
+        self._S, self._I = R.shape
         if A is not None and b is not None:
-            self.A = sparse(matrix(np.hstack((A, np.zeros((A.shape[0], 2))))))
-            self.b = matrix(b)
+            self._A = sparse(matrix(np.hstack((A, np.zeros((A.shape[0], 2))))))
+            self._b = matrix(b)
         elif A is None and b is None:
-            self.A = sparse(matrix(np.hstack((np.ones((1, self.I)), np.zeros((1, 2))))))
-            self.b = matrix([1.])
+            self._A = sparse(matrix(np.hstack((np.ones((1, self._I)), np.zeros((1, 2))))))
+            self._b = matrix([1.])
         else:
             raise ValueError('A and b must both be None or both different from None.')
 
         if G is not None and h is not None:
-            self.G = sparse(matrix(
-                np.block([[G, np.zeros((G.shape[0], 2))], [np.zeros(self.I + 1), -1]])))
-            self.h = matrix(np.hstack((h, [0.])))
+            self._G = sparse(matrix(
+                np.block([[G, np.zeros((G.shape[0], 2))], [np.zeros(self._I + 1), -1]])))
+            self._h = matrix(np.hstack((h, [0.])))
         elif G is None and h is None:
-            self.G = sparse(matrix(np.hstack((np.zeros((1, self.I + 1)), [[-1]]))))
-            self.h = matrix([0.])
+            self._G = sparse(matrix(np.hstack((np.zeros((1, self._I + 1)), [[-1]]))))
+            self._h = matrix([0.])
         else:
             raise ValueError('G and h must both be None or both different from None.')
 
         if p is None:
-            self.p = np.ones((1, self.S)) / self.S
+            self._p = np.ones((1, self._S)) / self._S
         else:
-            self.p = p.T
+            self._p = p.T
 
         if alpha is None:
-            alpha = 0.95
+            self._alpha = 0.95
 
-        self.c = matrix(np.hstack((np.zeros(self.I), [1], [1 / (1 - alpha)])))
+        self._c = matrix(np.hstack((np.zeros(self._I), [1], [1 / (1 - self._alpha)])))
         self._set_options(kwargs.get('options', globals()['cvar_options']))
-        self.mean = self.p @ R
-        self._expected_return_row = matrix(np.hstack((
-            -self.mean_scalar * self.mean, np.zeros((1, 2)))))
-        if self.demean:
-            self.losses = -self.R_scalar * (R - self.mean)
+        self._mean = self._p @ R
+        self._expected_return_row = matrix(
+            np.hstack((-self._mean_scalar * self._mean, np.zeros((1, 2)))))
+        if self._demean:
+            self._losses = -self._R_scalar * (R - self._mean)
         else:
-            self.losses = -self.R_scalar * R
+            self._losses = -self._R_scalar * R
 
     def _set_options(self, options):
-        self.demean = options.get('demean', True)
-        if type(self.demean) != bool:
+        self._demean = options.get('demean', True)
+        if type(self._demean) != bool:
             raise ValueError('demean must be a boolean equal to True or False.')
-        self.R_scalar = options.get('R_scalar', 1000)
-        if type(self.R_scalar) not in (int, float) or self.R_scalar <= 0:
+        self._R_scalar = options.get('R_scalar', 1000)
+        if type(self._R_scalar) not in (int, float) or self._R_scalar <= 0:
             raise ValueError('R_scalar must be a postive integer or float.')
-        self.mean_scalar = options.get('mean_scalar', 100)
-        if type(self.mean_scalar) not in (int, float) or self.mean_scalar <= 0:
+        self._mean_scalar = options.get('mean_scalar', 100)
+        if type(self._mean_scalar) not in (int, float) or self._mean_scalar <= 0:
             raise ValueError('mean_scalar must be a postive integer or float.')
-        self.maxiter = options.get('maxiter', 500)
-        if type(self.maxiter) != int or self.maxiter < 100:
+        self._maxiter = options.get('maxiter', 500)
+        if type(self._maxiter) != int or self._maxiter < 100:
             raise ValueError('maxiter must be a postive integer greater than or equal to 100.')
-        self.reltol = options.get('reltol', 1e-8)
-        if not 1e-8 <= self.reltol <= 1e-4:
+        self._reltol = options.get('reltol', 1e-8)
+        if not 1e-8 <= self._reltol <= 1e-4:
             raise ValueError('reltol must be in [1e-8, 1e-4].')
-        self.abstol = options.get('abstol', 1e-8)
-        if not 1e-8 <= self.abstol <= 1e-4:
+        self._abstol = options.get('abstol', 1e-8)
+        if not 1e-8 <= self._abstol <= 1e-4:
             raise ValueError('abstol must be in [1e-8, 1e-4].')
 
     def _benders_algorithm(self, G: sparse, h: matrix) -> np.ndarray:
@@ -108,17 +109,17 @@ class MeanCVaR:
             h: Inequality constraints vector with shape (N, 1) or (N+1, I).
 
         Returns:
-            Solution to the mean-CVaR minimization problem.
+            Solution to the mean-CVaR optimization problem.
         """
-        eta = self.p @ self.losses
+        eta = self._p @ self._losses
         p = 1
         solution, w, F_lower, G_benders, h_benders, eta, p = self._benders_main(G, h, eta, p)
-        F_star = F_lower + self.c[-1] * (w - solution[-1])
+        F_star = F_lower + self._c[-1] * (w - solution[-1])
         v = 1
-        while self._benders_stopping_criteria(F_star, F_lower) and v <= self.maxiter:
+        while self._benders_stopping_criteria(F_star, F_lower) and v <= self._maxiter:
             solution, w, F_lower, G_benders, h_benders, eta, p = self._benders_main(
                 G_benders, h_benders, eta, p)
-            F_star = min(F_lower + self.c[-1] * (w - solution[-1]), F_star)
+            F_star = min(F_lower + self._c[-1] * (w - solution[-1]), F_star)
             v += 1
         return solution
 
@@ -139,10 +140,10 @@ class MeanCVaR:
         G_benders = sparse([G_benders, matrix(np.block([eta, -p, -1]))])
         h_benders = matrix([h_benders, 0])
         solution = np.array(
-            solvers.lp(c=self.c, G=G_benders, h=h_benders, A=self.A, b=self.b, solver='glpk')['x'])
+            lp(c=self._c, G=G_benders, h=h_benders, A=self._A, b=self._b, solver='glpk')['x'])
         eta, p = self._benders_cut(solution)
         w = eta @ solution[0:-2] - p * solution[-2]
-        F_lower = self.c.T @ solution
+        F_lower = self._c.T @ solution
         return solution, w, F_lower, G_benders, h_benders, eta, p
 
     def _benders_cut(self, solution: np.ndarray) -> Tuple[np.ndarray, float]:
@@ -154,9 +155,9 @@ class MeanCVaR:
         Returns:
             Variables for the next cut.
         """
-        K = (self.losses @ solution[0:self.I] >= solution[-2])[:, 0]
-        eta = self.p[:, K] @ self.losses[K, :]
-        p = np.sum(self.p[0, K])
+        K = (self._losses @ solution[0:self._I] >= solution[-2])[:, 0]
+        eta = self._p[:, K] @ self._losses[K, :]
+        p = np.sum(self._p[0, K])
         return eta, p
 
     def _benders_stopping_criteria(self, F_star: float, F_lower: float) -> bool:
@@ -170,9 +171,9 @@ class MeanCVaR:
             Bolean indicating whether the algorithm should continue.
         """
         F_lower_abs = np.abs(F_lower)
-        if F_lower_abs > 1e-10 and (F_star - F_lower) / F_lower_abs > self.reltol:
+        if F_lower_abs > 1e-10 and (F_star - F_lower) / F_lower_abs > self._reltol:
             return True
-        elif F_lower_abs <= 1e-10 and (F_star - F_lower) > self.abstol:
+        elif F_lower_abs <= 1e-10 and (F_star - F_lower) > self._abstol:
             return True
         else:
             return False
@@ -188,11 +189,11 @@ class MeanCVaR:
             Efficient portfolio exposures with shape (I, 1).
         """
         if return_target is None:
-            G = copy(self.G)
-            h = copy(self.h)
+            G = copy(self._G)
+            h = copy(self._h)
         else:
-            G = sparse([self.G, self._expected_return_row])
-            h = matrix([self.h, -self.mean_scalar * return_target])
+            G = sparse([self._G, self._expected_return_row])
+            h = matrix([self._h, -self._mean_scalar * return_target])
         solution = self._benders_algorithm(G, h)
         return solution[0:-2]
 
@@ -203,14 +204,15 @@ class MeanCVaR:
             Highest expected return for the given constraints.
 
         Raises:
-            ValueError: If constraints are infeasible or _max_expected_return unbounded.
+            ValueError: If constraints are infeasible or max_expected_return is unbounded.
         """
-        solution = solvers.lp(
-            c=self._expected_return_row.T, G=self.G, h=self.h, A=self.A, b=self.b, solver='glpk')
+        solution = lp(
+            c=self._expected_return_row.T, G=self._G, h=self._h,
+            A=self._A, b=self._b, solver='glpk')
         if solution['status'] == 'optimal':
-            return -solution['primal objective'] / self.mean_scalar
+            return -solution['primal objective'] / self._mean_scalar
         else:
-            raise ValueError('Constraints are infeasible or _max_expected_return is unbounded.')
+            raise ValueError('Constraints are infeasible or max_expected_return is unbounded.')
 
     def efficient_frontier(self, num_portfolios: int = None) -> np.ndarray:
         """Method for computing the efficient frontier.
@@ -222,15 +224,15 @@ class MeanCVaR:
             Efficient frontier with shape (I, num_portfolios).
 
         Raises:
-            ValueError: If constraints are infeasible or _max_expected_return unbounded.
+            ValueError: If constraints are infeasible or max_expected_return is unbounded.
         """
         if num_portfolios is None:
             num_portfolios = 9
 
         max_expected_return = self._calculate_max_expected_return()
-        frontier = np.full((self.I, num_portfolios), np.nan)
+        frontier = np.full((self._I, num_portfolios), np.nan)
         frontier[:, 0] = self.efficient_portfolio()[:, 0]
-        min_expected_return = float(self.mean @ frontier[:, 0])
+        min_expected_return = float(self._mean @ frontier[:, 0])
         delta = (max_expected_return - min_expected_return) / (num_portfolios - 1)
 
         for p in range(1, num_portfolios):
