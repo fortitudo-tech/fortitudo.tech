@@ -122,7 +122,7 @@ probability vector <span class="math notranslate nohighlight">\(p\)</span>, and 
 <p>The above portfolio constraints simply specify that it is a long-only portfolio
 with an upper bound of 25% for individual assets. This ensures that the optimized
 portfolios are invested in at least 4 assets and imposes some diversification.</p>
-<p>The next step is to input the P&amp;L, constraints, and probability vector into the
+<p>The next step is to input the P&amp;L, constraints, and probability vector into a
 MeanCVaR object as well as optimize portfolios:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ft</span><span class="o">.</span><span class="n">cvar_options</span><span class="p">[</span><span class="s1">&#39;demean&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
 <span class="n">R</span> <span class="o">=</span> <span class="n">R</span><span class="o">.</span><span class="n">values</span>
@@ -140,8 +140,8 @@ should compute portfolio CVaR including its expected return.</p>
 mean of Private Equity should be 10%, while its volatility should be greater
 than or equal to 33%. Entropy Pooling allows us to incorporate this market view
 into our P&amp;L assumption in a way that introduces the least amount of spurious
-structure, which is measured by the relative entropy between our prior and
-posterior probability vectors.</p>
+structure, measured by the relative entropy between our prior and posterior
+probability vectors.</p>
 <p>The above views for Private Equity are implemented below:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">expected_return_row</span> <span class="o">=</span> <span class="n">R</span><span class="p">[:,</span> <span class="mi">6</span><span class="p">][</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">,</span> <span class="p">:]</span>
 <span class="n">variance_row</span> <span class="o">=</span> <span class="p">(</span><span class="n">expected_return_row</span> <span class="o">-</span> <span class="mf">0.1</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
@@ -376,9 +376,7 @@ recalculated using the posterior probabilities.</p>
 <span class="n">vols_post</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">q</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="p">(</span><span class="n">R</span> <span class="o">-</span> <span class="n">means_post</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
 <span class="n">skews_post</span> <span class="o">=</span> <span class="n">q</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="p">((</span><span class="n">R</span> <span class="o">-</span> <span class="n">means_post</span><span class="p">)</span> <span class="o">/</span> <span class="n">vols_post</span><span class="p">)</span><span class="o">**</span><span class="mi">3</span>
 <span class="n">kurts_post</span> <span class="o">=</span> <span class="n">q</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="p">((</span><span class="n">R</span> <span class="o">-</span> <span class="n">means_post</span><span class="p">)</span> <span class="o">/</span> <span class="n">vols_post</span><span class="p">)</span><span class="o">**</span><span class="mi">4</span>
-<span class="n">cov_post</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">I</span><span class="p">,</span> <span class="n">I</span><span class="p">))</span>
-<span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">S</span><span class="p">):</span>
-    <span class="n">cov_post</span> <span class="o">+=</span> <span class="n">q</span><span class="p">[</span><span class="n">s</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">R</span><span class="p">[</span><span class="n">s</span><span class="p">,</span> <span class="p">:]</span> <span class="o">-</span> <span class="n">means_post</span><span class="p">)</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="p">(</span><span class="n">R</span><span class="p">[</span><span class="n">s</span><span class="p">,</span> <span class="p">:]</span> <span class="o">-</span> <span class="n">means_post</span><span class="p">)</span>
+<span class="n">cov_post</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cov</span><span class="p">(</span><span class="n">R</span><span class="p">,</span> <span class="n">rowvar</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">aweights</span><span class="o">=</span><span class="n">q</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">])</span>
 <span class="n">vols_inverse</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">vols_post</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:]</span><span class="o">**-</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">corr_post</span> <span class="o">=</span> <span class="n">vols_inverse</span> <span class="o">@</span> <span class="n">cov_post</span> <span class="o">@</span> <span class="n">vols_inverse</span>
 </pre></div>

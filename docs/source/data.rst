@@ -8,7 +8,7 @@ given by `the Danish common return expectations for the 2nd half of 2021
 
 The simulation is used in all examples and allows you to immediately start 
 exploring the functionality of this package. You can also use it to test your
-understanding of the theory as well as replicate results.
+understanding of the theory by replicating results.
 
 .. automodule:: fortitudo.tech.data
    :members:

@@ -53,7 +53,7 @@ The above portfolio constraints simply specify that it is a long-only portfolio
 with an upper bound of 25% for individual assets. This ensures that the optimized
 portfolios are invested in at least 4 assets and imposes some diversification.
 
-The next step is to input the P&L, constraints, and probability vector into the
+The next step is to input the P&L, constraints, and probability vector into a
 MeanCVaR object as well as optimize portfolios:
 
 .. code-block:: python
@@ -74,8 +74,8 @@ Let us now assume that we have performed some analysis and concluded that the
 mean of Private Equity should be 10%, while its volatility should be greater
 than or equal to 33%. Entropy Pooling allows us to incorporate this market view
 into our P&L assumption in a way that introduces the least amount of spurious
-structure, which is measured by the relative entropy between our prior and
-posterior probability vectors.
+structure, measured by the relative entropy between our prior and posterior
+probability vectors.
 
 The above views for Private Equity are implemented below:
 
@@ -336,9 +336,7 @@ recalculated using the posterior probabilities.
     vols_post = np.sqrt(q.T @ (R - means_post)**2)
     skews_post = q.T @ ((R - means_post) / vols_post)**3
     kurts_post = q.T @ ((R - means_post) / vols_post)**4
-    cov_post = np.zeros((I, I))
-    for s in range(S):
-        cov_post += q[s, 0] * (R[s, :] - means_post).T @ (R[s, :] - means_post)
+    cov_post = np.cov(R, rowvar=False, aweights=q[:, 0])
     vols_inverse = np.diag(vols_post[0, :]**-1)
     corr_post = vols_inverse @ cov_post @ vols_inverse
 
