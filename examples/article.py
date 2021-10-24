@@ -43,12 +43,13 @@ data_prior = np.hstack((
     np.round(means_prior.T * 100, 1), np.round(vols_prior.T * 100, 1),
     np.round(skews_prior.T, 2), np.round(kurts_prior.T, 2)))
 prior_df = pd.DataFrame(
-    data_prior, index=instrument_names,
+    data=data_prior,
+    index=instrument_names,
     columns=['Mean', 'Volatility', 'Skewness', 'Kurtosis'])
 print(prior_df)
 
 corr_prior_df = pd.DataFrame(
-    np.intc(np.round(corr_prior * 100)),
+    data=np.intc(np.round(corr_prior * 100)),
     index=enumerate(instrument_names, start=1),
     columns=range(1, I + 1))
 print(corr_prior_df)
@@ -85,7 +86,8 @@ data_post = np.hstack((
     np.round(means_post.T * 100, 1), np.round(vols_post.T * 100, 1),
     np.round(skews_post.T, 2), np.round(kurts_post.T, 2)))
 post_df = pd.DataFrame(
-    data_post, index=instrument_names,
+    data=data_post,
+    index=instrument_names,
     columns=['Mean', 'Volatility', 'Skewness', 'Kurtosis'])
 print(post_df)
 
@@ -93,7 +95,7 @@ print(f'ENS = {np.round(effective_number_scenarios[0, 0] * 100, 2)}%.')
 print(f'RE = {np.round(relative_entropy[0, 0] * 100, 2)}%.')
 
 corr_post_df = pd.DataFrame(
-    np.intc(np.round(corr_post * 100)),
+    data=np.intc(np.round(corr_post * 100)),
     index=enumerate(instrument_names, start=1),
     columns=range(1, I + 1))
 print(corr_post_df)

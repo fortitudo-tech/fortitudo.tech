@@ -261,12 +261,13 @@ Next, we compute and print some prior stats:
         np.round(means_prior.T * 100, 1), np.round(vols_prior.T * 100, 1),
         np.round(skews_prior.T, 2), np.round(kurts_prior.T, 2)))
     prior_df = pd.DataFrame(
-        data_prior, index=instrument_names,
+        data=data_prior,
+        index=instrument_names,
         columns=['Mean', 'Volatility', 'Skewness', 'Kurtosis'])
     print(prior_df)
 
     corr_prior_df = pd.DataFrame(
-        np.intc(np.round(corr_prior * 100)),
+        data=np.intc(np.round(corr_prior * 100)),
         index=enumerate(instrument_names, start=1),
         columns=range(1, I + 1))
     print(corr_prior_df)
@@ -349,7 +350,8 @@ Finally, we print the posterior results:
         np.round(means_post.T * 100, 1), np.round(vols_post.T * 100, 1),
         np.round(skews_post.T, 2), np.round(kurts_post.T, 2)))
     post_df = pd.DataFrame(
-        data_post, index=instrument_names,
+        data=data_post,
+        index=instrument_names,
         columns=['Mean', 'Volatility', 'Skewness', 'Kurtosis'])
     print(post_df)
 
@@ -357,12 +359,13 @@ Finally, we print the posterior results:
     print(f'RE = {np.round(relative_entropy[0, 0] * 100, 2)}%.')
 
     corr_post_df = pd.DataFrame(
-        np.intc(np.round(corr_post * 100)),
+        data=np.intc(np.round(corr_post * 100)),
         index=enumerate(instrument_names, start=1),
         columns=range(1, I + 1))
     print(corr_post_df)
 
-Which gives the following output (Table 4 and Table 7)::
+Which gives the following output (Table 4 and Table 7 in 
+:cite:t:`SeqEntropyPooling`)::
 
                     Mean  Volatility  Skewness  Kurtosis
     Gov & MBS       -0.6         3.2      0.06      2.91
@@ -391,7 +394,7 @@ Which gives the following output (Table 4 and Table 7)::
     (9, Real Estate)     -20   11   27   15   38   36   47   39  100   49
     (10, Hedge Funds)    -24   29   67   29   79   75   76   38   49  100
 
-The results for the sequential heuristics are not replicated, as they are a
+The results for the sequential heuristics are not replicated as they are a
 part of Fortitudo Technologies' proprietary software, which also contains an
 elegant interface for handling the different views instead of manually specifying
 them through :math:`A`, :math:`b`, :math:`G`, and :math:`h`. The interested
