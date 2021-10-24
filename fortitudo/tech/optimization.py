@@ -25,7 +25,7 @@ cvar_options = {}
 
 
 class MeanCVaR:
-    """Object for efficient mean-CVaR optimization using Benders decomposition.
+    """Class for efficient mean-CVaR optimization using Benders decomposition.
 
     Args:
         R: Matrix with P&L simulations and shape (S, I).
@@ -81,7 +81,12 @@ class MeanCVaR:
         else:
             self._losses = -self._R_scalar * R
 
-    def _set_options(self, options):
+    def _set_options(self, options: dict):
+        """Method for setting algorithm parameters.
+
+        Args:
+            options: Dictionary containing algorithm parameters.
+        """
         self._demean = options.get('demean', True)
         if type(self._demean) != bool:
             raise ValueError('demean must be a boolean equal to True or False.')
@@ -168,7 +173,7 @@ class MeanCVaR:
             F_lower: Current lower bound on the objective value.
 
         Returns:
-            Bolean indicating whether the algorithm should continue.
+            Boolean indicating whether the algorithm should continue.
         """
         F_lower_abs = np.abs(F_lower)
         if F_lower_abs > 1e-10 and (F_star - F_lower) / F_lower_abs > self._reltol:
@@ -183,7 +188,7 @@ class MeanCVaR:
 
         Args:
             return_target: Return target for the efficient portfolio. If given
-                None, the minimum CVaR portfolio is estimated.
+                None, the minimum CVaR portfolio is computed.
 
         Returns:
             Efficient portfolio exposures with shape (I, 1).
