@@ -16,6 +16,6 @@
 
 __all__ = ['entropy_pooling', 'MeanCVaR', 'cvar_options', 'load_pnl']
 
-from fortitudo.tech.entropy_pooling import entropy_pooling
-from fortitudo.tech.optimization import MeanCVaR, cvar_options
-from fortitudo.tech.data import load_pnl
+from .entropy_pooling import entropy_pooling
+from .optimization import MeanCVaR, cvar_options
+from .data import load_pnl

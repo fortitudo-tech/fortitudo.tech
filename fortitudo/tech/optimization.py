@@ -69,8 +69,8 @@ class MeanCVaR:
 
         if alpha is None:
             alpha = 0.95
-        self.c = matrix(np.hstack((np.zeros(self.I), [1], [1 / (1 - alpha)])))
 
+        self.c = matrix(np.hstack((np.zeros(self.I), [1], [1 / (1 - alpha)])))
         self._set_options(kwargs.get('options', globals()['cvar_options']))
         self.mean = self.p @ R
         self._expected_return_row = matrix(np.hstack((
@@ -227,13 +227,13 @@ class MeanCVaR:
         if num_portfolios is None:
             num_portfolios = 9
 
-        _max_expected_return = self._calculate_max_expected_return()
+        max_expected_return = self._calculate_max_expected_return()
         frontier = np.full((self.I, num_portfolios), np.nan)
         frontier[:, 0] = self.efficient_portfolio()[:, 0]
-        _min_expected_return = float(self.mean @ frontier[:, 0])
-        _delta = (_max_expected_return - _min_expected_return) / (num_portfolios - 1)
+        min_expected_return = float(self.mean @ frontier[:, 0])
+        delta = (max_expected_return - min_expected_return) / (num_portfolios - 1)
 
         for p in range(1, num_portfolios):
-            frontier[:, p] = self.efficient_portfolio(_min_expected_return + _delta * p)[:, 0]
+            frontier[:, p] = self.efficient_portfolio(min_expected_return + delta * p)[:, 0]
 
         return frontier

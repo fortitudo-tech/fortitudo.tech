@@ -76,9 +76,7 @@ means_post = q.T @ R
 vols_post = np.sqrt(q.T @ (R - means_post)**2)
 skews_post = q.T @ ((R - means_post) / vols_post)**3
 kurts_post = q.T @ ((R - means_post) / vols_post)**4
-cov_post = np.zeros((I, I))
-for s in range(S):
-    cov_post += q[s, 0] * (R[s, :] - means_post).T @ (R[s, :] - means_post)
+cov_post = np.cov(R, rowvar=False, aweights=q[:, 0])
 vols_inverse = np.diag(vols_post[0, :]**-1)
 corr_post = vols_inverse @ cov_post @ vols_inverse
 
