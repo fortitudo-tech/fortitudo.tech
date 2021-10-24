@@ -86,12 +86,14 @@ and illustrates how these two technologies can be combined.</p>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">fortitudo.tech</span> <span class="k">as</span> <span class="nn">ft</span>
 
-<span class="n">R</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;pnl.csv&#39;</span><span class="p">)</span>
+<span class="n">R</span> <span class="o">=</span> <span class="n">ft</span><span class="o">.</span><span class="n">load_pnl</span><span class="p">()</span>
 <span class="n">instrument_names</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">R</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
 <span class="n">means</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">R</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 <span class="n">vols</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">R</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 <span class="n">stats_prior</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
-    <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">means</span><span class="p">,</span> <span class="n">vols</span><span class="p">))</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">instrument_names</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Mean&#39;</span><span class="p">,</span> <span class="s1">&#39;Volatility&#39;</span><span class="p">])</span>
+    <span class="n">data</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">means</span><span class="p">,</span> <span class="n">vols</span><span class="p">))</span><span class="o">.</span><span class="n">T</span><span class="p">,</span>
+    <span class="n">index</span><span class="o">=</span><span class="n">instrument_names</span><span class="p">,</span>
+    <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Mean&#39;</span><span class="p">,</span> <span class="s1">&#39;Volatility&#39;</span><span class="p">])</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">stats_prior</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
 </pre></div>
 </div>
@@ -131,12 +133,12 @@ MeanCVaR object as well as optimize portfolios:</p>
 </div>
 <p>Note that the MeanCVaR object uses demeaned P&amp;L by default when optimizing the
 portfolio’s CVaR, as we believe it is best not to rely on the expected return
-estimates in both the risk and the expectation. In the above example, we
+estimates in both portfolio risk and portfolio mean. In the above example, we
 illustrate how you can disable this feature and specify that the optimization
 should compute portfolio CVaR including its expected return.</p>
-<p>Let us now assume that we have done some analysis and concluded that the mean
-of Private Equity should be 10%, while its volatility should be greater than
-or equal to 33%. Entropy Pooling allows us to incorporate this market view
+<p>Let us now assume that we have performed some analysis and concluded that the
+mean of Private Equity should be 10%, while its volatility should be greater
+than or equal to 33%. Entropy Pooling allows us to incorporate this market view
 into our P&amp;L assumption in a way that introduces the least amount of spurious
 structure, which is measured by the relative entropy between our prior and
 posterior probability vectors.</p>
@@ -152,7 +154,9 @@ posterior probability vectors.</p>
 <span class="n">means_post</span> <span class="o">=</span> <span class="n">q</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">R</span>
 <span class="n">vols_post</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">q</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="p">(</span><span class="n">R</span> <span class="o">-</span> <span class="n">means_post</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
 <span class="n">stats_post</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
-    <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">means_post</span><span class="p">,</span> <span class="n">vols_post</span><span class="p">))</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">instrument_names</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Mean&#39;</span><span class="p">,</span> <span class="s1">&#39;Volatility&#39;</span><span class="p">])</span>
+    <span class="n">data</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">means_post</span><span class="p">,</span> <span class="n">vols_post</span><span class="p">))</span><span class="o">.</span><span class="n">T</span><span class="p">,</span>
+    <span class="n">index</span><span class="o">=</span><span class="n">instrument_names</span><span class="p">,</span>
+    <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Mean&#39;</span><span class="p">,</span> <span class="s1">&#39;Volatility&#39;</span><span class="p">])</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">stats_post</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
 </pre></div>
 </div>
@@ -173,7 +177,7 @@ posterior probability vectors.</p>
 <p>We note that our views regarding Private Equity are satisfied. In addition,
 we note that volatilities of the riskier assets have increased, while their
 expected returns have decreased. This illustrates how Entropy Pooling
-incorporates views/stress-tests in a way that tries to respect the dependencies
+incorporates views / stress-tests in a way that respects the dependencies
 of the prior distribution.</p>
 <p>With the posterior probabilities at hand, we want to examine the effect of our
 views on the efficient CVaR portfolios. This is easy to do by simply specifying
@@ -187,7 +191,9 @@ optimization:</p>
 <p>We can then print the results of the optimization and compare allocations.
 First for the minimum risk portfolios:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">min_risk_pfs</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
-<span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">w_min</span><span class="p">,</span> <span class="n">w_min_post</span><span class="p">)),</span> <span class="n">index</span><span class="o">=</span><span class="n">instrument_names</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Prior&#39;</span><span class="p">,</span> <span class="s1">&#39;Posterior&#39;</span><span class="p">])</span>
+    <span class="n">data</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">w_min</span><span class="p">,</span> <span class="n">w_min_post</span><span class="p">)),</span>
+    <span class="n">index</span><span class="o">=</span><span class="n">instrument_names</span><span class="p">,</span>
+    <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Prior&#39;</span><span class="p">,</span> <span class="s1">&#39;Posterior&#39;</span><span class="p">])</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">min_risk_pfs</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
 </pre></div>
 </div>
@@ -207,7 +213,9 @@ First for the minimum risk portfolios:</p>
 </div>
 <p>And then for the portfolios with an expected return target of 5%:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">target_return_pfs</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
-<span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">w_target</span><span class="p">,</span> <span class="n">w_target_post</span><span class="p">)),</span> <span class="n">index</span><span class="o">=</span><span class="n">instrument_names</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Prior&#39;</span><span class="p">,</span> <span class="s1">&#39;Posterior&#39;</span><span class="p">])</span>
+    <span class="n">data</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">w_target</span><span class="p">,</span> <span class="n">w_target_post</span><span class="p">)),</span>
+    <span class="n">index</span><span class="o">=</span><span class="n">instrument_names</span><span class="p">,</span>
+    <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Prior&#39;</span><span class="p">,</span> <span class="s1">&#39;Posterior&#39;</span><span class="p">])</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">target_return_pfs</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
 </pre></div>
 </div>

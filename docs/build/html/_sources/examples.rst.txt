@@ -15,12 +15,14 @@ We first load the necessary packages, data, and print some P&L stats:
     import pandas as pd
     import fortitudo.tech as ft
 
-    R = pd.read_csv('pnl.csv')
+    R = ft.load_pnl()
     instrument_names = list(R.columns)
     means = np.mean(R, axis=0)
     vols = np.std(R, axis=0)
     stats_prior = pd.DataFrame(
-        np.vstack((means, vols)).T, index=instrument_names, columns=['Mean', 'Volatility'])
+        data=np.vstack((means, vols)).T,
+        index=instrument_names,
+        columns=['Mean', 'Volatility'])
     print(np.round(stats_prior * 100, 1))
 
 This gives the following result::
@@ -64,13 +66,13 @@ MeanCVaR object as well as optimize portfolios:
 
 Note that the MeanCVaR object uses demeaned P&L by default when optimizing the
 portfolio's CVaR, as we believe it is best not to rely on the expected return
-estimates in both the risk and the expectation. In the above example, we
+estimates in both portfolio risk and portfolio mean. In the above example, we
 illustrate how you can disable this feature and specify that the optimization
 should compute portfolio CVaR including its expected return.
 
-Let us now assume that we have done some analysis and concluded that the mean
-of Private Equity should be 10%, while its volatility should be greater than
-or equal to 33%. Entropy Pooling allows us to incorporate this market view
+Let us now assume that we have performed some analysis and concluded that the
+mean of Private Equity should be 10%, while its volatility should be greater
+than or equal to 33%. Entropy Pooling allows us to incorporate this market view
 into our P&L assumption in a way that introduces the least amount of spurious
 structure, which is measured by the relative entropy between our prior and
 posterior probability vectors.
@@ -90,7 +92,9 @@ The above views for Private Equity are implemented below:
     means_post = q.T @ R
     vols_post = np.sqrt(q.T @ (R - means_post)**2)
     stats_post = pd.DataFrame(
-        np.vstack((means_post, vols_post)).T, index=instrument_names, columns=['Mean', 'Volatility'])
+        data=np.vstack((means_post, vols_post)).T,
+        index=instrument_names,
+        columns=['Mean', 'Volatility'])
     print(np.round(stats_post * 100, 1))
 
 Which gives the following posterior means and volatilities::
@@ -110,7 +114,7 @@ Which gives the following posterior means and volatilities::
 We note that our views regarding Private Equity are satisfied. In addition, 
 we note that volatilities of the riskier assets have increased, while their
 expected returns have decreased. This illustrates how Entropy Pooling
-incorporates views/stress-tests in a way that tries to respect the dependencies
+incorporates views / stress-tests in a way that respects the dependencies
 of the prior distribution.
 
 With the posterior probabilities at hand, we want to examine the effect of our
@@ -130,7 +134,9 @@ First for the minimum risk portfolios:
 .. code-block:: python
 
     min_risk_pfs = pd.DataFrame(
-    np.hstack((w_min, w_min_post)), index=instrument_names, columns=['Prior', 'Posterior'])
+        data=np.hstack((w_min, w_min_post)),
+        index=instrument_names,
+        columns=['Prior', 'Posterior'])
     print(np.round(min_risk_pfs * 100, 1))
 
 Which gives the following output::
@@ -152,7 +158,9 @@ And then for the portfolios with an expected return target of 5%:
 .. code-block:: python
 
     target_return_pfs = pd.DataFrame(
-    np.hstack((w_target, w_target_post)), index=instrument_names, columns=['Prior', 'Posterior'])
+        data=np.hstack((w_target, w_target_post)),
+        index=instrument_names,
+        columns=['Prior', 'Posterior'])
     print(np.round(target_return_pfs * 100, 1))
 
 Which gives the following output::
