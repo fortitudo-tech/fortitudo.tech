@@ -8,14 +8,14 @@
 
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 # GNU General Public License for more details.
 
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-__all__ = ['entropy_pooling', 'MeanCVaR', 'cvar_options', 'load_pnl']
+__all__ = ['load_pnl', 'entropy_pooling', 'cvar_options', 'MeanCVaR']
 
-from fortitudo.tech.entropy_pooling import entropy_pooling
-from fortitudo.tech.optimization import MeanCVaR, cvar_options
-from fortitudo.tech.data import load_pnl
+from .data import load_pnl
+from .entropy_pooling import entropy_pooling
+from .optimization import cvar_options, MeanCVaR

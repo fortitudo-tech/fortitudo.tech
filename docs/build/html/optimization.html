@@ -32,7 +32,7 @@
             <a href="index.html" class="icon icon-home"> fortitudo.tech
           </a>
               <div class="version">
-                0.2
+                0.2.1
               </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
@@ -85,7 +85,7 @@ in relation to the P&amp;L simulations <span class="math notranslate nohighlight
 <span class="target" id="module-fortitudo.tech.optimization"></span><dl class="py class">
 <dt class="sig sig-object py" id="fortitudo.tech.optimization.MeanCVaR">
 <em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">MeanCVaR</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">R</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">A</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">G</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fortitudo.tech.optimization.MeanCVaR" title="Permalink to this definition"></a></dt>
-<dd><p>Object for efficient mean-CVaR optimization using Benders decomposition.</p>
+<dd><p>Class for efficient mean-CVaR optimization using Benders decomposition.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -116,7 +116,7 @@ Default: np.ones((S, 1)) / S.</p></li>
 <dd class="field-odd"><p>Efficient frontier with shape (I, num_portfolios).</p>
 </dd>
 <dt class="field-even">Raises</dt>
-<dd class="field-even"><p><strong>ValueError</strong> – If constraints are infeasible or _max_expected_return unbounded.</p>
+<dd class="field-even"><p><strong>ValueError</strong> – If constraints are infeasible or max_expected_return is unbounded.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -127,8 +127,8 @@ Default: np.ones((S, 1)) / S.</p></li>
 <dd><p>Method for computing an efficient portfolio with return target.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>return_target</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]) – Return target for the efficient portfolio. If given
-None, the minimum CVaR portfolio is estimated.</p>
+<dd class="field-odd"><p><strong>return_target</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]) – Return target for the efficient portfolio.
+The minimum CVaR portfolio is computed by default.</p>
 </dd>
 <dt class="field-even">Return type</dt>
 <dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></p>
@@ -175,7 +175,7 @@ lower bounds if the lower bound is less than <code class="xref py py-const docut
 </dl>
 <p>The algorithm stops when one of the <code class="xref py py-const docutils literal notranslate"><span class="pre">'maxiter'</span></code>, <code class="xref py py-const docutils literal notranslate"><span class="pre">'reltol'</span></code>,
 or <code class="xref py py-const docutils literal notranslate"><span class="pre">'abstol'</span></code> conditions are satisfied. The parameters have been tested
-with P&amp;L that is “percentage return” and work well. In most cases the algorithm
+with P&amp;L that is “percentage return” and work well. In most cases, the algorithm
 stops due to relative convergence in less than 100 iterations. But if you use
 P&amp;L simulations that are scaled differently, you might need to adjust them.</p>
 </section>
@@ -191,7 +191,7 @@ P&amp;L simulations that are scaled differently, you might need to adjust them.<
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2021, Fortitudo Technologies ApS.</p>
+    <p>&#169; Copyright 2021, Fortitudo Technologies.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

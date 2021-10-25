@@ -15,12 +15,14 @@ We first load the necessary packages, data, and print some P&L stats:
     import pandas as pd
     import fortitudo.tech as ft
 
-    R = pd.read_csv('pnl.csv')
+    R = ft.load_pnl()
     instrument_names = list(R.columns)
     means = np.mean(R, axis=0)
     vols = np.std(R, axis=0)
     stats_prior = pd.DataFrame(
-        np.vstack((means, vols)).T, index=instrument_names, columns=['Mean', 'Volatility'])
+        data=np.vstack((means, vols)).T,
+        index=instrument_names,
+        columns=['Mean', 'Volatility'])
     print(np.round(stats_prior * 100, 1))
 
 This gives the following result::
@@ -51,7 +53,7 @@ The above portfolio constraints simply specify that it is a long-only portfolio
 with an upper bound of 25% for individual assets. This ensures that the optimized
 portfolios are invested in at least 4 assets and imposes some diversification.
 
-The next step is to input the P&L, constraints, and probability vector into the
+The next step is to input the P&L, constraints, and probability vector into a
 MeanCVaR object as well as optimize portfolios:
 
 .. code-block:: python
@@ -64,16 +66,16 @@ MeanCVaR object as well as optimize portfolios:
 
 Note that the MeanCVaR object uses demeaned P&L by default when optimizing the
 portfolio's CVaR, as we believe it is best not to rely on the expected return
-estimates in both the risk and the expectation. In the above example, we
+estimates in both portfolio risk and portfolio mean. In the above example, we
 illustrate how you can disable this feature and specify that the optimization
 should compute portfolio CVaR including its expected return.
 
-Let us now assume that we have done some analysis and concluded that the mean
-of Private Equity should be 10%, while its volatility should be greater than
-or equal to 33%. Entropy Pooling allows us to incorporate this market view
+Let us now assume that we have performed some analysis and concluded that the
+mean of Private Equity should be 10%, while its volatility should be greater
+than or equal to 33%. Entropy Pooling allows us to incorporate this market view
 into our P&L assumption in a way that introduces the least amount of spurious
-structure, which is measured by the relative entropy between our prior and
-posterior probability vectors.
+structure, measured by the relative entropy between our prior and posterior
+probability vectors.
 
 The above views for Private Equity are implemented below:
 
@@ -90,7 +92,9 @@ The above views for Private Equity are implemented below:
     means_post = q.T @ R
     vols_post = np.sqrt(q.T @ (R - means_post)**2)
     stats_post = pd.DataFrame(
-        np.vstack((means_post, vols_post)).T, index=instrument_names, columns=['Mean', 'Volatility'])
+        data=np.vstack((means_post, vols_post)).T,
+        index=instrument_names,
+        columns=['Mean', 'Volatility'])
     print(np.round(stats_post * 100, 1))
 
 Which gives the following posterior means and volatilities::
@@ -110,7 +114,7 @@ Which gives the following posterior means and volatilities::
 We note that our views regarding Private Equity are satisfied. In addition, 
 we note that volatilities of the riskier assets have increased, while their
 expected returns have decreased. This illustrates how Entropy Pooling
-incorporates views/stress-tests in a way that tries to respect the dependencies
+incorporates views / stress-tests in a way that respects the dependencies
 of the prior distribution.
 
 With the posterior probabilities at hand, we want to examine the effect of our
@@ -130,7 +134,9 @@ First for the minimum risk portfolios:
 .. code-block:: python
 
     min_risk_pfs = pd.DataFrame(
-    np.hstack((w_min, w_min_post)), index=instrument_names, columns=['Prior', 'Posterior'])
+        data=np.hstack((w_min, w_min_post)),
+        index=instrument_names,
+        columns=['Prior', 'Posterior'])
     print(np.round(min_risk_pfs * 100, 1))
 
 Which gives the following output::
@@ -152,7 +158,9 @@ And then for the portfolios with an expected return target of 5%:
 .. code-block:: python
 
     target_return_pfs = pd.DataFrame(
-    np.hstack((w_target, w_target_post)), index=instrument_names, columns=['Prior', 'Posterior'])
+        data=np.hstack((w_target, w_target_post)),
+        index=instrument_names,
+        columns=['Prior', 'Posterior'])
     print(np.round(target_return_pfs * 100, 1))
 
 Which gives the following output::
@@ -253,12 +261,13 @@ Next, we compute and print some prior stats:
         np.round(means_prior.T * 100, 1), np.round(vols_prior.T * 100, 1),
         np.round(skews_prior.T, 2), np.round(kurts_prior.T, 2)))
     prior_df = pd.DataFrame(
-        data_prior, index=instrument_names,
+        data=data_prior,
+        index=instrument_names,
         columns=['Mean', 'Volatility', 'Skewness', 'Kurtosis'])
     print(prior_df)
 
     corr_prior_df = pd.DataFrame(
-        np.intc(np.round(corr_prior * 100)),
+        data=np.intc(np.round(corr_prior * 100)),
         index=enumerate(instrument_names, start=1),
         columns=range(1, I + 1))
     print(corr_prior_df)
@@ -327,9 +336,7 @@ recalculated using the posterior probabilities.
     vols_post = np.sqrt(q.T @ (R - means_post)**2)
     skews_post = q.T @ ((R - means_post) / vols_post)**3
     kurts_post = q.T @ ((R - means_post) / vols_post)**4
-    cov_post = np.zeros((I, I))
-    for s in range(S):
-        cov_post += q[s, 0] * (R[s, :] - means_post).T @ (R[s, :] - means_post)
+    cov_post = np.cov(R, rowvar=False, aweights=q[:, 0])
     vols_inverse = np.diag(vols_post[0, :]**-1)
     corr_post = vols_inverse @ cov_post @ vols_inverse
 
@@ -341,7 +348,8 @@ Finally, we print the posterior results:
         np.round(means_post.T * 100, 1), np.round(vols_post.T * 100, 1),
         np.round(skews_post.T, 2), np.round(kurts_post.T, 2)))
     post_df = pd.DataFrame(
-        data_post, index=instrument_names,
+        data=data_post,
+        index=instrument_names,
         columns=['Mean', 'Volatility', 'Skewness', 'Kurtosis'])
     print(post_df)
 
@@ -349,12 +357,13 @@ Finally, we print the posterior results:
     print(f'RE = {np.round(relative_entropy[0, 0] * 100, 2)}%.')
 
     corr_post_df = pd.DataFrame(
-        np.intc(np.round(corr_post * 100)),
+        data=np.intc(np.round(corr_post * 100)),
         index=enumerate(instrument_names, start=1),
         columns=range(1, I + 1))
     print(corr_post_df)
 
-Which gives the following output (Table 4 and Table 7)::
+Which gives the following output (Table 4 and Table 7 in 
+:cite:t:`SeqEntropyPooling`)::
 
                     Mean  Volatility  Skewness  Kurtosis
     Gov & MBS       -0.6         3.2      0.06      2.91
@@ -383,7 +392,7 @@ Which gives the following output (Table 4 and Table 7)::
     (9, Real Estate)     -20   11   27   15   38   36   47   39  100   49
     (10, Hedge Funds)    -24   29   67   29   79   75   76   38   49  100
 
-The results for the sequential heuristics are not replicated, as they are a
+The results for the sequential heuristics are not replicated as they are a
 part of Fortitudo Technologies' proprietary software, which also contains an
 elegant interface for handling the different views instead of manually specifying
 them through :math:`A`, :math:`b`, :math:`G`, and :math:`h`. The interested
