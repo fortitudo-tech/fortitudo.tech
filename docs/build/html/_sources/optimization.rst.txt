@@ -55,6 +55,6 @@ The following parameters can be accessed:
 
 The algorithm stops when one of the :const:`'maxiter'`, :const:`'reltol'`,
 or :const:`'abstol'` conditions are satisfied. The parameters have been tested
-with P&L that is "percentage return" and work well. In most cases the algorithm
+with P&L that is "percentage return" and work well. In most cases, the algorithm
 stops due to relative convergence in less than 100 iterations. But if you use
 P&L simulations that are scaled differently, you might need to adjust them.

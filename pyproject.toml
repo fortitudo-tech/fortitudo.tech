@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "fortitudo.tech"
-version = "0.2"
+version = "0.2.1"
 description = "Investment and risk technologies maintained by Fortitudo Technologies."
 authors = ["Fortitudo Technologies <software@fortitudo.tech>"]
 license = "GPL-3.0-or-later"
@@ -8,7 +8,7 @@ readme = "README.rst"
 homepage = "https://fortitudo.tech"
 repository = "https://github.com/fortitudo-tech/fortitudo.tech"
 documentation = "https://os.fortitudo.tech"
-keywords = ["mathematical finance", "quant", "stress-testing", "portfolio optimization", "investment technologies"]
+keywords = ["CVaR Portfolio Optimization", "Entropy Pooling", "Investment Technologies", "Mathematical Finance", "Quant"]
 classifiers = [
     "Intended Audience :: Education",
     "Intended Audience :: Financial and Insurance Industry",
