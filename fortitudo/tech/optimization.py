@@ -187,8 +187,8 @@ class MeanCVaR:
         """Method for computing an efficient portfolio with return target.
 
         Args:
-            return_target: Return target for the efficient portfolio. If given
-                None, the minimum CVaR portfolio is computed.
+            return_target: Return target for the efficient portfolio.
+                The minimum CVaR portfolio is computed by default.
 
         Returns:
             Efficient portfolio exposures with shape (I, 1).
@@ -206,7 +206,7 @@ class MeanCVaR:
         """Method for calculating the highest expected return and checking feasibility/boundness.
 
         Returns:
-            Highest expected return for the given constraints.
+            Highest expected return for the given portfolio constraints.
 
         Raises:
             ValueError: If constraints are infeasible or max_expected_return is unbounded.
