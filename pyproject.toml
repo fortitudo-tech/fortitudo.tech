@@ -8,7 +8,7 @@ readme = "README.rst"
 homepage = "https://fortitudo.tech"
 repository = "https://github.com/fortitudo-tech/fortitudo.tech"
 documentation = "https://os.fortitudo.tech"
-keywords = ["Entropy Pooling", "Investment Technologies", "Mathematical Finance", "Portfolio Optimization", "Quant"]
+keywords = ["CVaR Portfolio Optimization", "Entropy Pooling", "Investment Technologies", "Mathematical Finance", "Quant"]
 classifiers = [
     "Intended Audience :: Education",
     "Intended Audience :: Financial and Insurance Industry",
