@@ -16,10 +16,11 @@
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Data" href="data.html" />
+    <link rel="next" title="Examples" href="examples.html" />
     <link rel="prev" title="Fortitudo Technologies Open Source" href="index.html" /> 
 </head>
 
@@ -36,12 +37,12 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Documentation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="data.html">Data</a></li>
-<li class="toctree-l2"><a class="reference internal" href="entropy_pooling.html">Entropy Pooling</a></li>
-<li class="toctree-l2"><a class="reference internal" href="optimization.html">Optimization</a></li>
-<li class="toctree-l2"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#data">Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#entropy-pooling">Entropy Pooling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#optimization">Optimization</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="references.html">References</a></li>
 </ul>
@@ -71,16 +72,171 @@
              
   <section id="documentation">
 <h1>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline"></a></h1>
-<p>The sidebar contains links to documentation of the main modules of this package
-as well as two examples:</p>
-<ol class="arabic simple">
-<li><p>How to combine Entropy Pooling views / stress-tests with CVaR optimization,</p></li>
-<li><p>A replication of the results from <span id="id1">Vorobets [<a class="reference internal" href="references.html#id3" title="A. Vorobets. Sequential entropy pooling heuristics. SSRN, 2021. URL: https://ssrn.com/abstract_id=3936392.">2021</a>]</span> for the original
-Entropy Pooling method.</p></li>
-</ol>
-<p>The data used in all of the example is the simulation from <span id="id2">Vorobets [<a class="reference internal" href="references.html#id3" title="A. Vorobets. Sequential entropy pooling heuristics. SSRN, 2021. URL: https://ssrn.com/abstract_id=3936392.">2021</a>]</span>.</p>
-<div class="toctree-wrapper compound">
+<section id="data">
+<h2>Data<a class="headerlink" href="#data" title="Permalink to this headline"></a></h2>
+<p>The P&amp;L simulation from <span id="id1">Vorobets [<a class="reference internal" href="references.html#id3" title="A. Vorobets. Sequential entropy pooling heuristics. SSRN, 2021. URL: https://ssrn.com/abstract_id=3936392.">2021</a>]</span> follows with this package
+and assumes that returns follow a log-normal distribution with parameters
+given by <a class="reference external" href="https://www.afkastforventninger.dk/en/common-return-expectations/">the Danish common return expectations for the 2nd half of 2021</a>.</p>
+<p>The simulation is used in all examples and allows you to immediately start
+exploring the functionality of this package. You can also use it to test your
+understanding of the theory by replicating results.</p>
+<span class="target" id="module-fortitudo.tech.data"></span><dl class="py function">
+<dt class="sig sig-object py" id="fortitudo.tech.data.load_pnl">
+<span class="sig-name descname"><span class="pre">load_pnl</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fortitudo.tech.data.load_pnl" title="Permalink to this definition"></a></dt>
+<dd><p>Function for loading the P&amp;L simulation from Vorobets (2021).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code></p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>P&amp;L simulation.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="entropy-pooling">
+<h2>Entropy Pooling<a class="headerlink" href="#entropy-pooling" title="Permalink to this headline"></a></h2>
+<p>The Entropy Pooling method solves the problem</p>
+<div class="math notranslate nohighlight">
+\[q=\text{argmin}\left\{ x'\left(\ln x-\ln p\right)\right\},\]</div>
+<p>subject to the constraints</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}Ax=b, \\Gx\leq h.\end{split}\]</div>
+<p>The method was first introduced by <span id="id2">Meucci [<a class="reference internal" href="references.html#id2" title="A. Meucci. Fully flexible views: theory and practice. Risk, 21(10):97-102, 2008. URL: https://ssrn.com/abstract=1213325.">2008</a>]</span>, while the
+code is implemented using notation from <span id="id3">Vorobets [<a class="reference internal" href="references.html#id3" title="A. Vorobets. Sequential entropy pooling heuristics. SSRN, 2021. URL: https://ssrn.com/abstract_id=3936392.">2021</a>]</span>.</p>
+<span class="target" id="module-fortitudo.tech.entropy_pooling"></span><dl class="py function">
+<dt class="sig sig-object py" id="fortitudo.tech.entropy_pooling.entropy_pooling">
+<span class="sig-name descname"><span class="pre">entropy_pooling</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">A</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">G</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fortitudo.tech.entropy_pooling.entropy_pooling" title="Permalink to this definition"></a></dt>
+<dd><p>Function for computing Entropy Pooling posterior probabilities.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>p</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>) – Prior probability vector with shape (S, 1).</p></li>
+<li><p><strong>A</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>) – Equality constraint matrix with shape (M, S).</p></li>
+<li><p><strong>b</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>) – Equality constraint vector with shape (M, 1).</p></li>
+<li><p><strong>G</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>]) – Inequality constraint matrix with shape (N, S).</p></li>
+<li><p><strong>h</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>]) – Inequality constraint vector with shape (N, 1).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Posterior probability vector with shape (S, 1).</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="optimization">
+<h2>Optimization<a class="headerlink" href="#optimization" title="Permalink to this headline"></a></h2>
+<p>The MeanCVaR object can solve the problem</p>
+<div class="math notranslate nohighlight">
+\[\min_{e}CVaR\left(R,p,\alpha,e\right),\]</div>
+<p>subject to the constraints</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\mu'e&amp;\geq\mu_{target},\\Ae&amp;=b,\\Ge&amp;\leq h.\end{split}\]</div>
+<p>A method for solving this problem was first introduced by <span id="id4">Rockafellar and Uryasev [<a class="reference internal" href="references.html#id4" title="R. Tyrrell Rockafellar and Stanislav Uryasev. Optimization of conditional value-at-risk. Journal of Risk, 2(3):21-41, 2000. URL: https://doi.org/10.21314/JOR.2000.038.">2000</a>]</span>,
+while the implemented algorithm is based on <span id="id5">Künzi-Bay and Mayer [<a class="reference internal" href="references.html#id5" title="A. Künzi-Bay and J Mayer. Computational aspects of minimizing conditional value-at-risk. CMS, 3:3–27, 2006. URL: https://doi.org/10.1007/s10287-005-0042-0.">2006</a>]</span>. The notation
+in relation to the P&amp;L simulations <span class="math notranslate nohighlight">\(R\)</span> follows <span id="id6">Vorobets [<a class="reference internal" href="references.html#id3" title="A. Vorobets. Sequential entropy pooling heuristics. SSRN, 2021. URL: https://ssrn.com/abstract_id=3936392.">2021</a>]</span>.</p>
+<span class="target" id="module-fortitudo.tech.optimization"></span><dl class="py class">
+<dt class="sig sig-object py" id="fortitudo.tech.optimization.MeanCVaR">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">MeanCVaR</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">R</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">A</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">G</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fortitudo.tech.optimization.MeanCVaR" title="Permalink to this definition"></a></dt>
+<dd><p>Class for efficient mean-CVaR optimization using Benders decomposition.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>R</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>) – Matrix with P&amp;L simulations and shape (S, I).</p></li>
+<li><p><strong>A</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>]) – Equality constraints matrix with shape (M, I).</p></li>
+<li><p><strong>b</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>]) – Equality constraints matrix with shape (M,).</p></li>
+<li><p><strong>G</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>]) – Inequality constraints matrix with shape (N, I).</p></li>
+<li><p><strong>h</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>]) – Inequality constraints vector with shape (N,).</p></li>
+<li><p><strong>p</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>]) – Vector containing scenario probabilities with shape (S, 1).
+Default: np.ones((S, 1)) / S.</p></li>
+<li><p><strong>alpha</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]) – Alpha value for alpha-VaR and alpha-CVaR. Default: 0.95.</p></li>
+<li><p><strong>kwargs</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code>) – options dictionary with CVaR algorithm parameters.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="fortitudo.tech.optimization.MeanCVaR.efficient_frontier">
+<span class="sig-name descname"><span class="pre">efficient_frontier</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_portfolios</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fortitudo.tech.optimization.MeanCVaR.efficient_frontier" title="Permalink to this definition"></a></dt>
+<dd><p>Method for computing the efficient frontier.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>num_portfolios</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]) – Number of portfolios used to span the efficient frontier. Default: 9.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Efficient frontier with shape (I, num_portfolios).</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If constraints are infeasible or max_expected_return is unbounded.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fortitudo.tech.optimization.MeanCVaR.efficient_portfolio">
+<span class="sig-name descname"><span class="pre">efficient_portfolio</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">return_target</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fortitudo.tech.optimization.MeanCVaR.efficient_portfolio" title="Permalink to this definition"></a></dt>
+<dd><p>Method for computing an efficient portfolio with return target.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>return_target</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]) – Return target for the efficient portfolio.
+The minimum CVaR portfolio is computed by default.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Efficient portfolio exposures with shape (I, 1).</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<p><strong>Algorithm Parameters</strong></p>
+<p>Control parameters can be set globally using the cvar_options dictionary, e.g.,</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">fortitudo.tech</span> <span class="k">as</span> <span class="nn">ft</span>
+<span class="n">ft</span><span class="o">.</span><span class="n">cvar_options</span><span class="p">[</span><span class="s1">&#39;demean&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="n">ft</span><span class="o">.</span><span class="n">cvar_options</span><span class="p">[</span><span class="s1">&#39;R_scalar&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">10000</span>
+</pre></div>
 </div>
+<p>or for a particular instance of the MeanCVaR class:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">opt</span> <span class="o">=</span> <span class="n">ft</span><span class="o">.</span><span class="n">MeanCVaR</span><span class="p">(</span><span class="n">R</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">G</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;demean&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span> <span class="s1">&#39;R_scalar&#39;</span><span class="p">:</span> <span class="mi">10000</span><span class="p">})</span>
+</pre></div>
+</div>
+<p>The following parameters can be accessed:</p>
+<dl class="simple">
+<dt><code class="xref py py-const docutils literal notranslate"><span class="pre">'demean'</span></code></dt><dd><p>Whether to use demeaned P&amp;L when calculating CVaR. Default: <code class="xref py py-const docutils literal notranslate"><span class="pre">True</span></code>.</p>
+</dd>
+<dt><code class="xref py py-const docutils literal notranslate"><span class="pre">'R_scalar'</span></code></dt><dd><p>Scaling factor for the P&amp;L simulation. Default: <code class="xref py py-const docutils literal notranslate"><span class="pre">1000</span></code>.</p>
+</dd>
+<dt><code class="xref py py-const docutils literal notranslate"><span class="pre">'mean_scalar'</span></code></dt><dd><p>Scaling factor for the expected returns used by the return target constraint.
+Default: <code class="xref py py-const docutils literal notranslate"><span class="pre">100</span></code>.</p>
+</dd>
+<dt><code class="xref py py-const docutils literal notranslate"><span class="pre">'maxiter'</span></code></dt><dd><p>Maximum number of iterations for the decomposition algorithm, i.e., maximum
+number of relaxed master problems the algorithm is allowed to solve.
+Default: <code class="xref py py-const docutils literal notranslate"><span class="pre">500</span></code>.</p>
+</dd>
+<dt><code class="xref py py-const docutils literal notranslate"><span class="pre">'reltol'</span></code></dt><dd><p>Relative tolerance for the difference between the currently best upper and
+lower bounds. Default: <code class="xref py py-const docutils literal notranslate"><span class="pre">1e-8</span></code>.</p>
+</dd>
+<dt><code class="xref py py-const docutils literal notranslate"><span class="pre">'abstol'</span></code></dt><dd><p>Absolute tolerance for the difference between the currently best upper and
+lower bounds if the lower bound is less than <code class="xref py py-const docutils literal notranslate"><span class="pre">1e-10</span></code>. Default:
+<code class="xref py py-const docutils literal notranslate"><span class="pre">1e-8</span></code>.</p>
+</dd>
+</dl>
+<p>The algorithm stops when one of the <code class="xref py py-const docutils literal notranslate"><span class="pre">'maxiter'</span></code>, <code class="xref py py-const docutils literal notranslate"><span class="pre">'reltol'</span></code>,
+or <code class="xref py py-const docutils literal notranslate"><span class="pre">'abstol'</span></code> conditions are satisfied. The parameters have been tested
+with P&amp;L that is “percentage return” and work well. In most cases, the algorithm
+stops due to relative convergence in less than 100 iterations. But if you use
+P&amp;L simulations that are scaled differently, you might need to adjust them.</p>
+</section>
 </section>
 
 
@@ -88,7 +244,7 @@ Entropy Pooling method.</p></li>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="index.html" class="btn btn-neutral float-left" title="Fortitudo Technologies Open Source" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="data.html" class="btn btn-neutral float-right" title="Data" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="examples.html" class="btn btn-neutral float-right" title="Examples" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

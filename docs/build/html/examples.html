@@ -21,7 +21,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Contributing" href="contributing.html" />
-    <link rel="prev" title="Optimization" href="optimization.html" /> 
+    <link rel="prev" title="Documentation" href="documentation.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -36,15 +36,10 @@
               </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="documentation.html">Documentation</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="data.html">Data</a></li>
-<li class="toctree-l2"><a class="reference internal" href="entropy_pooling.html">Entropy Pooling</a></li>
-<li class="toctree-l2"><a class="reference internal" href="optimization.html">Optimization</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Examples</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#general-overview">General Overview</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#entropy-pooling">Entropy Pooling</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="documentation.html">Documentation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#general-overview">General Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#entropy-pooling">Entropy Pooling</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
@@ -65,7 +60,6 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="documentation.html">Documentation</a> &raquo;</li>
       <li>Examples</li>
       <li class="wy-breadcrumbs-aside">
       </li>
@@ -77,6 +71,13 @@
              
   <section id="examples">
 <h1>Examples<a class="headerlink" href="#examples" title="Permalink to this headline"></a></h1>
+<p>This page contains two examples:</p>
+<ol class="arabic simple">
+<li><p>How to combine Entropy Pooling views / stress-tests with CVaR optimization,</p></li>
+<li><p>A replication of the results from <span id="id1">Vorobets [<a class="reference internal" href="references.html#id3" title="A. Vorobets. Sequential entropy pooling heuristics. SSRN, 2021. URL: https://ssrn.com/abstract_id=3936392.">2021</a>]</span> for the original
+Entropy Pooling method.</p></li>
+</ol>
+<p>The data used in all of the example is the simulation from <span id="id2">Vorobets [<a class="reference internal" href="references.html#id3" title="A. Vorobets. Sequential entropy pooling heuristics. SSRN, 2021. URL: https://ssrn.com/abstract_id=3936392.">2021</a>]</span>.</p>
 <section id="general-overview">
 <h2>General Overview<a class="headerlink" href="#general-overview" title="Permalink to this headline"></a></h2>
 <p>This example walks through the mean-CVaR and Entropy Pooling functionality
@@ -280,7 +281,7 @@ scope of this example and package.</p>
 </section>
 <section id="entropy-pooling">
 <h2>Entropy Pooling<a class="headerlink" href="#entropy-pooling" title="Permalink to this headline"></a></h2>
-<p>This example replicates Table 4 and Table 7 in <span id="id1">Vorobets [<a class="reference internal" href="references.html#id3" title="A. Vorobets. Sequential entropy pooling heuristics. SSRN, 2021. URL: https://ssrn.com/abstract_id=3936392.">2021</a>]</span>.
+<p>This example replicates Table 4 and Table 7 in <span id="id3">Vorobets [<a class="reference internal" href="references.html#id3" title="A. Vorobets. Sequential entropy pooling heuristics. SSRN, 2021. URL: https://ssrn.com/abstract_id=3936392.">2021</a>]</span>.
 You can <a class="reference external" href="https://ssrn.com/abstract_id=3936392">download the article using this link</a>
 and compare the results.</p>
 <p>We first load the necessary packages and P&amp;L data as well as create a prior
@@ -320,7 +321,7 @@ probability vector <span class="math notranslate nohighlight">\(p\)</span>:</p>
 </pre></div>
 </div>
 <p>This gives the following output (Table 1 and Table 5 in
-<span id="id2">Vorobets [<a class="reference internal" href="references.html#id3" title="A. Vorobets. Sequential entropy pooling heuristics. SSRN, 2021. URL: https://ssrn.com/abstract_id=3936392.">2021</a>]</span>):</p>
+<span id="id4">Vorobets [<a class="reference internal" href="references.html#id3" title="A. Vorobets. Sequential entropy pooling heuristics. SSRN, 2021. URL: https://ssrn.com/abstract_id=3936392.">2021</a>]</span>):</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>                <span class="n">Mean</span>  <span class="n">Volatility</span>  <span class="n">Skewness</span>  <span class="n">Kurtosis</span>
 <span class="n">Gov</span> <span class="o">&amp;</span> <span class="n">MBS</span>       <span class="o">-</span><span class="mf">0.7</span>         <span class="mf">3.2</span>      <span class="mf">0.10</span>      <span class="mf">3.02</span>
 <span class="n">Corp</span> <span class="n">IG</span>         <span class="o">-</span><span class="mf">0.4</span>         <span class="mf">3.4</span>      <span class="mf">0.11</span>      <span class="mf">3.11</span>
@@ -402,7 +403,7 @@ recalculated using the posterior probabilities.</p>
 </pre></div>
 </div>
 <p>Which gives the following output (Table 4 and Table 7 in
-<span id="id3">Vorobets [<a class="reference internal" href="references.html#id3" title="A. Vorobets. Sequential entropy pooling heuristics. SSRN, 2021. URL: https://ssrn.com/abstract_id=3936392.">2021</a>]</span>):</p>
+<span id="id5">Vorobets [<a class="reference internal" href="references.html#id3" title="A. Vorobets. Sequential entropy pooling heuristics. SSRN, 2021. URL: https://ssrn.com/abstract_id=3936392.">2021</a>]</span>):</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>                <span class="n">Mean</span>  <span class="n">Volatility</span>  <span class="n">Skewness</span>  <span class="n">Kurtosis</span>
 <span class="n">Gov</span> <span class="o">&amp;</span> <span class="n">MBS</span>       <span class="o">-</span><span class="mf">0.6</span>         <span class="mf">3.2</span>      <span class="mf">0.06</span>      <span class="mf">2.91</span>
 <span class="n">Corp</span> <span class="n">IG</span>         <span class="o">-</span><span class="mf">0.5</span>         <span class="mf">3.4</span>      <span class="mf">0.14</span>      <span class="mf">3.12</span>
@@ -444,7 +445,7 @@ simulation that follows with this package and the Entropy Pooling technology.</p
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="optimization.html" class="btn btn-neutral float-left" title="Optimization" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="documentation.html" class="btn btn-neutral float-left" title="Documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="contributing.html" class="btn btn-neutral float-right" title="Contributing" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

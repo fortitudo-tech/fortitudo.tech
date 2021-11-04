@@ -1,6 +1,14 @@
 Examples
 ========
 
+This page contains two examples:
+
+1) How to combine Entropy Pooling views / stress-tests with CVaR optimization,
+2) A replication of the results from :cite:t:`SeqEntropyPooling` for the original
+   Entropy Pooling method.
+
+The data used in all of the example is the simulation from :cite:t:`SeqEntropyPooling`.
+
 General Overview
 ----------------
 

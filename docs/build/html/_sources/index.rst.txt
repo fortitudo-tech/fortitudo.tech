@@ -51,5 +51,6 @@ not representative of the functionality offered therein.
    :hidden:
 
    documentation
+   examples
    contributing
    references
