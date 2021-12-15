@@ -1,5 +1,5 @@
-# fortitudo.tech investment and risk technologies
-# Copyright (C) 2021 Fortitudo Technologies ApS
+# fortitudo.tech - Novel Investment Technologies.
+# Copyright (C) 2021 Fortitudo Technologies ApS.
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
