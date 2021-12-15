@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "fortitudo.tech"
-version = "0.2.1"
+version = "0.2.2"
 description = "Investment and risk technologies maintained by Fortitudo Technologies."
 authors = ["Fortitudo Technologies <software@fortitudo.tech>"]
 license = "GPL-3.0-or-later"
