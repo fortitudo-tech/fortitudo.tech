@@ -176,12 +176,10 @@ class MeanCVaR:
             Boolean indicating whether the algorithm should continue.
         """
         F_lower_abs = np.abs(F_lower)
-        if F_lower_abs > 1e-10 and (F_star - F_lower) / F_lower_abs > self._reltol:
-            return True
-        elif F_lower_abs <= 1e-10 and (F_star - F_lower) > self._abstol:
-            return True
+        if F_lower_abs > 1e-10:
+            return (F_star - F_lower) / F_lower_abs > self._reltol
         else:
-            return False
+            return (F_star - F_lower) > self._abstol
 
     def efficient_portfolio(self, return_target: float = None) -> np.ndarray:
         """Method for computing an efficient portfolio with return target.
