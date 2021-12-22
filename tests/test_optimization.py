@@ -71,6 +71,19 @@ def test_equality_constraint():
     assert np.max(np.abs(frontier_eq[:, 0] - min_risk_eq[:, 0])) <= tol
 
 
+def test_options():
+    with pytest.raises(ValueError):
+        MeanCVaR(pnl, options={'demean': 'X'})
+    with pytest.raises(ValueError):
+        MeanCVaR(pnl, options={'R_scalar': -100})
+    with pytest.raises(ValueError):
+        MeanCVaR(pnl, options={'maxiter': 'X'})
+    with pytest.raises(ValueError):
+        MeanCVaR(pnl, options={'reltol': 1e-9})
+    with pytest.raises(ValueError):
+        MeanCVaR(pnl, options={'abstol': 1e-3})
+
+
 def test_long_short_variance():
     opt4 = MeanVariance(mean, covariance_matrix)
     min_risk_pf = opt4.efficient_portfolio()
@@ -106,27 +119,3 @@ def test_equality_constraint_variance():
     frontier_eq = opt6.efficient_frontier()
     assert frontier_eq.shape == (I, 9)
     assert np.max(np.abs(frontier_eq[:, 0] - min_risk_eq[:, 0])) <= tol
-
-
-def test_inputs():
-    with pytest.raises(ValueError):
-        MeanCVaR(pnl, G=G)
-    with pytest.raises(ValueError):
-        MeanCVaR(pnl, h=h)
-    with pytest.raises(ValueError):
-        MeanCVaR(pnl, A=A)
-    with pytest.raises(ValueError):
-        MeanCVaR(pnl, b=b)
-
-
-def test_options():
-    with pytest.raises(ValueError):
-        MeanCVaR(pnl, options={'demean': 'X'})
-    with pytest.raises(ValueError):
-        MeanCVaR(pnl, options={'R_scalar': -100})
-    with pytest.raises(ValueError):
-        MeanCVaR(pnl, options={'maxiter': 'X'})
-    with pytest.raises(ValueError):
-        MeanCVaR(pnl, options={'reltol': 1e-9})
-    with pytest.raises(ValueError):
-        MeanCVaR(pnl, options={'abstol': 1e-3})

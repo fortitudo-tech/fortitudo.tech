@@ -93,8 +93,6 @@ class MeanCVaR(Optimization):
         elif A is None and b is None:
             self._A = sparse(matrix(np.hstack((np.ones((1, self._I)), np.zeros((1, 2))))))
             self._b = matrix([1.])
-        else:
-            raise ValueError('A and b must both be None or both different from None.')
 
         if G is not None and h is not None:
             self._G = sparse(matrix(
@@ -103,8 +101,6 @@ class MeanCVaR(Optimization):
         elif G is None and h is None:
             self._G = sparse(matrix(np.hstack((np.zeros((1, self._I + 1)), [[-1]]))))
             self._h = matrix([0.])
-        else:
-            raise ValueError('G and h must both be None or both different from None.')
 
         if p is None:
             self._p = np.ones((1, self._S)) / self._S
