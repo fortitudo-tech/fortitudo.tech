@@ -1,7 +1,7 @@
 Examples
 ========
 
-Jupyter Notebook examples are available in `fortitudo.tech GitHub repository
+Jupyter Notebook examples are available in the `fortitudo.tech GitHub repository
 <https://github.com/fortitudo-tech/fortitudo.tech/tree/main/examples>`_.
 The repository contains two examples:
 

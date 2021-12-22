@@ -191,13 +191,13 @@ class MeanCVaR(Optimization):
         return solution, w, F_lower, G_benders, h_benders, eta, p
 
     def _benders_cut(self, solution: np.ndarray) -> Tuple[np.ndarray, float]:
-        """Method for generating benders cut variables.
+        """Method for generating Benders cut.
 
         Args:
             solution: Current solution.
 
         Returns:
-            Variables for the next cut.
+            Input for the next cut.
         """
         K = (self._losses @ solution[0:self._I] >= solution[-2])[:, 0]
         eta = self._p[:, K] @ self._losses[K, :]
@@ -221,7 +221,7 @@ class MeanCVaR(Optimization):
             return (F_star - F_lower) > self._abstol
 
     def efficient_portfolio(self, return_target: float = None) -> np.ndarray:
-        """Method for computing an efficient portfolio with return target.
+        """Method for computing an efficient portfolio with return a target.
 
         Args:
             return_target: Return target for the efficient portfolio.
@@ -276,7 +276,7 @@ class MeanVariance(Optimization):
             self._h = matrix([0.])
 
     def efficient_portfolio(self, return_target: float = None) -> np.ndarray:
-        """Method for computing an efficient portfolio with return target.
+        """Method for computing an efficient portfolio with a return target.
 
         Args:
             return_target: Return target for the efficient portfolio.

@@ -50,6 +50,7 @@ in relation to the P&L simulations :math:`R` follows :cite:t:`SeqEntropyPooling`
 
 .. automodule:: fortitudo.tech.optimization
    :members:
+   :inherited-members:
 
 **Algorithm Parameters**
 
@@ -73,9 +74,6 @@ The following parameters can be accessed:
    Whether to use demeaned P&L when calculating CVaR. Default: :const:`True`.
 :const:`'R_scalar'`
    Scaling factor for the P&L simulation. Default: :const:`1000`.
-:const:`'mean_scalar'`
-   Scaling factor for the expected returns used by the return target constraint.
-   Default: :const:`100`.
 :const:`'maxiter'`
    Maximum number of iterations for the decomposition algorithm, i.e., maximum
    number of relaxed master problems the algorithm is allowed to solve.

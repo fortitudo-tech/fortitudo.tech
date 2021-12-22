@@ -32,7 +32,7 @@
             <a href="index.html" class="icon icon-home"> fortitudo.tech
           </a>
               <div class="version">
-                0.2.2
+                v0.3
               </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
@@ -182,11 +182,67 @@ Default: np.ones((S, 1)) / S.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="fortitudo.tech.optimization.MeanCVaR.efficient_portfolio">
 <span class="sig-name descname"><span class="pre">efficient_portfolio</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">return_target</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fortitudo.tech.optimization.MeanCVaR.efficient_portfolio" title="Permalink to this definition"></a></dt>
-<dd><p>Method for computing an efficient portfolio with return target.</p>
+<dd><p>Method for computing an efficient portfolio with return a target.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>return_target</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]) – Return target for the efficient portfolio.
 The minimum CVaR portfolio is computed by default.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Efficient portfolio exposures with shape (I, 1).</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="fortitudo.tech.optimization.MeanVariance">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MeanVariance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mean</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">covariance_matrix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">A</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">G</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fortitudo.tech.optimization.MeanVariance" title="Permalink to this definition"></a></dt>
+<dd><p>Class for efficient mean-variance optimization.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mean</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>) – Mean vector with shape (I,).</p></li>
+<li><p><strong>covariance_matrix</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>) – Covariance matrix with shape (I, I).</p></li>
+<li><p><strong>A</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>]) – Equality constraints matrix with shape (M, I).</p></li>
+<li><p><strong>b</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>]) – Equality constraints matrix with shape (M,).</p></li>
+<li><p><strong>G</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>]) – Inequality constraints matrix with shape (N, I).</p></li>
+<li><p><strong>h</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>]) – Inequality constraints vector with shape (N,).</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="fortitudo.tech.optimization.MeanVariance.efficient_frontier">
+<span class="sig-name descname"><span class="pre">efficient_frontier</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_portfolios</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fortitudo.tech.optimization.MeanVariance.efficient_frontier" title="Permalink to this definition"></a></dt>
+<dd><p>Method for computing the efficient frontier.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>num_portfolios</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]) – Number of portfolios used to span the efficient frontier. Default: 9.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Efficient frontier with shape (I, num_portfolios).</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If constraints are infeasible or max_expected_return is unbounded.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fortitudo.tech.optimization.MeanVariance.efficient_portfolio">
+<span class="sig-name descname"><span class="pre">efficient_portfolio</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">return_target</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fortitudo.tech.optimization.MeanVariance.efficient_portfolio" title="Permalink to this definition"></a></dt>
+<dd><p>Method for computing an efficient portfolio with a return target.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>return_target</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]) – Return target for the efficient portfolio.
+The minimum variance portfolio is computed by default.</p>
 </dd>
 <dt class="field-even">Return type</dt>
 <dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></p>
@@ -215,9 +271,6 @@ The minimum CVaR portfolio is computed by default.</p>
 <dt><code class="xref py py-const docutils literal notranslate"><span class="pre">'demean'</span></code></dt><dd><p>Whether to use demeaned P&amp;L when calculating CVaR. Default: <code class="xref py py-const docutils literal notranslate"><span class="pre">True</span></code>.</p>
 </dd>
 <dt><code class="xref py py-const docutils literal notranslate"><span class="pre">'R_scalar'</span></code></dt><dd><p>Scaling factor for the P&amp;L simulation. Default: <code class="xref py py-const docutils literal notranslate"><span class="pre">1000</span></code>.</p>
-</dd>
-<dt><code class="xref py py-const docutils literal notranslate"><span class="pre">'mean_scalar'</span></code></dt><dd><p>Scaling factor for the expected returns used by the return target constraint.
-Default: <code class="xref py py-const docutils literal notranslate"><span class="pre">100</span></code>.</p>
 </dd>
 <dt><code class="xref py py-const docutils literal notranslate"><span class="pre">'maxiter'</span></code></dt><dd><p>Maximum number of iterations for the decomposition algorithm, i.e., maximum
 number of relaxed master problems the algorithm is allowed to solve.
