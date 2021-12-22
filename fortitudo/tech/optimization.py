@@ -25,7 +25,49 @@ options['show_progress'] = False
 cvar_options = {}
 
 
-class MeanCVaR:
+class Optimization:
+    def _calculate_max_expected_return(self) -> float:
+        """Method for calculating the highest expected return and checking feasibility/boundness.
+
+        Returns:
+            Highest expected return for the given portfolio constraints.
+
+        Raises:
+            ValueError: If constraints are infeasible or max_expected_return is unbounded.
+        """
+        solution = lp(
+            c=self._expected_return_row.T, G=self._G, h=self._h,
+            A=self._A, b=self._b, solver='glpk')
+        if solution['status'] == 'optimal':
+            return -solution['primal objective']
+        else:
+            raise ValueError('Constraints are infeasible or max_expected_return is unbounded.')
+
+    def efficient_frontier(self, num_portfolios: int = None) -> np.ndarray:
+        """Method for computing the efficient frontier.
+
+        Args:
+            num_portfolios: Number of portfolios used to span the efficient frontier. Default: 9.
+
+        Returns:
+            Efficient frontier with shape (I, num_portfolios).
+
+        Raises:
+            ValueError: If constraints are infeasible or max_expected_return is unbounded.
+        """
+        if num_portfolios is None:
+            num_portfolios = 9
+        max_expected_return = self._calculate_max_expected_return()
+        frontier = np.full((self._I, num_portfolios), np.nan)
+        frontier[:, 0] = self.efficient_portfolio()[:, 0]
+        min_expected_return = float(self._mean @ frontier[:, 0])
+        delta = (max_expected_return - min_expected_return) / (num_portfolios - 1)
+        for p in range(1, num_portfolios):
+            frontier[:, p] = self.efficient_portfolio(min_expected_return + delta * p)[:, 0]
+        return frontier
+
+
+class MeanCVaR(Optimization):
     """Class for efficient mean-CVaR optimization using Benders decomposition.
 
     Args:
@@ -194,54 +236,10 @@ class MeanCVaR:
         else:
             G = sparse([self._G, self._expected_return_row])
             h = matrix([self._h, -return_target])
-        solution = self._benders_algorithm(G, h)
-        return solution[0:-2]
-
-    def _calculate_max_expected_return(self) -> float:
-        """Method for calculating the highest expected return and checking feasibility/boundness.
-
-        Returns:
-            Highest expected return for the given portfolio constraints.
-
-        Raises:
-            ValueError: If constraints are infeasible or max_expected_return is unbounded.
-        """
-        solution = lp(
-            c=self._expected_return_row.T, G=self._G, h=self._h,
-            A=self._A, b=self._b, solver='glpk')
-        if solution['status'] == 'optimal':
-            return -solution['primal objective']
-        else:
-            raise ValueError('Constraints are infeasible or max_expected_return is unbounded.')
-
-    def efficient_frontier(self, num_portfolios: int = None) -> np.ndarray:
-        """Method for computing the mean-CVaR efficient frontier.
-
-        Args:
-            num_portfolios: Number of portfolios used to span the efficient frontier. Default: 9.
-
-        Returns:
-            Efficient frontier with shape (I, num_portfolios).
-
-        Raises:
-            ValueError: If constraints are infeasible or max_expected_return is unbounded.
-        """
-        if num_portfolios is None:
-            num_portfolios = 9
-
-        max_expected_return = self._calculate_max_expected_return()
-        frontier = np.full((self._I, num_portfolios), np.nan)
-        frontier[:, 0] = self.efficient_portfolio()[:, 0]
-        min_expected_return = float(self._mean @ frontier[:, 0])
-        delta = (max_expected_return - min_expected_return) / (num_portfolios - 1)
-
-        for p in range(1, num_portfolios):
-            frontier[:, p] = self.efficient_portfolio(min_expected_return + delta * p)[:, 0]
-
-        return frontier
+        return self._benders_algorithm(G, h)[0:-2]
 
 
-class MeanVariance:
+class MeanVariance(Optimization):
     """Class for efficient mean-variance optimization.
 
     Args:
@@ -293,46 +291,3 @@ class MeanVariance:
             G = sparse([self._G, self._expected_return_row])
             h = matrix([self._h, -return_target])
             return np.array(qp(self._P, self._q, G, h, self._A, self._b)['x'])
-
-    def _calculate_max_expected_return(self) -> float:
-        """Method for calculating the highest expected return and checking feasibility/boundness.
-
-        Returns:
-            Highest expected return for the given portfolio constraints.
-
-        Raises:
-            ValueError: If constraints are infeasible or max_expected_return is unbounded.
-        """
-        solution = lp(
-            c=self._expected_return_row.T, G=self._G, h=self._h,
-            A=self._A, b=self._b, solver='glpk')
-        if solution['status'] == 'optimal':
-            return -solution['primal objective']
-        else:
-            raise ValueError('Constraints are infeasible or max_expected_return is unbounded.')
-
-    def efficient_frontier(self, num_portfolios: int = None) -> np.ndarray:
-        """Method for computing the efficient frontier.
-
-        Args:
-            num_portfolios: Number of portfolios used to span the efficient frontier. Default: 9.
-
-        Returns:
-            Efficient frontier with shape (I, num_portfolios).
-
-        Raises:
-            ValueError: If constraints are infeasible or max_expected_return is unbounded.
-        """
-        if num_portfolios is None:
-            num_portfolios = 9
-
-        max_expected_return = self._calculate_max_expected_return()
-        frontier = np.full((self._I, num_portfolios), np.nan)
-        frontier[:, 0] = self.efficient_portfolio()[:, 0]
-        min_expected_return = float(self._mean @ frontier[:, 0])
-        delta = (max_expected_return - min_expected_return) / (num_portfolios - 1)
-
-        for p in range(1, num_portfolios):
-            frontier[:, p] = self.efficient_portfolio(min_expected_return + delta * p)[:, 0]
-
-        return frontier
