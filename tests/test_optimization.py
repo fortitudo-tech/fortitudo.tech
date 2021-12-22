@@ -16,9 +16,11 @@
 
 import numpy as np
 import pytest
-from context import MeanCVaR, cvar_options, pnl
+from context import MeanCVaR, MeanVariance, cvar_options, pnl
 
 S, I = pnl.shape
+mean = np.mean(pnl, axis=0)
+covariance_matrix = np.cov(pnl, rowvar=False)
 tol = 1e-8
 G = -np.eye(I)
 h = np.zeros(I)
@@ -67,6 +69,17 @@ def test_equality_constraint():
     frontier_eq = opt3.efficient_frontier()
     assert frontier_eq.shape == (I, 9)
     assert np.max(np.abs(frontier_eq[:, 0] - min_risk_eq[:, 0])) <= tol
+
+
+def test_mean_variance():
+    opt4 = MeanVariance(mean, covariance_matrix, A, b, G, h)
+    min_risk_eq = opt4.efficient_portfolio()
+    target_return_eq = opt4.efficient_portfolio(0.06)
+    assert np.abs(np.sum(min_risk_eq) - 1) <= tol
+    assert np.abs(np.sum(target_return_eq) - 1) <= tol
+    assert np.abs(np.mean(pnl @ target_return_eq) - 0.06) <= tol
+    assert np.abs(min_risk_eq[6, 0] - b[0]) <= tol
+    assert np.abs(target_return_eq[6, 0] - b[0]) <= tol
 
 
 def test_inputs():

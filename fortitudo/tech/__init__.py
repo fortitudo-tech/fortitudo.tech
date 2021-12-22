@@ -14,8 +14,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-__all__ = ['load_pnl', 'entropy_pooling', 'cvar_options', 'MeanCVaR']
+__all__ = ['load_pnl', 'entropy_pooling', 'cvar_options', 'MeanCVaR', 'MeanVariance']
 
 from .data import load_pnl
 from .entropy_pooling import entropy_pooling
-from .optimization import cvar_options, MeanCVaR
+from .optimization import cvar_options, MeanCVaR, MeanVariance

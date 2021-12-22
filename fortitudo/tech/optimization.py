@@ -16,7 +16,7 @@
 
 import numpy as np
 from cvxopt import sparse, matrix
-from cvxopt.solvers import lp, options
+from cvxopt.solvers import lp, qp, options
 from typing import Tuple
 from copy import copy
 
@@ -242,3 +242,60 @@ class MeanCVaR:
             frontier[:, p] = self.efficient_portfolio(min_expected_return + delta * p)[:, 0]
 
         return frontier
+
+
+class MeanVariance:
+    """Class for efficient mean-variance optimization.
+
+    Args:
+        mean: Mean vector with shape (I,).
+        covariance_matrix: Covariance matrix with shape (I, I).
+        A: Equality constraints matrix with shape (M, I).
+        b: Equality constraints matrix with shape (M,).
+        G: Inequality constraints matrix with shape (N, I).
+        h: Inequality constraints vector with shape (N,).
+    """
+    def __init__(
+            self, mean: np.ndarray, covariance_matrix: np.ndarray,
+            A: np.ndarray = None, b: np.ndarray = None,
+            G: np.ndarray = None, h: np.ndarray = None):
+
+        self._I = len(mean)
+        self._expected_return_row = -matrix(mean).T
+        self._P = matrix(covariance_matrix)
+        self._q = matrix(np.zeros(self._I))
+
+        if A is not None and b is not None:
+            self._A = sparse(matrix(A))
+            self._b = matrix(b)
+        else:
+            self._A = sparse(matrix((np.ones((1, self._I)))))
+            self._b = matrix([1.])
+
+        if G is not None and h is not None:
+            self._G = sparse(matrix(G))
+            self._h = matrix(h)
+        else:
+            self._G = None
+            self._h = None
+
+    def efficient_portfolio(self, return_target: float = None) -> np.ndarray:
+        """Method for computing an efficient portfolio with return target.
+
+        Args:
+            return_target: Return target for the efficient portfolio.
+                The minimum variance portfolio is computed by default.
+
+        Returns:
+            Efficient portfolio exposures with shape (I, 1).
+        """
+        if return_target:
+            if self._G:
+                G = sparse([self._G, self._expected_return_row])
+                h = matrix([self._h, -return_target])
+            else:
+                G = self._expected_return_row
+                h = matrix([-return_target])
+            return np.array(qp(self._P, self._q, G, h, self._A, self._b)['x'])
+        else:
+            return np.array(qp(self._P, self._q, self._G, self._h, self._A, self._b)['x'])
