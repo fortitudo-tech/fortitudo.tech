@@ -125,8 +125,6 @@ def test_options():
     with pytest.raises(ValueError):
         MeanCVaR(pnl, options={'R_scalar': -100})
     with pytest.raises(ValueError):
-        MeanCVaR(pnl, options={'mean_scalar': -100})
-    with pytest.raises(ValueError):
         MeanCVaR(pnl, options={'maxiter': 'X'})
     with pytest.raises(ValueError):
         MeanCVaR(pnl, options={'reltol': 1e-9})

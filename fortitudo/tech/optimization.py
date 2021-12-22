@@ -75,8 +75,7 @@ class MeanCVaR:
         self._c = matrix(np.hstack((np.zeros(self._I), [1], [1 / (1 - self._alpha)])))
         self._set_options(kwargs.get('options', globals()['cvar_options']))
         self._mean = self._p @ R
-        self._expected_return_row = matrix(
-            np.hstack((-self._mean_scalar * self._mean, np.zeros((1, 2)))))
+        self._expected_return_row = matrix(np.hstack((-self._mean, np.zeros((1, 2)))))
         if self._demean:
             self._losses = -self._R_scalar * (R - self._mean)
         else:
@@ -94,9 +93,6 @@ class MeanCVaR:
         self._R_scalar = options.get('R_scalar', 1000)
         if type(self._R_scalar) not in (int, float) or self._R_scalar <= 0:
             raise ValueError('R_scalar must be a postive integer or float.')
-        self._mean_scalar = options.get('mean_scalar', 100)
-        if type(self._mean_scalar) not in (int, float) or self._mean_scalar <= 0:
-            raise ValueError('mean_scalar must be a postive integer or float.')
         self._maxiter = options.get('maxiter', 500)
         if type(self._maxiter) != int or self._maxiter < 100:
             raise ValueError('maxiter must be a postive integer greater than or equal to 100.')
@@ -197,7 +193,7 @@ class MeanCVaR:
             h = copy(self._h)
         else:
             G = sparse([self._G, self._expected_return_row])
-            h = matrix([self._h, -self._mean_scalar * return_target])
+            h = matrix([self._h, -return_target])
         solution = self._benders_algorithm(G, h)
         return solution[0:-2]
 
@@ -214,7 +210,7 @@ class MeanCVaR:
             c=self._expected_return_row.T, G=self._G, h=self._h,
             A=self._A, b=self._b, solver='glpk')
         if solution['status'] == 'optimal':
-            return -solution['primal objective'] / self._mean_scalar
+            return -solution['primal objective']
         else:
             raise ValueError('Constraints are infeasible or max_expected_return is unbounded.')
 
