@@ -14,9 +14,13 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-__all__ = ['load_pnl', 'load_parameters' 'entropy_pooling',
-           'cvar_options', 'MeanCVaR', 'MeanVariance']
+from context import load_parameters, load_pnl
+pnl = load_pnl()
+instrument_names, means, covariance_matrix = load_parameters()
 
-from .data import load_pnl, load_parameters
-from .entropy_pooling import entropy_pooling
-from .optimization import cvar_options, MeanCVaR, MeanVariance
+
+def test_load_data():
+    assert list(pnl.columns) == instrument_names
+    I = pnl.shape[1]
+    assert means.shape == (I,)
+    assert covariance_matrix.shape == (I, I)
