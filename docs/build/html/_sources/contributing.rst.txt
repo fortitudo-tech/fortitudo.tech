@@ -1,7 +1,7 @@
 Contributing
 ============
 
-You are very welcome to contribute to this package by forking the `github
+You are welcome to contribute to this package by forking the `GitHub
 repository <https://github.com/fortitudo-tech/fortitudo.tech>`_ and creating
 pull requests. Pull requests should always be sent to the dev branch. We
 especially appreciate contributions in relation to packaging, e.g., making
@@ -29,5 +29,5 @@ it easier to link the code to the theory.
 
 We encourage you to keep individual contributions small in addition to avoid
 imposing object-oriented design patterns. We are unlikely to accept contributions
-that use inheritance without exceptionally good reasons and encourage you to
-use composition instead.
+that use inheritance without very good reasons and encourage you to use composition
+instead.
