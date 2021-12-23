@@ -79,7 +79,7 @@ class MeanCVaR(Optimization):
         p: Vector containing scenario probabilities with shape (S, 1).
             Default: np.ones((S, 1)) / S.
         alpha: Alpha value for alpha-VaR and alpha-CVaR. Default: 0.95.
-        kwargs: options dictionary with CVaR algorithm parameters.
+        kwargs: options dictionary with Benders algorithm parameters.
     """
     def __init__(
             self, R: np.ndarray, A: np.ndarray = None, b: np.ndarray = None,
@@ -120,7 +120,7 @@ class MeanCVaR(Optimization):
             self._losses = -self._R_scalar * R
 
     def _set_options(self, options: dict):
-        """Method for setting algorithm parameters.
+        """Method for setting Benders algorithm parameters.
 
         Args:
             options: Dictionary containing algorithm parameters.
@@ -217,7 +217,7 @@ class MeanCVaR(Optimization):
             return (F_star - F_lower) > self._abstol
 
     def efficient_portfolio(self, return_target: float = None) -> np.ndarray:
-        """Method for computing an efficient portfolio with return a target.
+        """Method for computing a mean-CVaR efficient portfolio with return a target.
 
         Args:
             return_target: Return target for the efficient portfolio.
@@ -272,7 +272,7 @@ class MeanVariance(Optimization):
             self._h = matrix([0.])
 
     def efficient_portfolio(self, return_target: float = None) -> np.ndarray:
-        """Method for computing an efficient portfolio with a return target.
+        """Method for computing a mean-variance efficient portfolio with a return target.
 
         Args:
             return_target: Return target for the efficient portfolio.
