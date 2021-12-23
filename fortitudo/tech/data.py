@@ -31,11 +31,11 @@ def load_pnl() -> pd.DataFrame:
     return pd.read_csv(pnl_string)
 
 
-def load_parameters() -> Tuple[pd.DataFrame, pd.DataFrame, list]:
+def load_parameters() -> Tuple[list, pd.DataFrame, pd.DataFrame]:
     """Function for loading the P&L parameters from Vorobets (2021).
 
     Returns:
-        Mean vector, covariance matrix, and instrument names.
+        Instrument names, means vector, and covariance matrix.
     """
     parameters_string = StringIO(get_data('fortitudo.tech', 'data/parameters.csv').decode())
     data = pd.read_csv(parameters_string)

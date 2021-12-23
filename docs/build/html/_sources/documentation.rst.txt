@@ -4,13 +4,13 @@ Documentation
 Data
 ----
 
-The P&L simulation from :cite:t:`SeqEntropyPooling` follows with this package
-and assumes that returns follow a log-normal distribution with parameters
-given by `the Danish common return expectations for the 2nd half of 2021
-<https://www.afkastforventninger.dk/en/common-return-expectations/>`_.
+The P&L parameters and simulation from :cite:t:`SeqEntropyPooling` follows with
+this package. The simulation assumes that returns follow a log-normal distribution,
+while the parameters are given by `the Danish common return expectations for the
+2nd half of 2021 <https://www.afkastforventninger.dk/en/common-return-expectations/>`_.
 
-The simulation is used in all examples and allows you to immediately start 
-exploring the functionality of this package. You can also use it to test your
+The parameters and simulation are used in the examples and allows you to immediately
+start exploring the functionality of this package. You can also use it to test your
 understanding of the theory by replicating results.
 
 .. automodule:: fortitudo.tech.data
@@ -96,5 +96,5 @@ The following parameters can be adjusted:
 The algorithm stops when one of the :const:`'maxiter'`, :const:`'reltol'`,
 or :const:`'abstol'` conditions are satisfied. The parameters have been tested
 with "percentage return" P&L and work well. In most cases, the algorithm stops
-due to relative convergence in less than 100 iterations. But if you use P&L
+due to relative convergence in less than 100 iterations. If you use P&L
 simulations that are scaled differently, you might need to adjust them.
