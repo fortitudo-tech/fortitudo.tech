@@ -16,6 +16,8 @@
 
 from pkgutil import get_data
 from io import StringIO
+from typing import Tuple
+import numpy as np
 import pandas as pd
 
 
@@ -27,3 +29,20 @@ def load_pnl() -> pd.DataFrame:
     """
     pnl_string = StringIO(get_data('fortitudo.tech', 'data/pnl.csv').decode())
     return pd.read_csv(pnl_string)
+
+
+def load_parameters() -> Tuple[pd.DataFrame, pd.DataFrame, list]:
+    """Function for loading the P&L parameters from Vorobets (2021).
+
+    Returns:
+        Mean vector, covariance matrix, and instrument names.
+    """
+    parameters_string = StringIO(get_data('fortitudo.tech', 'data/parameters.csv').decode())
+    data = pd.read_csv(parameters_string)
+    instrument_names = list(data.columns)
+    data = data.values
+    means = data[0, :]
+    vols = data[1, :]
+    correlation_matrix = data[2:, :]
+    covariance_matrix = np.diag(vols) @ correlation_matrix @ np.diag(vols)
+    return instrument_names, means, covariance_matrix
