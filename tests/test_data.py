@@ -14,9 +14,13 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-import os
-import sys
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-from fortitudo.tech import (
-    entropy_pooling, MeanCVaR, MeanVariance, cvar_options, load_parameters, load_pnl)
-pnl = load_pnl().values
+from context import load_parameters, load_pnl
+pnl = load_pnl()
+instrument_names, means, covariance_matrix = load_parameters()
+
+
+def test_load_data():
+    assert list(pnl.columns) == instrument_names
+    I = pnl.shape[1]
+    assert means.shape == (I,)
+    assert covariance_matrix.shape == (I, I)
