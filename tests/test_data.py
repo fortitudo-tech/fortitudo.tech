@@ -15,12 +15,12 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 from context import load_parameters, load_pnl
-pnl = load_pnl()
+R = load_pnl()
 instrument_names, means, covariance_matrix = load_parameters()
 
 
 def test_load_data():
-    assert list(pnl.columns) == instrument_names
-    I = pnl.shape[1]
+    assert list(R.columns) == instrument_names
+    I = R.shape[1]
     assert means.shape == (I,)
     assert covariance_matrix.shape == (I, I)
