@@ -19,4 +19,4 @@ import sys
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from fortitudo.tech import (
     entropy_pooling, MeanCVaR, MeanVariance, cvar_options, load_parameters, load_pnl)
-pnl = load_pnl().values
+R = load_pnl().values
