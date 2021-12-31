@@ -1,5 +1,5 @@
 # fortitudo.tech - Novel Investment Technologies.
-# Copyright (C) 2021 Fortitudo Technologies ApS.
+# Copyright (C) 2021-2022 Fortitudo Technologies.
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -15,14 +15,14 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import numpy as np
-from context import entropy_pooling, pnl
+from context import entropy_pooling, R
 
-S = len(pnl)
+S = len(R)
 A_base = np.ones((1, S))
 b_base = np.ones((1, 1))
-A = np.vstack((A_base, pnl[:, 0][np.newaxis, :]))
+A = np.vstack((A_base, R[:, 0][np.newaxis, :]))
 b = np.vstack((b_base, np.array([[0.075]])))
-G = -pnl[:, 1][np.newaxis, :]
+G = -R[:, 1][np.newaxis, :]
 h = -np.array([[0.075]])
 tol = 1e-5
 
@@ -32,9 +32,9 @@ def test_uniform_prior():
     q1 = entropy_pooling(p, A, b, G, h)
     q2 = entropy_pooling(p, A, b)
     q3 = entropy_pooling(p, A_base, b_base, G, h)
-    means1 = q1.T @ pnl
-    means2 = q2.T @ pnl
-    means3 = q3.T @ pnl
+    means1 = q1.T @ R
+    means2 = q2.T @ R
+    means3 = q3.T @ R
     assert np.abs(means1[0, 0] - b[1, 0]) <= tol
     assert means1[0, 1] + h[0, 0] <= tol
     assert np.abs(np.sum(q1) - 1) <= tol
@@ -56,9 +56,9 @@ def test_random_prior():
     q4 = entropy_pooling(p2, A, b, G, h)
     q5 = entropy_pooling(p2, A, b)
     q6 = entropy_pooling(p2, A_base, b_base, G, h)
-    means4 = q4.T @ pnl
-    means5 = q5.T @ pnl
-    means6 = q6.T @ pnl
+    means4 = q4.T @ R
+    means5 = q5.T @ R
+    means6 = q6.T @ R
     assert np.abs(means4[0, 0] - b[1, 0]) <= tol
     assert means4[0, 1] + h[0, 0] <= tol
     assert np.abs(np.sum(q4) - 1) <= tol

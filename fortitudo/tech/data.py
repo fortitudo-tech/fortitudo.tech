@@ -1,5 +1,5 @@
 # fortitudo.tech - Novel Investment Technologies.
-# Copyright (C) 2021 Fortitudo Technologies ApS.
+# Copyright (C) 2021-2022 Fortitudo Technologies.
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -31,7 +31,7 @@ def load_pnl() -> pd.DataFrame:
     return pd.read_csv(pnl_string)
 
 
-def load_parameters() -> Tuple[list, pd.DataFrame, pd.DataFrame]:
+def load_parameters() -> Tuple[list, np.ndarray, np.ndarray]:
     """Function for loading the P&L parameters from Vorobets (2021).
 
     Returns:
