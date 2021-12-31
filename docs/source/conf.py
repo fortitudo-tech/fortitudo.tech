@@ -1,5 +1,5 @@
 # fortitudo.tech - Novel Investment Technologies.
-# Copyright (C) 2021 Fortitudo Technologies ApS.
+# Copyright (C) 2021-2022 Fortitudo Technologies.
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -34,11 +34,11 @@ sys.path.insert(0, os.path.abspath('../..'))
 # -- Project information -----------------------------------------------------
 
 project = 'fortitudo.tech'
-copyright = '2021, Fortitudo Technologies'
+copyright = '2021-2022, Fortitudo Technologies'
 author = 'Fortitudo Technologies'
 
 # The full version, including alpha/beta/rc tags
-version = 'v0.3'
+version = 'v0.3.1'
 
 
 # -- General configuration ---------------------------------------------------
