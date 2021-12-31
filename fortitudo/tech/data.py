@@ -31,7 +31,7 @@ def load_pnl() -> pd.DataFrame:
     return pd.read_csv(pnl_string)
 
 
-def load_parameters() -> Tuple[list, pd.DataFrame, pd.DataFrame]:
+def load_parameters() -> Tuple[list, np.ndarray, np.ndarray]:
     """Function for loading the P&L parameters from Vorobets (2021).
 
     Returns:
