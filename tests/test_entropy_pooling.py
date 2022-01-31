@@ -26,12 +26,9 @@ b = np.vstack((b_base, np.array([[0.075]])))
 G = -R[:, 1][np.newaxis, :]
 h = -np.array([[0.075]])
 tol = 1e-5
-
 p1 = np.ones((S, 1)) / S
 p2 = np.random.randint(1, S, (S, 1))
 p2 = p2 / np.sum(p2)
-
-
 q1 = entropy_pooling(p1, A, b)
 q2 = entropy_pooling(p1, A_base, b_base, G, h)
 q3 = entropy_pooling(p2, A, b)
