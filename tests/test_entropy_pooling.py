@@ -14,6 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+import pytest
 import numpy as np
 from context import entropy_pooling, R
 
@@ -26,49 +27,32 @@ G = -R[:, 1][np.newaxis, :]
 h = -np.array([[0.075]])
 tol = 1e-5
 
-
-def test_uniform_prior():
-    p = np.ones((S, 1)) / S
-    q1 = entropy_pooling(p, A, b, G, h)
-    q2 = entropy_pooling(p, A, b)
-    q3 = entropy_pooling(p, A_base, b_base, G, h)
-    means1 = q1.T @ R
-    means2 = q2.T @ R
-    means3 = q3.T @ R
-    assert np.abs(means1[0, 0] - b[1, 0]) <= tol
-    assert means1[0, 1] + h[0, 0] <= tol
-    assert np.abs(np.sum(q1) - 1) <= tol
-    assert np.all(q1 > 0)
-    assert q1.shape == (S, 1)
-    assert np.abs(means2[0, 0] - b[1, 0]) <= tol
-    assert np.abs(np.sum(q2) - 1) <= tol
-    assert np.all(q2 > 0)
-    assert q2.shape == (S, 1)
-    assert means3[0, 1] + h[0, 0] <= tol
-    assert np.abs(np.sum(q3) - 1) <= tol
-    assert np.all(q3 > 0)
-    assert q3.shape == (S, 1)
+p1 = np.ones((S, 1)) / S
+p2 = np.random.randint(1, S, (S, 1))
+p2 = p2 / np.sum(p2)
 
 
-def test_random_prior():
-    p2 = np.random.randint(1, S, (S, 1))
-    p2 = p2 / np.sum(p2)
-    q4 = entropy_pooling(p2, A, b, G, h)
-    q5 = entropy_pooling(p2, A, b)
-    q6 = entropy_pooling(p2, A_base, b_base, G, h)
-    means4 = q4.T @ R
-    means5 = q5.T @ R
-    means6 = q6.T @ R
-    assert np.abs(means4[0, 0] - b[1, 0]) <= tol
-    assert means4[0, 1] + h[0, 0] <= tol
-    assert np.abs(np.sum(q4) - 1) <= tol
-    assert np.all(q4 > 0)
-    assert q4.shape == (S, 1)
-    assert np.abs(means5[0, 0] - b[1, 0]) <= tol
-    assert np.abs(np.sum(q5) - 1) <= tol
-    assert np.all(q5 > 0)
-    assert q5.shape == (S, 1)
-    assert means6[0, 1] + h[0, 0] <= tol
-    assert np.abs(np.sum(q6) - 1) <= tol
-    assert np.all(q6 > 0)
-    assert q6.shape == (S, 1)
+@pytest.mark.parametrize("p", [p1, p2])
+def test_uniform_prior(p):
+    q = entropy_pooling(p, A, b, G, h)
+    means = q.T @ R
+    assert np.abs(means[0, 0] - b[1, 0]) <= tol
+    assert means[0, 1] + h[0, 0] <= tol
+    assert np.abs(np.sum(q) - 1) <= tol
+    assert np.all(q > 0)
+    assert q.shape == (S, 1)
+
+
+q1 = entropy_pooling(p1, A, b)
+q2 = entropy_pooling(p1, A_base, b_base, G, h)
+q3 = entropy_pooling(p2, A, b)
+q4 = entropy_pooling(p2, A_base, b_base, G, h)
+
+
+@pytest.mark.parametrize("q", [q1, q2, q3, q4])
+def test_random_prior(q):
+    means = q.T @ R
+    assert means[0, 1] + h[0, 0] <= tol
+    assert np.abs(np.sum(q) - 1) <= tol
+    assert np.all(q > 0)
+    assert q.shape == (S, 1)
