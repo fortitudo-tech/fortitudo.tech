@@ -87,20 +87,20 @@ class MeanCVaR(Optimization):
             alpha: float = None, **kwargs: dict):
 
         self._S, self._I = R.shape
-        if A is not None and b is not None:
-            self._A = sparse(matrix(np.hstack((A, np.zeros((A.shape[0], 2))))))
-            self._b = matrix(b)
-        elif A is None and b is None:
+        if A is None:
             self._A = sparse(matrix(np.hstack((np.ones((1, self._I)), np.zeros((1, 2))))))
             self._b = matrix([1.])
+        else:
+            self._A = sparse(matrix(np.hstack((A, np.zeros((A.shape[0], 2))))))
+            self._b = matrix(b)
 
-        if G is not None and h is not None:
+        if G is None:
+            self._G = sparse(matrix(np.hstack((np.zeros((1, self._I + 1)), [[-1]]))))
+            self._h = matrix([0.])
+        else:
             self._G = sparse(matrix(
                 np.block([[G, np.zeros((G.shape[0], 2))], [np.zeros(self._I + 1), -1]])))
             self._h = matrix(np.hstack((h, [0.])))
-        elif G is None and h is None:
-            self._G = sparse(matrix(np.hstack((np.zeros((1, self._I + 1)), [[-1]]))))
-            self._h = matrix([0.])
 
         if p is None:
             self._p = np.ones((1, self._S)) / self._S
@@ -257,19 +257,19 @@ class MeanVariance(Optimization):
         self._P = matrix(covariance_matrix)
         self._q = matrix(np.zeros(self._I))
 
-        if A is not None and b is not None:
-            self._A = sparse(matrix(A))
-            self._b = matrix(b)
-        else:
+        if A is None:
             self._A = sparse(matrix((np.ones((1, self._I)))))
             self._b = matrix([1.])
-
-        if G is not None and h is not None:
-            self._G = sparse(matrix(G))
-            self._h = matrix(h)
         else:
+            self._A = sparse(matrix(A))
+            self._b = matrix(b)
+
+        if G is None:
             self._G = sparse(matrix(np.zeros((1, self._I))))
             self._h = matrix([0.])
+        else:
+            self._G = sparse(matrix(G))
+            self._h = matrix(h)
 
     def efficient_portfolio(self, return_target: float = None) -> np.ndarray:
         """Method for computing a mean-variance efficient portfolio with a return target.
