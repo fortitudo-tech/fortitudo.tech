@@ -16,8 +16,9 @@
 
 import numpy as np
 import pytest
-from context import MeanCVaR, MeanVariance, R
+from context import R, MeanCVaR, cvar_options, MeanVariance
 
+R = R.values
 S, I = R.shape
 mean = np.mean(R, axis=0)
 covariance_matrix = np.cov(R, rowvar=False)
@@ -90,6 +91,9 @@ def test_equality_constraint(opt):
 
 
 def test_options():
+    cvar_options['demean'] = False
+    opt4 = MeanCVaR(R, A, b, G, h)
+    assert opt4._demean is False
     with pytest.raises(ValueError):
         MeanCVaR(R, options={'demean': 'X'})
     with pytest.raises(ValueError):

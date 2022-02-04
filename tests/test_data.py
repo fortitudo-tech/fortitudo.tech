@@ -14,8 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-from context import load_parameters, load_pnl
-R = load_pnl()
+from context import load_parameters, R
 instrument_names, means, covariance_matrix = load_parameters()
 
 
