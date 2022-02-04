@@ -16,7 +16,7 @@
 
 import numpy as np
 import pytest
-from context import MeanCVaR, MeanVariance, R
+from context import R, MeanCVaR, cvar_options, MeanVariance
 
 R = R.values
 S, I = R.shape
@@ -90,7 +90,10 @@ def test_equality_constraint(opt):
     assert np.max(np.abs(frontier_eq[:, 0] - min_risk_eq[:, 0])) <= tol
 
 
-def test_options_local():
+def test_options():
+    cvar_options['demean'] = False
+    opt4 = MeanCVaR(R, A, b, G, h)
+    assert opt4._demean is False
     with pytest.raises(ValueError):
         MeanCVaR(R, options={'demean': 'X'})
     with pytest.raises(ValueError):
