@@ -29,14 +29,21 @@ tol = 1e-5
 p1 = np.ones((S, 1)) / S
 p2 = np.random.randint(1, S, (S, 1))
 p2 = p2 / np.sum(p2)
-q1 = entropy_pooling(p1, A, b)
-q2 = entropy_pooling(p1, A_base, b_base, G, h)
-q3 = entropy_pooling(p2, A, b)
-q4 = entropy_pooling(p2, A_base, b_base, G, h)
 
 
-@pytest.mark.parametrize("q", [q1, q2, q3, q4])
-def test_entropy_pooling_base(q):
+@pytest.mark.parametrize("p", [p1, p2])
+def test_equality(p):
+    q = entropy_pooling(p, A, b)
+    means = q.T @ R
+    assert np.abs(means[0, 0] - b[1, 0]) <= tol
+    assert np.abs(np.sum(q) - 1) <= tol
+    assert np.all(q > 0)
+    assert q.shape == (S, 1)
+
+
+@pytest.mark.parametrize("p", [p1, p2])
+def test_base_inequality(p):
+    q = entropy_pooling(p, A_base, b_base, G, h)
     means = q.T @ R
     assert means[0, 1] + h[0, 0] <= tol
     assert np.abs(np.sum(q) - 1) <= tol
@@ -45,7 +52,7 @@ def test_entropy_pooling_base(q):
 
 
 @pytest.mark.parametrize("p", [p1, p2])
-def test_mean_equality(p):
+def test_equality_inequality(p):
     q = entropy_pooling(p, A, b, G, h)
     means = q.T @ R
     assert np.abs(means[0, 0] - b[1, 0]) <= tol
