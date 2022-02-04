@@ -18,6 +18,7 @@ import pytest
 import numpy as np
 from context import entropy_pooling, R
 
+R = R.values
 S = len(R)
 A_base = np.ones((1, S))
 b_base = np.ones((1, 1))

@@ -18,6 +18,7 @@ import numpy as np
 import pytest
 from context import MeanCVaR, MeanVariance, R
 
+R = R.values
 S, I = R.shape
 mean = np.mean(R, axis=0)
 covariance_matrix = np.cov(R, rowvar=False)
@@ -89,7 +90,7 @@ def test_equality_constraint(opt):
     assert np.max(np.abs(frontier_eq[:, 0] - min_risk_eq[:, 0])) <= tol
 
 
-def test_options():
+def test_options_local():
     with pytest.raises(ValueError):
         MeanCVaR(R, options={'demean': 'X'})
     with pytest.raises(ValueError):
