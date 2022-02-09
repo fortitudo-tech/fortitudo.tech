@@ -5,12 +5,12 @@ channels:
 dependencies:
   - _libgcc_mutex=0.1=main
   - _openmp_mutex=4.5=1_gnu
-  - attrs=21.2.0=pyhd3eb1b0_0
+  - attrs=21.4.0=pyhd3eb1b0_0
   - blas=1.0=mkl
   - bottleneck=1.3.2=py39hdd57654_1
   - ca-certificates=2021.10.8=ha878542_0
   - certifi=2021.10.8=py39hf3d152e_1
-  - coverage=5.5=py39h27cfd23_2
+  - coverage=6.2=py39h7f8727e_0
   - cvxopt=1.2.6=py39heb1511d_0
   - dsdp=5.8=hd9d9efa_1203
   - fftw=3.3.9=h27cfd23_1
@@ -36,15 +36,15 @@ dependencies:
   - mkl_random=1.2.2=py39h51133e4_0
   - mpfr=4.1.0=h9202a9a_1
   - ncurses=6.3=h7f8727e_2
-  - numexpr=2.7.3=py39h22e1b3c_1
+  - numexpr=2.8.1=py39h6abb31d_0
   - numpy=1.21.2=py39h20f2e39_0
   - numpy-base=1.21.2=py39h79a1101_0
-  - openssl=1.1.1l=h7f8727e_0
+  - openssl=1.1.1m=h7f8727e_0
   - packaging=21.3=pyhd3eb1b0_0
-  - pandas=1.3.4=py39h8c16a72_0
+  - pandas=1.3.5=py39h8c16a72_0
   - pip=21.2.4=py39h06a4308_0
   - pluggy=1.0.0=py39h06a4308_0
-  - py=1.10.0=pyhd3eb1b0_0
+  - py=1.11.0=pyhd3eb1b0_0
   - pyparsing=3.0.4=pyhd3eb1b0_0
   - pytest=6.2.5=py39h06a4308_2
   - pytest-cov=3.0.0=pyhd3eb1b0_0
@@ -52,27 +52,28 @@ dependencies:
   - python-dateutil=2.8.2=pyhd3eb1b0_0
   - python_abi=3.9=2_cp39
   - pytz=2021.3=pyhd3eb1b0_0
-  - readline=8.1=h27cfd23_0
-  - scipy=1.7.1=py39h292c36d_2
+  - readline=8.1.2=h7f8727e_1
+  - scipy=1.7.3=py39hc147768_0
   - setuptools=58.0.4=py39h06a4308_0
   - six=1.16.0=pyhd3eb1b0_0
-  - sqlite=3.36.0=hc218d9a_0
+  - sqlite=3.37.2=hc218d9a_0
   - suitesparse=5.10.1=hd8046ac_0
   - tbb=2020.2=h4bd325d_4
   - tk=8.6.11=h1ccaba5_0
   - toml=0.10.2=pyhd3eb1b0_0
   - tzdata=2021e=hda174b7_0
-  - wheel=0.37.0=pyhd3eb1b0_1
+  - wheel=0.37.1=pyhd3eb1b0_0
   - xz=5.2.5=h7b6447c_0
-  - zlib=1.2.11=h7b6447c_3
+  - zlib=1.2.11=h7f8727e_4
   - pip:
     - alabaster==0.7.12
     - babel==2.9.1
-    - charset-normalizer==2.0.9
+    - charset-normalizer==2.0.11
     - docutils==0.17.1
     - flake8==4.0.1
     - idna==3.3
     - imagesize==1.3.0
+    - importlib-metadata==4.10.1
     - jinja2==3.0.3
     - latexcodec==2.0.1
     - markupsafe==2.0.1
@@ -81,12 +82,12 @@ dependencies:
     - pybtex-docutils==1.0.1
     - pycodestyle==2.8.0
     - pyflakes==2.4.0
-    - pygments==2.10.0
+    - pygments==2.11.2
     - pyyaml==6.0
-    - requests==2.26.0
+    - requests==2.27.1
     - snowballstemmer==2.2.0
-    - sphinx==4.3.1
-    - sphinx-autodoc-typehints==1.12.0
+    - sphinx==4.4.0
+    - sphinx-autodoc-typehints==1.16.0
     - sphinx-rtd-theme==1.0.0
     - sphinxcontrib-applehelp==1.0.2
     - sphinxcontrib-bibtex==2.4.1
@@ -95,4 +96,5 @@ dependencies:
     - sphinxcontrib-jsmath==1.0.1
     - sphinxcontrib-qthelp==1.0.3
     - sphinxcontrib-serializinghtml==1.1.5
-    - urllib3==1.26.7
+    - urllib3==1.26.8
+    - zipp==3.7.0
