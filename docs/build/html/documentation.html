@@ -74,17 +74,17 @@
 <h1>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline"></a></h1>
 <section id="data">
 <h2>Data<a class="headerlink" href="#data" title="Permalink to this headline"></a></h2>
-<p>The P&amp;L parameters and simulation from <span id="id1">Vorobets [<a class="reference internal" href="references.html#id3" title="A. Vorobets. Sequential entropy pooling heuristics. SSRN, 2021. URL: https://ssrn.com/abstract_id=3936392.">2021</a>]</span> follows with
-this package. The simulation assumes that returns follow a log-normal distribution,
-while the parameters are given by <a class="reference external" href="https://www.afkastforventninger.dk/en/common-return-expectations/">the Danish common return expectations for the
-2nd half of 2021</a>.</p>
+<p>The P&amp;L parameters from <span id="id1">Vorobets [<a class="reference internal" href="references.html#id6" title="A. Vorobets. Variance for intuition, cvar for optimization. SSRN, 2022. URL: https://ssrn.com/abstract=4034316.">2022</a>]</span> and simulation from
+<span id="id2">Vorobets [<a class="reference internal" href="references.html#id3" title="A. Vorobets. Sequential entropy pooling heuristics. SSRN, 2021. URL: https://ssrn.com/abstract=3936392.">2021</a>]</span> follow with this package. The simulation assumes
+that returns follow a log-normal distribution, while the parameters are given
+by <a class="reference external" href="https://www.afkastforventninger.dk/en/common-return-expectations/">the Danish common return expectations for the 2nd half of 2021</a>.</p>
 <p>The parameters and simulation are used in the examples and allows you to immediately
 start exploring the functionality of this package. You can also use it to test your
 understanding of the theory by replicating results.</p>
 <span class="target" id="module-fortitudo.tech.data"></span><dl class="py function">
 <dt class="sig sig-object py" id="fortitudo.tech.data.load_parameters">
 <span class="sig-name descname"><span class="pre">load_parameters</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fortitudo.tech.data.load_parameters" title="Permalink to this definition"></a></dt>
-<dd><p>Function for loading the P&amp;L parameters from Vorobets (2021).</p>
+<dd><p>Function for loading the P&amp;L parameters from Vorobets (2022).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>]</p>
@@ -118,8 +118,8 @@ understanding of the theory by replicating results.</p>
 <p>subject to the constraints</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}Ax=b, \\Gx\leq h.\end{split}\]</div>
-<p>The method was first introduced by <span id="id2">Meucci [<a class="reference internal" href="references.html#id2" title="A. Meucci. Fully flexible views: theory and practice. Risk, 21(10):97-102, 2008. URL: https://ssrn.com/abstract=1213325.">2008</a>]</span>, while the
-code is implemented using notation from <span id="id3">Vorobets [<a class="reference internal" href="references.html#id3" title="A. Vorobets. Sequential entropy pooling heuristics. SSRN, 2021. URL: https://ssrn.com/abstract_id=3936392.">2021</a>]</span>.</p>
+<p>The method was first introduced by <span id="id3">Meucci [<a class="reference internal" href="references.html#id2" title="A. Meucci. Fully flexible views: theory and practice. Risk, 21(10):97-102, 2008. URL: https://ssrn.com/abstract=1213325.">2008</a>]</span>, while the
+code is implemented using notation from <span id="id4">Vorobets [<a class="reference internal" href="references.html#id3" title="A. Vorobets. Sequential entropy pooling heuristics. SSRN, 2021. URL: https://ssrn.com/abstract=3936392.">2021</a>]</span>.</p>
 <span class="target" id="module-fortitudo.tech.entropy_pooling"></span><dl class="py function">
 <dt class="sig sig-object py" id="fortitudo.tech.entropy_pooling.entropy_pooling">
 <span class="sig-name descname"><span class="pre">entropy_pooling</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">A</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">G</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fortitudo.tech.entropy_pooling.entropy_pooling" title="Permalink to this definition"></a></dt>
@@ -153,9 +153,9 @@ code is implemented using notation from <span id="id3">Vorobets [<a class="refer
 subject to the constraints</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\mu'w&amp;\geq\mu_{target},\\Aw&amp;=b,\\Gw&amp;\leq h.\end{split}\]</div>
-<p>A method for solving the CVaR problem was first introduced by <span id="id4">Rockafellar and Uryasev [<a class="reference internal" href="references.html#id4" title="R. Tyrrell Rockafellar and Stanislav Uryasev. Optimization of conditional value-at-risk. Journal of Risk, 2(3):21-41, 2000. URL: https://doi.org/10.21314/JOR.2000.038.">2000</a>]</span>,
-while the implemented algorithm is based on <span id="id5">Künzi-Bay and Mayer [<a class="reference internal" href="references.html#id5" title="A. Künzi-Bay and J Mayer. Computational aspects of minimizing conditional value-at-risk. CMS, 3:3–27, 2006. URL: https://doi.org/10.1007/s10287-005-0042-0.">2006</a>]</span>. The notation
-in relation to the P&amp;L simulations <span class="math notranslate nohighlight">\(R\)</span> follows <span id="id6">Vorobets [<a class="reference internal" href="references.html#id3" title="A. Vorobets. Sequential entropy pooling heuristics. SSRN, 2021. URL: https://ssrn.com/abstract_id=3936392.">2021</a>]</span>.
+<p>A method for solving the CVaR problem was first introduced by <span id="id5">Rockafellar and Uryasev [<a class="reference internal" href="references.html#id4" title="R. Tyrrell Rockafellar and S. Uryasev. Optimization of conditional value-at-risk. Journal of Risk, 2(3):21-41, 2000. URL: https://doi.org/10.21314/JOR.2000.038.">2000</a>]</span>,
+while the implemented algorithm is based on <span id="id6">Künzi-Bay and Mayer [<a class="reference internal" href="references.html#id5" title="A. Künzi-Bay and J. Mayer. Computational aspects of minimizing conditional value-at-risk. CMS, 3:3–27, 2006. URL: https://doi.org/10.1007/s10287-005-0042-0.">2006</a>]</span>. The notation
+in relation to the P&amp;L simulations <span class="math notranslate nohighlight">\(R\)</span> follows <span id="id7">Vorobets [<a class="reference internal" href="references.html#id3" title="A. Vorobets. Sequential entropy pooling heuristics. SSRN, 2021. URL: https://ssrn.com/abstract=3936392.">2021</a>]</span>.
 For the variance risk measure, a standard quadratic programming solver is used.</p>
 <span class="target" id="module-fortitudo.tech.optimization"></span><dl class="py class">
 <dt class="sig sig-object py" id="fortitudo.tech.optimization.MeanCVaR">
