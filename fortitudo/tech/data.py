@@ -32,7 +32,7 @@ def load_pnl() -> pd.DataFrame:
 
 
 def load_parameters() -> Tuple[list, np.ndarray, np.ndarray]:
-    """Function for loading the P&L parameters from Vorobets (2021).
+    """Function for loading the P&L parameters from Vorobets (2022).
 
     Returns:
         Instrument names, means vector, and covariance matrix.
