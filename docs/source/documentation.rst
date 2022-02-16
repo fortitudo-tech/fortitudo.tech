@@ -4,10 +4,11 @@ Documentation
 Data
 ----
 
-The P&L parameters and simulation from :cite:t:`SeqEntropyPooling` follows with
-this package. The simulation assumes that returns follow a log-normal distribution,
-while the parameters are given by `the Danish common return expectations for the
-2nd half of 2021 <https://www.afkastforventninger.dk/en/common-return-expectations/>`_.
+The P&L parameters from :cite:t:`Vorobets2022` and simulation from 
+:cite:t:`Vorobets2021` follow with this package. The simulation assumes
+that returns follow a log-normal distribution, while the parameters are given
+by `the Danish common return expectations for the 2nd half of 2021 
+<https://www.afkastforventninger.dk/en/common-return-expectations/>`_.
 
 The parameters and simulation are used in the examples and allows you to immediately
 start exploring the functionality of this package. You can also use it to test your
@@ -28,7 +29,7 @@ subject to the constraints
 .. math:: Ax=b, \\Gx\leq h.
 
 The method was first introduced by :cite:t:`EntropyPooling`, while the
-code is implemented using notation from :cite:t:`SeqEntropyPooling`.
+code is implemented using notation from :cite:t:`Vorobets2021`.
 
 .. automodule:: fortitudo.tech.entropy_pooling
    :members:
@@ -47,7 +48,7 @@ subject to the constraints
 
 A method for solving the CVaR problem was first introduced by :cite:t:`optCVaR`,
 while the implemented algorithm is based on :cite:t:`compCVaR`. The notation
-in relation to the P&L simulations :math:`R` follows :cite:t:`SeqEntropyPooling`.
+in relation to the P&L simulations :math:`R` follows :cite:t:`Vorobets2021`.
 For the variance risk measure, a standard quadratic programming solver is used.
 
 .. automodule:: fortitudo.tech.optimization
