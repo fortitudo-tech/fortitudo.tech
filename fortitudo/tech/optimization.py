@@ -86,7 +86,9 @@ class MeanCVaR(Optimization):
             G: np.ndarray = None, h: np.ndarray = None, p: np.ndarray = None,
             alpha: float = None, **kwargs: dict):
 
+        self._set_options(kwargs.get('options', globals()['cvar_options']))
         self._S, self._I = R.shape
+
         if A is None:
             self._A = sparse(matrix(np.hstack((np.ones((1, self._I)), np.zeros((1, 2))))))
             self._b = matrix([1.])
@@ -110,10 +112,9 @@ class MeanCVaR(Optimization):
         if alpha is None:
             self._alpha = 0.95
 
-        self._c = matrix(np.hstack((np.zeros(self._I), [1], [1 / (1 - self._alpha)])))
-        self._set_options(kwargs.get('options', globals()['cvar_options']))
         self._mean = self._p @ R
         self._expected_return_row = matrix(np.hstack((-self._mean, np.zeros((1, 2)))))
+        self._c = matrix(np.hstack((np.zeros(self._I), [1], [1 / (1 - self._alpha)])))
         if self._demean:
             self._losses = -self._R_scalar * (R - self._mean)
         else:

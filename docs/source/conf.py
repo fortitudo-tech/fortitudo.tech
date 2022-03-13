@@ -38,7 +38,7 @@ copyright = '2021-2022, Fortitudo Technologies'
 author = 'Fortitudo Technologies'
 
 # The full version, including alpha/beta/rc tags
-version = 'v0.3.2'
+version = 'v0.3.3'
 
 
 # -- General configuration ---------------------------------------------------
@@ -63,7 +63,7 @@ typehints_document_rtype = True
 html_show_sourcelink = False
 
 # Add any paths that contain templates here, relative to this directory.
-templates_path = ['_templates']
+# templates_path = ['_templates']
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
