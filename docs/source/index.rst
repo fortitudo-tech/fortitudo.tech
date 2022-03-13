@@ -29,7 +29,7 @@ package using pip. You can do this by following these steps::
 
    conda create -n fortitudo.tech python scipy pandas -y
    conda activate fortitudo.tech
-   conda install -c conda-forge cvxopt=1.2.6 -y
+   conda install -c conda-forge cvxopt=1.3 -y
    pip install fortitudo.tech
 
 Code of Conduct
