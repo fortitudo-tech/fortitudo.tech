@@ -14,12 +14,18 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-from context import load_parameters, R
-instrument_names, means, covariance_matrix = load_parameters()
+import numpy as np
+from context import load_parameters, time_series, R
 
 
 def test_load_data():
+    instrument_names, means, covariance_matrix = load_parameters()
     assert list(R.columns) == instrument_names
     I = R.shape[1]
     assert means.shape == (I,)
     assert covariance_matrix.shape == (I, I)
+
+
+def test_time_series():
+    assert time_series.shape == (5040, 69)
+    assert np.all(time_series.values >= 0)
