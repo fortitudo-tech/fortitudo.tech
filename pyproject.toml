@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "fortitudo.tech"
-version = "0.3.3"
+version = "0.4"
 description = "Investment and risk technologies maintained by Fortitudo Technologies."
 authors = ["Fortitudo Technologies <software@fortitudo.tech>"]
 license = "GPL-3.0-or-later"
@@ -24,7 +24,9 @@ packages = [
     { include = "fortitudo/tech" }
 ]
 
-include = ["fortitudo/tech/data/pnl.csv", "fortitudo/tech/data/parameters.csv"]
+include = [
+    "fortitudo/tech/data/pnl.csv", "fortitudo/tech/data/parameters.csv",
+    "fortitudo/tech/data/time_series.csv"]
 
 [tool.poetry.urls]
 "Issues" = "https://github.com/fortitudo-tech/fortitudo.tech/issues"

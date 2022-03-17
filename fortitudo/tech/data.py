@@ -46,3 +46,13 @@ def load_parameters() -> Tuple[list, np.ndarray, np.ndarray]:
     correlation_matrix = data[2:, :]
     covariance_matrix = vols @ correlation_matrix @ vols
     return instrument_names, means, covariance_matrix
+
+
+def load_time_series() -> pd.DataFrame:
+    """Function for loading the time series simulation.
+
+    Returns:
+        Time series simulation.
+    """
+    ts_string = StringIO(get_data('fortitudo.tech', 'data/time_series.csv').decode())
+    return pd.read_csv(ts_string)
