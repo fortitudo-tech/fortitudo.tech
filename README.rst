@@ -13,7 +13,7 @@ management industry. For more information, please visit our `website
 This package is intended for advanced users who are comfortable specifying
 portfolio constraints and Entropy Pooling views using matrices and vectors.
 This gives full flexibility in relation to working with these technologies and
-allows user to build their own high-level interfaces if they wish to do so.
+allows users to build their own high-level interfaces if they wish to do so.
 
 Installation Instructions
 -------------------------

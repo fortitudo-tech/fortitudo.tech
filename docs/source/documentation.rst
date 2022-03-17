@@ -10,9 +10,15 @@ that returns follow a log-normal distribution, while the parameters are given
 by `the Danish common return expectations for the 2nd half of 2021 
 <https://www.afkastforventninger.dk/en/common-return-expectations/>`_.
 
-The parameters and simulation are used in the examples and allows you to immediately
-start exploring the functionality of this package. You can also use it to test your
-understanding of the theory by replicating results.
+The parameters and P&L simulation are used in the examples and allows you to
+immediately start exploring the functionality of this package. You can also use
+it to test your understanding of the theory by replicating results.
+
+In addition to the above, a simulated time series of an equity index, an
+associated implied volatility surface, and risk-free zero-coupon curve is
+included. You can use this time series data to, e.g., validate your risk
+modeling approach. See the example that uses the time series data for more
+information.
 
 .. automodule:: fortitudo.tech.data
    :members:
@@ -20,7 +26,7 @@ understanding of the theory by replicating results.
 Entropy Pooling
 ---------------
 
-The Entropy Pooling method solves the problem
+The Entropy Pooling approach solves the problem
 
 .. math:: q=\text{argmin}\left\{ x'\left(\ln x-\ln p\right)\right\},
 
@@ -28,7 +34,7 @@ subject to the constraints
 
 .. math:: Ax=b, \\Gx\leq h.
 
-The method was first introduced by :cite:t:`EntropyPooling`, while the
+The approach was first introduced by :cite:t:`EntropyPooling`, while the
 code is implemented using notation from :cite:t:`Vorobets2021`.
 
 .. automodule:: fortitudo.tech.entropy_pooling
@@ -99,3 +105,12 @@ or :const:`'abstol'` conditions are satisfied. The parameters have been tested
 with "percentage return" P&L and work well. In most cases, the algorithm stops
 due to relative convergence in less than 100 iterations. If you use P&L
 simulations that are scaled differently, you might need to adjust them.
+
+Option Pricing
+--------------
+
+The option pricing functionality consists of functions that use `Black's model
+<https://en.wikipedia.org/wiki/Black_model>`_ to price European call and put options.
+
+.. automodule:: fortitudo.tech.option_pricing
+   :members:
