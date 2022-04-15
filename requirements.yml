@@ -7,12 +7,11 @@ dependencies:
   - _openmp_mutex=4.5=1_gnu
   - attrs=21.4.0=pyhd3eb1b0_0
   - blas=1.0=mkl
-  - bottleneck=1.3.2=py310h9102076_1
-  - bzip2=1.0.8=h7b6447c_0
+  - bottleneck=1.3.4=py39hce1f21e_0
   - ca-certificates=2021.10.8=ha878542_0
-  - certifi=2021.10.8=py310hff52083_1
-  - coverage=6.3.2=py310h7f8727e_0
-  - cvxopt=1.3.0=py310h3151893_0
+  - certifi=2021.10.8=py39hf3d152e_2
+  - coverage=6.3.2=py39h7f8727e_0
+  - cvxopt=1.3.0=py39h751e006_1
   - dsdp=5.8=hd9d9efa_1203
   - fftw=3.3.8=nompi_hfc0cae8_1114
   - glpk=4.65=h9202a9a_1004
@@ -24,47 +23,46 @@ dependencies:
   - libblas=3.9.0=12_linux64_mkl
   - libcblas=3.9.0=12_linux64_mkl
   - libffi=3.3=he6710b0_2
-  - libgcc-ng=11.2.0=h1d223b6_13
+  - libgcc-ng=11.2.0=h1d223b6_15
   - libgfortran-ng=7.5.0=ha8ba4b0_17
   - libgfortran4=7.5.0=ha8ba4b0_17
-  - libgomp=11.2.0=h1d223b6_13
+  - libgomp=11.2.0=h1d223b6_15
   - liblapack=3.9.0=12_linux64_mkl
   - libstdcxx-ng=9.3.0=hd4cf53a_17
-  - libuuid=1.0.3=h7f8727e_2
   - metis=5.1.0=h58526e2_1006
   - mkl=2021.4.0=h06a4308_640
-  - mkl-service=2.4.0=py310h7f8727e_0
-  - mkl_fft=1.3.1=py310hd6ae3a3_0
-  - mkl_random=1.2.2=py310h00e6091_0
-  - more-itertools=8.12.0=pyhd3eb1b0_0
+  - mkl-service=2.4.0=py39h7f8727e_0
+  - mkl_fft=1.3.1=py39hd3c417c_0
+  - mkl_random=1.2.2=py39h51133e4_0
   - mpfr=4.1.0=h9202a9a_1
   - ncurses=6.3=h7f8727e_2
-  - numexpr=2.7.3=py310hd732450_1
-  - numpy=1.21.2=py310h20f2e39_0
-  - numpy-base=1.21.2=py310h79a1101_0
-  - openssl=1.1.1m=h7f8727e_0
+  - numexpr=2.8.1=py39h6abb31d_0
+  - numpy=1.21.5=py39he7a7128_1
+  - numpy-base=1.21.5=py39hf524024_1
+  - openssl=1.1.1n=h166bdaf_0
   - packaging=21.3=pyhd3eb1b0_0
-  - pandas=1.4.1=py310h295c915_0
-  - pip=21.2.4=py310h06a4308_0
-  - pluggy=0.13.1=py310h06a4308_0
+  - pandas=1.4.1=py39h295c915_1
+  - pip=21.2.4=py39h06a4308_0
+  - pluggy=1.0.0=py39h06a4308_1
   - py=1.11.0=pyhd3eb1b0_0
   - pyparsing=3.0.4=pyhd3eb1b0_0
-  - pytest=6.2.4=py310h06a4308_2
+  - pytest=7.1.1=py39h06a4308_0
   - pytest-cov=3.0.0=pyhd3eb1b0_0
-  - python=3.10.0=h12debd9_5
+  - python=3.9.12=h12debd9_0
   - python-dateutil=2.8.2=pyhd3eb1b0_0
-  - python_abi=3.10=2_cp310
+  - python_abi=3.9=2_cp39
   - pytz=2021.3=pyhd3eb1b0_0
   - readline=8.1.2=h7f8727e_1
-  - scipy=1.7.3=py310hfa59a62_0
-  - setuptools=58.0.4=py310h06a4308_0
+  - scipy=1.7.3=py39hc147768_0
+  - setuptools=61.2.0=py39h06a4308_0
   - six=1.16.0=pyhd3eb1b0_1
-  - sqlite=3.38.0=hc218d9a_0
+  - sqlite=3.38.2=hc218d9a_0
   - suitesparse=5.10.1=hd8046ac_0
   - tbb=2020.2=h4bd325d_4
   - tk=8.6.11=h1ccaba5_0
   - toml=0.10.2=pyhd3eb1b0_0
-  - tzdata=2021e=hda174b7_0
+  - tomli=1.2.2=pyhd3eb1b0_0
+  - tzdata=2022a=hda174b7_0
   - wheel=0.37.1=pyhd3eb1b0_0
   - xz=5.2.5=h7b6447c_0
   - zlib=1.2.11=h7f8727e_4
@@ -76,9 +74,10 @@ dependencies:
     - flake8==4.0.1
     - idna==3.3
     - imagesize==1.3.0
-    - jinja2==3.0.3
+    - importlib-metadata==4.11.3
+    - jinja2==3.1.1
     - latexcodec==2.0.1
-    - markupsafe==2.1.0
+    - markupsafe==2.1.1
     - mccabe==0.6.1
     - pybtex==0.24.0
     - pybtex-docutils==1.0.1
@@ -88,14 +87,15 @@ dependencies:
     - pyyaml==6.0
     - requests==2.27.1
     - snowballstemmer==2.2.0
-    - sphinx==4.4.0
-    - sphinx-autodoc-typehints==1.17.0
+    - sphinx==4.5.0
+    - sphinx-autodoc-typehints==1.18.1
     - sphinx-rtd-theme==1.0.0
     - sphinxcontrib-applehelp==1.0.2
-    - sphinxcontrib-bibtex==2.4.1
+    - sphinxcontrib-bibtex==2.4.2
     - sphinxcontrib-devhelp==1.0.2
     - sphinxcontrib-htmlhelp==2.0.0
     - sphinxcontrib-jsmath==1.0.1
     - sphinxcontrib-qthelp==1.0.3
     - sphinxcontrib-serializinghtml==1.1.5
-    - urllib3==1.26.8
+    - urllib3==1.26.9
+    - zipp==3.8.0
