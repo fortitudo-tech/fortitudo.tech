@@ -26,5 +26,5 @@ def test_load_data():
 
 
 def test_time_series():
-    assert time_series.shape == (5040, 69)
+    assert time_series.shape == (5040, 79)
     assert np.all(time_series.values >= 0)
