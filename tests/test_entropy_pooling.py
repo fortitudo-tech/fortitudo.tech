@@ -14,9 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-import pytest
-import numpy as np
-from context import entropy_pooling, R
+from context import np, pytest, entropy_pooling, R
 
 R = R.values
 S = len(R)

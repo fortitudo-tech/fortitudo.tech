@@ -14,8 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-import numpy as np
-from context import load_parameters, time_series, R
+from context import np, load_parameters, time_series, R
 
 
 def test_load_data():
@@ -27,5 +26,5 @@ def test_load_data():
 
 
 def test_time_series():
-    assert time_series.shape == (5040, 69)
+    assert time_series.shape == (5040, 79)
     assert np.all(time_series.values >= 0)

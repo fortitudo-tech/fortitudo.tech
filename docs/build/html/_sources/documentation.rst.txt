@@ -15,10 +15,10 @@ immediately start exploring the functionality of this package. You can also use
 it to test your understanding of the theory by replicating results.
 
 In addition to the above, a simulated time series of an equity index, an
-associated implied volatility surface, and risk-free zero-coupon curve is
-included. You can use this time series data to, e.g., validate your risk
-modeling approach. See the example that uses the time series data for more
-information.
+associated implied volatility surface, a risk-free zero-coupon curve, and
+a creadit spread curve is included. You can use this time series data to,
+e.g., validate your risk modeling approach. See the example that uses the
+time series data for more information.
 
 .. automodule:: fortitudo.tech.data
    :members:
