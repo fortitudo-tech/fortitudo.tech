@@ -46,9 +46,8 @@ def entropy_pooling(
         len_bh = len_b + len_h
         bounds = Bounds([-np.inf] * len_b + [0] * len_h, [np.inf] * len_bh)
         lhs = np.vstack((A, G))
-        rhs = np.vstack((b, h))
         solution = minimize(
-            _dual_inequality, x0=np.zeros(len_bh), args=(p, lhs, rhs),
+            _dual_inequality, x0=np.zeros(len_bh), args=(p, lhs, np.vstack((b, h))),
             method='TNC', jac=True, bounds=bounds, options={'maxiter': 10000})
         q = np.exp(np.log(p) - 1 - lhs.T @ solution.x[:, np.newaxis])
     return q
@@ -93,7 +92,7 @@ def _dual_inequality(
     x = np.exp(np.log(p) - 1 - lhs.T @ lagrange_multipliers)
     gradient = rhs - lhs @ x
     dual_objective = x.T @ (np.log(x) - np.log(p)) - lagrange_multipliers.T @ gradient
-    return -dual_objective, gradient
+    return -1000 * dual_objective, 1000 * gradient
 
 
 def _hessian_equality(
