@@ -70,10 +70,9 @@ def _dual_equality(
     """
     equality_multipliers = equality_multipliers[:, np.newaxis]
     x = np.exp(np.log(p) - 1 - A.T @ equality_multipliers)
-    dual_objective = (x.T @ (np.log(x) - np.log(p))
-                      + equality_multipliers.T @ (A @ x - b))
     gradient = b - A @ x
-    return -100 * dual_objective, gradient.flatten()
+    dual_objective = x.T @ (np.log(x) - np.log(p)) - equality_multipliers.T @ gradient
+    return -dual_objective, gradient.flatten()
 
 
 def _dual_inequality(
