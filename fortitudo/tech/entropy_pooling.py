@@ -117,7 +117,6 @@ def _hessian_equality(
     Returns:
         Hessian matrix with shape (M, M).
     """
-    equality_multipliers = equality_multipliers[:, np.newaxis]
-    x = np.exp(np.log(p) - 1 - A.T @ equality_multipliers)
+    x = np.exp(np.log(p) - 1 - A.T @ equality_multipliers[:, np.newaxis])
     hessian = A @ (x @ np.ones((1, A.shape[0])) * A.T)
     return hessian
