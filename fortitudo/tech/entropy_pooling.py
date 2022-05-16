@@ -45,12 +45,12 @@ def entropy_pooling(
         len_h = len(h)
         len_bh = len_b + len_h
         bounds = Bounds([-np.inf] * len_b + [0] * len_h, [np.inf] * len_bh)
+        lhs = np.vstack((A, G))
+        rhs = np.vstack((b, h))
         solution = minimize(
-            _dual_inequality, x0=np.zeros(len_bh), args=(p, A, b, G, h),
+            _dual_inequality, x0=np.zeros(len_bh), args=(p, lhs, rhs),
             method='TNC', jac=True, bounds=bounds, options={'maxiter': 10000})
-        q = np.exp(np.log(p) - 1
-                   - A.T @ solution.x[0:len_b][:, np.newaxis]
-                   - G.T @ solution.x[len_b:][:, np.newaxis])
+        q = np.exp(np.log(p) - 1 - lhs.T @ solution.x[:, np.newaxis])
     return q
 
 
@@ -76,31 +76,24 @@ def _dual_equality(
 
 
 def _dual_inequality(
-        lagrange_multipliers: np.ndarray, p: np.ndarray, A: np.ndarray, b: np.ndarray,
-        G: np.ndarray, h: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
+        lagrange_multipliers: np.ndarray, p: np.ndarray, lhs: np.ndarray,
+        rhs: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
     """Function computing inequality constrained objective and gradient.
 
     Args:
         lagrange_multipliers: Lagrange multipliers with shape (N + M,).
         p: Prior probability vector with shape (S, 1).
-        A: Equality constraint matrix with shape (M, S).
-        b: Equality constraint vector with shape (M, 1).
-        G: Inequality constraint matrix with shape (N, S).
-        h: Inequality constraint vector with shape (N, 1).
+        lhs: Matrix with shape (N + M, S).
+        rhs: Vector with shape (N + M, 1).
 
     Returns:
         Tuple containing the dual objective value and gradient.
     """
-    equality_multipliers = lagrange_multipliers[0:len(b)][:, np.newaxis]
-    inequality_multipliers = lagrange_multipliers[len(b):][:, np.newaxis]
-    x = np.exp(np.log(p) - 1
-               - A.T @ equality_multipliers
-               - G.T @ inequality_multipliers)
-    dual_objective = (x.T @ (np.log(x) - np.log(p))
-                      + equality_multipliers.T @ (A @ x - b)
-                      + inequality_multipliers.T @ (G @ x - h))
-    gradient = np.vstack((b - A @ x, h - G @ x))
-    return -100 * dual_objective, gradient
+    lagrange_multipliers = lagrange_multipliers[:, np.newaxis]
+    x = np.exp(np.log(p) - 1 - lhs.T @ lagrange_multipliers)
+    gradient = rhs - lhs @ x
+    dual_objective = x.T @ (np.log(x) - np.log(p)) - lagrange_multipliers.T @ gradient
+    return -dual_objective, gradient
 
 
 def _hessian_equality(
