@@ -82,10 +82,10 @@ def _dual_inequality(
     """Function computing inequality constrained objective and gradient.
 
     Args:
-        lagrange_multipliers: Lagrange multipliers with shape (N + M,).
+        lagrange_multipliers: Lagrange multipliers with shape (M + N,).
         log_p: Log of prior probability vector with shape (S, 1).
-        lhs: Matrix with shape (N + M, S).
-        rhs: Vector with shape (N + M, 1).
+        lhs: Matrix with shape (M + N, S).
+        rhs: Vector with shape (M + N, 1).
 
     Returns:
         Tuple containing the dual objective value and gradient.
