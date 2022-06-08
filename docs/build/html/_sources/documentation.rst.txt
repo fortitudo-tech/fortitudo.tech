@@ -40,6 +40,18 @@ code is implemented using notation from :cite:t:`Vorobets2021`.
 .. automodule:: fortitudo.tech.entropy_pooling
    :members:
 
+Functions
+---------
+
+The functions below are useful when working with Entropy Pooling, e.g.,
+they can be used to calculate posterior moments and correlation matrix
+to verify that views have been implemented correctly. The covariance
+matrix function is useful for mean-variance optimization with Entropy
+Pooling views.
+
+.. automodule:: fortitudo.tech.functions
+   :members:
+
 Optimization
 ------------
 
