@@ -77,7 +77,7 @@ def covariance_matrix(R: Union[pd.DataFrame, np.ndarray], p: np.ndarray = None) 
         Covariance matrix with shape (I, I).
     """
     simulation_names, R, p = _simulation_check(R, p)
-    cov = np.cov(R, rowvar=False, aweights=p)
+    cov = np.cov(R, rowvar=False, aweights=p[:, 0])
     return pd.DataFrame(cov, index=enumerate(simulation_names))
 
 
@@ -93,5 +93,5 @@ def correlation_matrix(R: Union[pd.DataFrame, np.ndarray], p: np.ndarray = None)
     """
     cov = covariance_matrix(R, p)
     vols_inverse = np.diag(np.sqrt(np.diag(cov.values))**-1)
-    corr = vols_inverse @ cov @ vols_inverse
+    corr = vols_inverse @ cov.values @ vols_inverse
     return pd.DataFrame(corr, index=cov.index)
