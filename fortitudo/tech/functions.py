@@ -57,9 +57,11 @@ def simulation_moments(R: Union[pd.DataFrame, np.ndarray], p: np.ndarray = None)
     """
     simulation_names, R, p = _simulation_check(R, p)
     means = p.T @ R
-    vols = np.sqrt(p.T @ (R - means)**2)
-    skews = p.T @ ((R - means) / vols)**3
-    kurts = p.T @ ((R - means) / vols)**4
+    R_demean = R - means
+    vols = np.sqrt(p.T @ R_demean**2)
+    R_standardized = R_demean / vols
+    skews = p.T @ R_standardized**3
+    kurts = p.T @ R_standardized**4
     results = pd.DataFrame(np.hstack((means.T, vols.T, skews.T, kurts.T)),
                            index=simulation_names,
                            columns=['Mean', 'Volatility', 'Skewness', 'Kurtosis'])
