@@ -25,7 +25,7 @@ def _simulation_check(
 
     Args:
         R: P&L / risk factor simulation with shape (S, I).
-        p: probability vector with shape (S, 1)
+        p: probability vector with shape (S, 1) or None.
 
     Returns:
         Validated and preprocessed simulation_names, R, and p.
