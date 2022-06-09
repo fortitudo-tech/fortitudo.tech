@@ -14,7 +14,9 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-from context import np, pytest, R, MeanCVaR, cvar_options, MeanVariance
+import numpy as np
+import pytest
+from context import R, MeanCVaR, cvar_options, MeanVariance
 
 R = R.values
 S, I = R.shape
