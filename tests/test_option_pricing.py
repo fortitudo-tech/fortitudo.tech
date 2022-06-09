@@ -14,7 +14,9 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-from context import np, pytest, time_series, call_option, put_option
+import numpy as np
+import pytest
+from context import time_series, call_option, put_option
 
 tol = 1e-8
 

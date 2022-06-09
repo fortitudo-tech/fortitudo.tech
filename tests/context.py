@@ -14,16 +14,16 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-
-import numpy as np
-import pytest
 import os
 import sys
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from fortitudo.tech import (
     entropy_pooling, MeanCVaR, cvar_options, MeanVariance, load_parameters,
-    load_pnl, load_time_series, call_option, put_option)
+    simulation_moments, covariance_matrix, correlation_matrix, load_pnl,
+    load_time_series, call_option, put_option)
+
+from fortitudo.tech.functions import _simulation_check
 
 R = load_pnl()
 time_series = load_time_series()

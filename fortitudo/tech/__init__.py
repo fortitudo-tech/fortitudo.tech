@@ -15,9 +15,11 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 __all__ = ['load_pnl', 'load_parameters' 'load_time_series', 'entropy_pooling',
+           'simulation_moments', 'covariance_matrix', 'correlation_matrix',
            'cvar_options', 'MeanCVaR', 'MeanVariance', 'call_option', 'put_option']
 
 from .data import load_pnl, load_parameters, load_time_series
 from .entropy_pooling import entropy_pooling
+from .functions import simulation_moments, covariance_matrix, correlation_matrix
 from .optimization import cvar_options, MeanCVaR, MeanVariance
 from .option_pricing import call_option, put_option
