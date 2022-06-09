@@ -23,5 +23,7 @@ from fortitudo.tech import (
     simulation_moments, covariance_matrix, correlation_matrix, load_pnl,
     load_time_series, call_option, put_option)
 
+from fortitudo.tech.functions import _simulation_check
+
 R = load_pnl()
 time_series = load_time_series()
