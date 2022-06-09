@@ -5,6 +5,4 @@
         "--max-line-length=99",
         "--ignore=E123,E402,E741,F401,W503"
     ],
-    "esbonio.server.enabled": true,
-    "restructuredtext.confPath": ""
 }
