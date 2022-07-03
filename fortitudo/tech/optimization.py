@@ -61,7 +61,7 @@ class Optimization:
             Efficient frontier with shape (I, num_portfolios).
 
         Raises:
-            ValueError: If constraints are infeasible or max_expected_return is unbounded.
+            ValueError: If expected return is unbounded.
         """
         if num_portfolios is None:
             num_portfolios = 9
@@ -88,6 +88,9 @@ class MeanCVaR(Optimization):
             Default: np.ones((S, 1)) / S.
         alpha: Alpha value for alpha-VaR and alpha-CVaR. Default: 0.95.
         kwargs: options dictionary with Benders algorithm parameters.
+
+    Raises:
+        ValueError: If constraints are infeasible.
     """
     def __init__(
             self, R: np.ndarray, A: np.ndarray = None, b: np.ndarray = None,
@@ -256,6 +259,9 @@ class MeanVariance(Optimization):
         b: Equality constraints matrix with shape (M,).
         G: Inequality constraints matrix with shape (N, I).
         h: Inequality constraints vector with shape (N,).
+
+    Raises:
+        ValueError: If constraints are infeasible.
     """
     def __init__(
             self, mean: np.ndarray, covariance_matrix: np.ndarray,
