@@ -104,3 +104,12 @@ def test_options():
         MeanCVaR(R, options={'reltol': 1e-9})
     with pytest.raises(ValueError):
         MeanCVaR(R, options={'abstol': 1e-3})
+
+
+def test_infeasible_constraints():
+    G_infeasible = np.vstack((G, -G))
+    h_infeasible = np.hstack((h, -np.ones(I)))
+    with pytest.raises(ValueError):
+        MeanCVaR(R, G=G_infeasible, h=h_infeasible)
+    with pytest.raises(ValueError):
+        MeanVariance(mean, covariance_matrix, G=G_infeasible, h=h_infeasible)
