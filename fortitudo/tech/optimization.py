@@ -26,22 +26,30 @@ cvar_options = {}
 
 
 class Optimization:
-    def _calculate_max_expected_return(self) -> float:
-        """Method for calculating the highest expected return and checking feasibility/boundness.
+    def _calculate_max_expected_return(self, feasibility_check: bool = False) -> float:
+        """Method for calculating the highest expected return / checking feasibility.
+
+        feasibility_check: Boolean indicating whether the method is used for initial
+            feasibility check or to calculate max expected return.
 
         Returns:
             Highest expected return for the given portfolio constraints.
 
         Raises:
-            ValueError: If constraints are infeasible or max_expected_return is unbounded.
+            ValueError: If constraints are infeasible or max expected return is unbounded.
         """
-        solution = lp(
-            c=self._expected_return_row.T, G=self._G, h=self._h,
-            A=self._A, b=self._b, solver='glpk')
+        if feasibility_check:
+            c = matrix(np.zeros(self._G.size[1]))
+        else:
+            c = self._expected_return_row.T
+
+        solution = lp(c, self._G, self._h, self._A, self._b, solver='glpk')
         if solution['status'] == 'optimal':
             return -solution['primal objective']
+        elif feasibility_check:
+            raise ValueError('Constraints are infeasible. Please specify feasible constraints.')
         else:
-            raise ValueError('Constraints are infeasible or max_expected_return is unbounded.')
+            raise ValueError('Expected return is unbounded. Unable to compute efficient frontier.')
 
     def efficient_frontier(self, num_portfolios: int = None) -> np.ndarray:
         """Method for computing the efficient frontier.
@@ -103,6 +111,8 @@ class MeanCVaR(Optimization):
             self._G = sparse(matrix(
                 np.block([[G, np.zeros((G.shape[0], 2))], [np.zeros(self._I + 1), -1]])))
             self._h = matrix(np.hstack((h, [0.])))
+
+        _ = self._calculate_max_expected_return(feasibility_check=True)
 
         if p is None:
             self._p = np.ones((1, self._S)) / self._S
@@ -271,6 +281,8 @@ class MeanVariance(Optimization):
         else:
             self._G = sparse(matrix(G))
             self._h = matrix(h)
+
+        _ = self._calculate_max_expected_return(feasibility_check=True)
 
     def efficient_portfolio(self, return_target: float = None) -> np.ndarray:
         """Method for computing a mean-variance efficient portfolio with a return target.
