@@ -15,6 +15,7 @@
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
         <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="_static/js/theme.js"></script>
@@ -32,7 +33,7 @@
             <a href="index.html" class="icon icon-home"> fortitudo.tech
           </a>
               <div class="version">
-                v0.5
+                v0.5.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -80,9 +81,9 @@
            <div itemprop="articleBody">
              
   <section id="documentation">
-<h1>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline"></a></h1>
+<h1>Documentation<a class="headerlink" href="#documentation" title="Permalink to this heading"></a></h1>
 <section id="data">
-<h2>Data<a class="headerlink" href="#data" title="Permalink to this headline"></a></h2>
+<h2>Data<a class="headerlink" href="#data" title="Permalink to this heading"></a></h2>
 <p>The P&amp;L parameters from <span id="id1">Vorobets [<a class="reference internal" href="references.html#id6" title="A. Vorobets. Variance for intuition, cvar for optimization. SSRN, 2022. URL: https://ssrn.com/abstract=4034316.">2022</a>]</span> and simulation from
 <span id="id2">Vorobets [<a class="reference internal" href="references.html#id3" title="A. Vorobets. Sequential entropy pooling heuristics. SSRN, 2021. URL: https://ssrn.com/abstract=3936392.">2021</a>]</span> follow with this package. The simulation assumes
 that returns follow a log-normal distribution, while the parameters are given
@@ -139,7 +140,7 @@ time series data for more information.</p>
 
 </section>
 <section id="entropy-pooling">
-<h2>Entropy Pooling<a class="headerlink" href="#entropy-pooling" title="Permalink to this headline"></a></h2>
+<h2>Entropy Pooling<a class="headerlink" href="#entropy-pooling" title="Permalink to this heading"></a></h2>
 <p>The Entropy Pooling approach solves the problem</p>
 <div class="math notranslate nohighlight">
 \[q=\text{argmin}\left\{ x'\left(\ln x-\ln p\right)\right\},\]</div>
@@ -173,7 +174,7 @@ code is implemented using notation from <span id="id4">Vorobets [<a class="refer
 
 </section>
 <section id="functions">
-<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline"></a></h2>
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this heading"></a></h2>
 <p>The functions below are useful when working with Entropy Pooling, e.g.,
 they can be used to calculate posterior moments and correlation matrix
 to verify that views have been implemented correctly. The covariance
@@ -241,7 +242,7 @@ Pooling views.</p>
 
 </section>
 <section id="optimization">
-<h2>Optimization<a class="headerlink" href="#optimization" title="Permalink to this headline"></a></h2>
+<h2>Optimization<a class="headerlink" href="#optimization" title="Permalink to this heading"></a></h2>
 <p>The MeanCVaR and MeanVariance objects solve the problem</p>
 <div class="math notranslate nohighlight">
 \[\min_{w}\mathcal{R}\left(w\right),\]</div>
@@ -271,6 +272,9 @@ Default: np.ones((S, 1)) / S.</p></li>
 <li><p><strong>kwargs</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code>) – options dictionary with Benders algorithm parameters.</p></li>
 </ul>
 </dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If constraints are infeasible.</p>
+</dd>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="fortitudo.tech.optimization.MeanCVaR.efficient_frontier">
@@ -287,7 +291,7 @@ Default: np.ones((S, 1)) / S.</p></li>
 <dd class="field-odd"><p>Efficient frontier with shape (I, num_portfolios).</p>
 </dd>
 <dt class="field-even">Raises</dt>
-<dd class="field-even"><p><strong>ValueError</strong> – If constraints are infeasible or max_expected_return is unbounded.</p>
+<dd class="field-even"><p><strong>ValueError</strong> – If expected return is unbounded.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -327,6 +331,9 @@ The minimum CVaR portfolio is computed by default.</p>
 <li><p><strong>h</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>]) – Inequality constraints vector with shape (N,).</p></li>
 </ul>
 </dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If constraints are infeasible.</p>
+</dd>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="fortitudo.tech.optimization.MeanVariance.efficient_frontier">
@@ -343,7 +350,7 @@ The minimum CVaR portfolio is computed by default.</p>
 <dd class="field-odd"><p>Efficient frontier with shape (I, num_portfolios).</p>
 </dd>
 <dt class="field-even">Raises</dt>
-<dd class="field-even"><p><strong>ValueError</strong> – If constraints are infeasible or max_expected_return is unbounded.</p>
+<dd class="field-even"><p><strong>ValueError</strong> – If expected return is unbounded.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -407,7 +414,7 @@ due to relative convergence in less than 100 iterations. If you use P&amp;L
 simulations that are scaled differently, you might need to adjust them.</p>
 </section>
 <section id="option-pricing">
-<h2>Option Pricing<a class="headerlink" href="#option-pricing" title="Permalink to this headline"></a></h2>
+<h2>Option Pricing<a class="headerlink" href="#option-pricing" title="Permalink to this heading"></a></h2>
 <p>The option pricing functionality consists of functions that use <a class="reference external" href="https://en.wikipedia.org/wiki/Black_model">Black’s model</a> to price European call and put options.</p>
 <span class="target" id="module-fortitudo.tech.option_pricing"></span><dl class="py function">
 <dt class="sig sig-object py" id="fortitudo.tech.option_pricing.call_option">
