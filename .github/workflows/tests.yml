@@ -1,0 +1,25 @@
+name: pytest
+
+on:
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash -l {0}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: conda-incubator/setup-miniconda@v2
+        with:
+          activate-environment: fortitudo.tech-dev
+          environment-file: requirements.yml
+          auto-activate-base: false
+      - run: |
+          conda activate fortitudo.tech-dev
+          pytest --cov=fortitudo/tech > pytest-coverage.txt
+      - uses: coroo/pytest-coverage-commentator@v1.0.2
+        with:
+          pytest-coverage: pytest-coverage.txt
