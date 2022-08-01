@@ -65,11 +65,14 @@ class Optimization:
         """
         if num_portfolios is None:
             num_portfolios = 9
-        max_expected_return = self._calculate_max_expected_return()
+
         frontier = np.full((self._I, num_portfolios), np.nan)
         frontier[:, 0] = self.efficient_portfolio()[:, 0]
+
+        max_expected_return = self._calculate_max_expected_return()
         min_expected_return = float(self._mean @ frontier[:, 0])
         delta = (max_expected_return - min_expected_return) / (num_portfolios - 1)
+
         for p in range(1, num_portfolios):
             frontier[:, p] = self.efficient_portfolio(min_expected_return + delta * p)[:, 0]
         return frontier
@@ -124,10 +127,14 @@ class MeanCVaR(Optimization):
 
         if alpha is None:
             self._alpha = 0.95
+        elif type(alpha) is float and 0 < alpha < 1:
+            self._alpha = alpha
+        else:
+            raise ValueError('alpha must be a float in the interval (0, 1).')
+        self._c = matrix(np.hstack((np.zeros(self._I), [1], [1 / (1 - self._alpha)])))
 
         self._mean = self._p @ R
         self._expected_return_row = matrix(np.hstack((-self._mean, np.zeros((1, 2)))))
-        self._c = matrix(np.hstack((np.zeros(self._I), [1], [1 / (1 - self._alpha)])))
         if self._demean:
             self._losses = -self._R_scalar * (R - self._mean)
         else:

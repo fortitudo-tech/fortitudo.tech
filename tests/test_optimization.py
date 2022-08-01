@@ -113,3 +113,13 @@ def test_infeasible_constraints():
         MeanCVaR(R, G=G_infeasible, h=h_infeasible)
     with pytest.raises(ValueError):
         MeanVariance(mean, covariance_matrix, G=G_infeasible, h=h_infeasible)
+
+
+def test_alpha_parameter():
+    assert opt2._alpha == 0.95
+    opt4 = MeanCVaR(R, A, b, G, h, alpha=0.9)
+    assert opt4._alpha == 0.9
+    with pytest.raises(ValueError):
+        MeanCVaR(R, A, b, G, h, alpha=1.1)
+    with pytest.raises(ValueError):
+        MeanCVaR(R, A, b, G, h, alpha='x')
