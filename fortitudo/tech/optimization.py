@@ -124,6 +124,10 @@ class MeanCVaR(Optimization):
 
         if alpha is None:
             self._alpha = 0.95
+        elif type(alpha) is float and 0 < alpha < 1:
+            self._alpha = alpha
+        else:
+            raise ValueError('alpha must be a float in the interval (0, 1).')
 
         self._mean = self._p @ R
         self._expected_return_row = matrix(np.hstack((-self._mean, np.zeros((1, 2)))))
