@@ -19,7 +19,4 @@ jobs:
           auto-activate-base: false
       - run: |
           conda activate fortitudo.tech-dev
-          pytest --cov=fortitudo/tech > pytest-coverage.txt
-      - uses: coroo/pytest-coverage-commentator@v1.0.2
-        with:
-          pytest-coverage: pytest-coverage.txt
+          pytest --cov=fortitudo/tech
