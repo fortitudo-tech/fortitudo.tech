@@ -16,7 +16,7 @@ it to test your understanding of the theory by replicating results.
 
 In addition to the above, a simulated time series of an equity index, an
 associated implied volatility surface, a risk-free zero-coupon curve, and
-a creadit spread curve is included. You can use this time series data to,
+a credit spread curve is included. You can use this time series data to,
 e.g., validate your risk modeling approach. See the example that uses the
 time series data for more information.
 
@@ -52,17 +52,26 @@ Pooling views.
 .. automodule:: fortitudo.tech.functions
    :members:
 
-Optimization
-------------
+Option Pricing
+--------------
+
+The option pricing functionality consists of functions that use `Black's model
+<https://en.wikipedia.org/wiki/Black_model>`_ to price European call and put options.
+
+.. automodule:: fortitudo.tech.option_pricing
+   :members:
+
+Portfolio Optimization
+----------------------
 
 The MeanCVaR and MeanVariance objects solve the problem
 
-.. math:: \min_{w}\mathcal{R}\left(w\right),
+.. math:: \min_{e}\mathcal{R}\left(e\right),
 
-with :math:`\mathcal{R}\left(w\right)` being the CVaR or variance risk measure,
-subject to the constraints
+with :math:`\mathcal{R}\left(e\right)` being the CVaR or variance for exposures
+:math:`e\in\mathbb{R}^{I}`, subject to the constraints
 
-.. math:: \mu'w&\geq\mu_{target},\\Aw&=b,\\Gw&\leq h.
+.. math:: \mu'e&\geq\mu_{target},\\Ae&=b,\\Ge&\leq h.
 
 A method for solving the CVaR problem was first introduced by :cite:t:`optCVaR`,
 while the implemented algorithm is based on :cite:t:`compCVaR`. The notation
@@ -117,12 +126,3 @@ or :const:`'abstol'` conditions are satisfied. The parameters have been tested
 with "percentage return" P&L and work well. In most cases, the algorithm stops
 due to relative convergence in less than 100 iterations. If you use P&L
 simulations that are scaled differently, you might need to adjust them.
-
-Option Pricing
---------------
-
-The option pricing functionality consists of functions that use `Black's model
-<https://en.wikipedia.org/wiki/Black_model>`_ to price European call and put options.
-
-.. automodule:: fortitudo.tech.option_pricing
-   :members:
