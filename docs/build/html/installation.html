@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Python Module Index &mdash; fortitudo.tech  documentation</title>
+  <title>Installation Instructions &mdash; fortitudo.tech  documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/default.css" type="text/css" />
@@ -19,9 +20,8 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
- 
-
-
+    <link rel="next" title="Documentation" href="documentation.html" />
+    <link rel="prev" title="Fortitudo Technologies Open Source" href="index.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -42,8 +42,8 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <ul>
-<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation Instructions</a></li>
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Installation Instructions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="documentation.html">Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
@@ -64,7 +64,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Python Module Index</li>
+      <li>Installation Instructions</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -73,54 +73,30 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-
-   <h1>Python Module Index</h1>
-
-   <div class="modindex-jumpbox">
-   <a href="#cap-f"><strong>f</strong></a>
-   </div>
-
-   <table class="indextable modindextable">
-     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
-     <tr class="cap" id="cap-f"><td></td><td>
-       <strong>f</strong></td><td></td></tr>
-     <tr>
-       <td><img src="_static/minus.png" class="toggler"
-              id="toggle-1" style="display: none" alt="-" /></td>
-       <td>
-       <code class="xref">fortitudo</code></td><td>
-       <em></em></td></tr>
-     <tr class="cg-1">
-       <td></td>
-       <td>&#160;&#160;&#160;
-       <a href="documentation.html#module-fortitudo.tech.data"><code class="xref">fortitudo.tech.data</code></a></td><td>
-       <em></em></td></tr>
-     <tr class="cg-1">
-       <td></td>
-       <td>&#160;&#160;&#160;
-       <a href="documentation.html#module-fortitudo.tech.entropy_pooling"><code class="xref">fortitudo.tech.entropy_pooling</code></a></td><td>
-       <em></em></td></tr>
-     <tr class="cg-1">
-       <td></td>
-       <td>&#160;&#160;&#160;
-       <a href="documentation.html#module-fortitudo.tech.functions"><code class="xref">fortitudo.tech.functions</code></a></td><td>
-       <em></em></td></tr>
-     <tr class="cg-1">
-       <td></td>
-       <td>&#160;&#160;&#160;
-       <a href="documentation.html#module-fortitudo.tech.optimization"><code class="xref">fortitudo.tech.optimization</code></a></td><td>
-       <em></em></td></tr>
-     <tr class="cg-1">
-       <td></td>
-       <td>&#160;&#160;&#160;
-       <a href="documentation.html#module-fortitudo.tech.option_pricing"><code class="xref">fortitudo.tech.option_pricing</code></a></td><td>
-       <em></em></td></tr>
-   </table>
+  <section id="installation-instructions">
+<h1>Installation Instructions<a class="headerlink" href="#installation-instructions" title="Permalink to this heading"></a></h1>
+<p>Installation can be done via pip:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">fortitudo</span><span class="o">.</span><span class="n">tech</span>
+</pre></div>
+</div>
+<p>For best performance, we recommend that you install the package in a <a class="reference external" href="https://conda.io/projects/conda/en/latest/user-guide/concepts/environments.html">conda environment</a>
+and let conda handle the installation of dependencies before installing the
+package using pip. You can do this by following these steps:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">create</span> <span class="o">-</span><span class="n">n</span> <span class="n">fortitudo</span><span class="o">.</span><span class="n">tech</span> <span class="n">python</span> <span class="n">scipy</span> <span class="n">pandas</span> <span class="o">-</span><span class="n">y</span>
+<span class="n">conda</span> <span class="n">activate</span> <span class="n">fortitudo</span><span class="o">.</span><span class="n">tech</span>
+<span class="n">conda</span> <span class="n">install</span> <span class="o">-</span><span class="n">c</span> <span class="n">conda</span><span class="o">-</span><span class="n">forge</span> <span class="n">cvxopt</span><span class="o">=</span><span class="mf">1.3</span> <span class="o">-</span><span class="n">y</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="n">fortitudo</span><span class="o">.</span><span class="n">tech</span>
+</pre></div>
+</div>
+</section>
 
 
            </div>
           </div>
-          <footer>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Fortitudo Technologies Open Source" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="documentation.html" class="btn btn-neutral float-right" title="Documentation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
 
   <hr/>
 

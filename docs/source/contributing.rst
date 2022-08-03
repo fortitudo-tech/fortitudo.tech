@@ -30,6 +30,4 @@ the code to replicate the variables used in the references. We believe this make
 it easier to link the code to the theory.
 
 We encourage you to keep individual contributions small in addition to avoid
-imposing object-oriented design patterns. We are unlikely to accept contributions
-that use inheritance without very good reasons and encourage you to use composition
-instead.
+imposing object-oriented design patterns.
