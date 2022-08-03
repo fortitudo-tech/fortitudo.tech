@@ -5,10 +5,9 @@ This package allows users to freely explore open-source implementations of some
 of our fundamental technologies under the `GNU General Public License, Version 3 
 <https://www.gnu.org/licenses/gpl-3.0.html>`_.
 
-Fortitudo Technologies is a fintech company offering novel investment technologies
-as well as quantitative and digitalization consultancy to the investment
-management industry. For more information, please visit our `website 
-<https://fortitudo.tech>`_.
+Fortitudo Technologies provides novel investment technologies as well as quantitative
+and digitalization consultancy to the investment management industry. For more information,
+please visit our `website <https://fortitudo.tech>`_.
 
 This package is intended for advanced users who are comfortable specifying
 portfolio constraints and Entropy Pooling views using matrices and vectors.
