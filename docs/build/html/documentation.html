@@ -22,7 +22,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Examples" href="examples.html" />
-    <link rel="prev" title="Fortitudo Technologies Open Source" href="index.html" /> 
+    <link rel="prev" title="Installation Instructions" href="installation.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -44,12 +44,13 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation Instructions</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Documentation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#data">Data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#entropy-pooling">Entropy Pooling</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#functions">Functions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#optimization">Optimization</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#option-pricing">Option Pricing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#portfolio-optimization">Portfolio Optimization</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
@@ -93,7 +94,7 @@ immediately start exploring the functionality of this package. You can also use
 it to test your understanding of the theory by replicating results.</p>
 <p>In addition to the above, a simulated time series of an equity index, an
 associated implied volatility surface, a risk-free zero-coupon curve, and
-a creadit spread curve is included. You can use this time series data to,
+a credit spread curve is included. You can use this time series data to,
 e.g., validate your risk modeling approach. See the example that uses the
 time series data for more information.</p>
 <span class="target" id="module-fortitudo.tech.data"></span><dl class="py function">
@@ -241,15 +242,65 @@ Pooling views.</p>
 </dd></dl>
 
 </section>
-<section id="optimization">
-<h2>Optimization<a class="headerlink" href="#optimization" title="Permalink to this heading"></a></h2>
+<section id="option-pricing">
+<h2>Option Pricing<a class="headerlink" href="#option-pricing" title="Permalink to this heading"></a></h2>
+<p>The option pricing functionality consists of functions that use <a class="reference external" href="https://en.wikipedia.org/wiki/Black_model">Black’s model</a> to price European call and put options.</p>
+<span class="target" id="module-fortitudo.tech.option_pricing"></span><dl class="py function">
+<dt class="sig sig-object py" id="fortitudo.tech.option_pricing.call_option">
+<span class="sig-name descname"><span class="pre">call_option</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">F</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">K</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">T</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fortitudo.tech.option_pricing.call_option" title="Permalink to this definition"></a></dt>
+<dd><p>Function for computing European call option price using Black’s formula.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>F</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>) – Forward price for maturity T.</p></li>
+<li><p><strong>K</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>) – Strike value.</p></li>
+<li><p><strong>sigma</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>) – Implied volatility for maturity T and strike K.</p></li>
+<li><p><strong>r</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>) – Interest rate for maturity T.</p></li>
+<li><p><strong>T</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>) – Time to maturity.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>European call option price.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="fortitudo.tech.option_pricing.put_option">
+<span class="sig-name descname"><span class="pre">put_option</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">F</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">K</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">T</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fortitudo.tech.option_pricing.put_option" title="Permalink to this definition"></a></dt>
+<dd><p>Function for computing European put option price using Black’s formula.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>F</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>) – Forward price for maturity T.</p></li>
+<li><p><strong>K</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>) – Strike value.</p></li>
+<li><p><strong>sigma</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>) – Implied volatility for maturity T and strike K.</p></li>
+<li><p><strong>r</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>) – Interest rate for maturity T.</p></li>
+<li><p><strong>T</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>) – Time to maturity.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>European put option price.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="portfolio-optimization">
+<h2>Portfolio Optimization<a class="headerlink" href="#portfolio-optimization" title="Permalink to this heading"></a></h2>
 <p>The MeanCVaR and MeanVariance objects solve the problem</p>
 <div class="math notranslate nohighlight">
-\[\min_{w}\mathcal{R}\left(w\right),\]</div>
-<p>with <span class="math notranslate nohighlight">\(\mathcal{R}\left(w\right)\)</span> being the CVaR or variance risk measure,
-subject to the constraints</p>
+\[\min_{e}\mathcal{R}\left(e\right),\]</div>
+<p>with <span class="math notranslate nohighlight">\(\mathcal{R}\left(e\right)\)</span> being the CVaR or variance for exposures
+<span class="math notranslate nohighlight">\(e\in\mathbb{R}^{I}\)</span>, subject to the constraints</p>
 <div class="math notranslate nohighlight">
-\[\begin{split}\mu'w&amp;\geq\mu_{target},\\Aw&amp;=b,\\Gw&amp;\leq h.\end{split}\]</div>
+\[\begin{split}\mu'e&amp;\geq\mu_{target},\\Ae&amp;=b,\\Ge&amp;\leq h.\end{split}\]</div>
 <p>A method for solving the CVaR problem was first introduced by <span id="id5">Rockafellar and Uryasev [<a class="reference internal" href="references.html#id4" title="R. Tyrrell Rockafellar and S. Uryasev. Optimization of conditional value-at-risk. Journal of Risk, 2(3):21-41, 2000. URL: https://doi.org/10.21314/JOR.2000.038.">2000</a>]</span>,
 while the implemented algorithm is based on <span id="id6">Künzi-Bay and Mayer [<a class="reference internal" href="references.html#id5" title="A. Künzi-Bay and J. Mayer. Computational aspects of minimizing conditional value-at-risk. CMS, 3:3–27, 2006. URL: https://doi.org/10.1007/s10287-005-0042-0.">2006</a>]</span>. The notation
 in relation to the P&amp;L simulations <span class="math notranslate nohighlight">\(R\)</span> follows <span id="id7">Vorobets [<a class="reference internal" href="references.html#id3" title="A. Vorobets. Sequential entropy pooling heuristics. SSRN, 2021. URL: https://ssrn.com/abstract=3936392.">2021</a>]</span>.
@@ -413,63 +464,13 @@ with “percentage return” P&amp;L and work well. In most cases, the algorithm
 due to relative convergence in less than 100 iterations. If you use P&amp;L
 simulations that are scaled differently, you might need to adjust them.</p>
 </section>
-<section id="option-pricing">
-<h2>Option Pricing<a class="headerlink" href="#option-pricing" title="Permalink to this heading"></a></h2>
-<p>The option pricing functionality consists of functions that use <a class="reference external" href="https://en.wikipedia.org/wiki/Black_model">Black’s model</a> to price European call and put options.</p>
-<span class="target" id="module-fortitudo.tech.option_pricing"></span><dl class="py function">
-<dt class="sig sig-object py" id="fortitudo.tech.option_pricing.call_option">
-<span class="sig-name descname"><span class="pre">call_option</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">F</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">K</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">T</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fortitudo.tech.option_pricing.call_option" title="Permalink to this definition"></a></dt>
-<dd><p>Function for computing European call option price using Black’s formula.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>F</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>) – Forward price for maturity T.</p></li>
-<li><p><strong>K</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>) – Strike value.</p></li>
-<li><p><strong>sigma</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>) – Implied volatility for maturity T and strike K.</p></li>
-<li><p><strong>r</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>) – Interest rate for maturity T.</p></li>
-<li><p><strong>T</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>) – Time to maturity.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></p>
-</dd>
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>European call option price.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="fortitudo.tech.option_pricing.put_option">
-<span class="sig-name descname"><span class="pre">put_option</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">F</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">K</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">T</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fortitudo.tech.option_pricing.put_option" title="Permalink to this definition"></a></dt>
-<dd><p>Function for computing European put option price using Black’s formula.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>F</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>) – Forward price for maturity T.</p></li>
-<li><p><strong>K</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>) – Strike value.</p></li>
-<li><p><strong>sigma</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>) – Implied volatility for maturity T and strike K.</p></li>
-<li><p><strong>r</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>) – Interest rate for maturity T.</p></li>
-<li><p><strong>T</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>) – Time to maturity.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></p>
-</dd>
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>European put option price.</p>
-</dd>
-</dl>
-</dd></dl>
-
-</section>
 </section>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="index.html" class="btn btn-neutral float-left" title="Fortitudo Technologies Open Source" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="installation.html" class="btn btn-neutral float-left" title="Installation Instructions" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="examples.html" class="btn btn-neutral float-right" title="Examples" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
