@@ -25,10 +25,9 @@ cov_matrix = np.cov(R, rowvar=False)
 
 G = -np.eye(I)
 h = np.zeros(I)
-A = np.zeros((2, I))
+A = np.zeros((1, I))
 A[0, 6] = 1
-A[1, :] = 1
-b = np.array([0.1, 1])
+b = np.array([0.1])
 
 tol = 1e-7
 np.random.seed(1)
