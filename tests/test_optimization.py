@@ -52,8 +52,8 @@ def test_long_short(opt):
         opt.efficient_frontier()
 
 
-opt2 = MeanCVaR(R, G=G, h=h, options={'demean': False})
-opt3 = MeanVariance(mean, cov_matrix, G=G, h=h)
+opt2 = MeanCVaR(R, G, h, options={'demean': False})
+opt3 = MeanVariance(mean, cov_matrix, G, h)
 
 
 @pytest.mark.parametrize("opt", [(opt2), (opt3)])
@@ -68,8 +68,8 @@ def test_long_only(opt):
     assert np.max(np.abs(frontier_lo[:, 0] - min_risk_lo[:, 0])) <= tol
 
 
-opt4 = MeanCVaR(R, A, b, G, h)
-opt5 = MeanVariance(mean, cov_matrix, A, b, G, h)
+opt4 = MeanCVaR(R, G, h, A, b)
+opt5 = MeanVariance(mean, cov_matrix, G, h, A, b)
 
 
 @pytest.mark.parametrize("opt", [(opt4), (opt5)])
@@ -88,7 +88,7 @@ def test_equality_constraint(opt):
 
 def test_options():
     cvar_options['demean'] = False
-    opt6 = MeanCVaR(R, A, b, G, h)
+    opt6 = MeanCVaR(R, G, h, A, b)
     assert opt6._demean is False
     with pytest.raises(ValueError):
         MeanCVaR(R, options={'demean': 'X'})
@@ -113,9 +113,9 @@ def test_infeasible_constraints():
 
 def test_alpha_parameter():
     assert opt0._alpha == 0.95
-    opt7 = MeanCVaR(R, A, b, G, h, alpha=0.9)
+    opt7 = MeanCVaR(R, G, h, A, b, alpha=0.9)
     assert opt7._alpha == 0.9
     with pytest.raises(ValueError):
-        MeanCVaR(R, A, b, G, h, alpha=1.1)
+        MeanCVaR(R, G, h, A, b, alpha=1.1)
     with pytest.raises(ValueError):
-        MeanCVaR(R, A, b, G, h, alpha='x')
+        MeanCVaR(R, G, h, A, b, alpha='x')
