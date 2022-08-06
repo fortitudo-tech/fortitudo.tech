@@ -71,7 +71,7 @@ The MeanCVaR and MeanVariance objects solve the problem
 with :math:`\mathcal{R}\left(e\right)` being the CVaR or variance for exposures
 :math:`e\in\mathbb{R}^{I}`, subject to the constraints
 
-.. math:: \mu'e&\geq\mu_{target},\\Ae&=b,\\Ge&\leq h.
+.. math:: \mu'e&\geq\mu_{target},\\v'e&=1,\\Ge&\leq h,\\Ae&=b.
 
 A method for solving the CVaR problem was first introduced by :cite:t:`optCVaR`,
 while the implemented algorithm is based on :cite:t:`compCVaR`. The notation

@@ -83,10 +83,10 @@ class MeanCVaR(Optimization):
 
     Args:
         R: Matrix with P&L simulations and shape (S, I).
-        A: Equality constraints matrix with shape (M, I).
-        b: Equality constraints matrix with shape (M,).
         G: Inequality constraints matrix with shape (N, I).
         h: Inequality constraints vector with shape (N,).
+        A: Equality constraints matrix with shape (M, I).
+        b: Equality constraints matrix with shape (M,).
         v: Vector of relative market values and shape (I,).
             Default: np.ones(I).
         p: Vector containing scenario probabilities with shape (S, 1).
@@ -269,10 +269,10 @@ class MeanVariance(Optimization):
     Args:
         mean: Mean vector with shape (I,).
         covariance_matrix: Covariance matrix with shape (I, I).
-        A: Equality constraints matrix with shape (M, I).
-        b: Equality constraints matrix with shape (M,).
         G: Inequality constraints matrix with shape (N, I).
         h: Inequality constraints vector with shape (N,).
+        A: Equality constraints matrix with shape (M, I).
+        b: Equality constraints matrix with shape (M,).
         v: Vector of relative market values and shape (I,).
             Default: np.ones(I).
 
