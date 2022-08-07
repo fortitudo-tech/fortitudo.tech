@@ -101,7 +101,7 @@ or for a particular instance of the MeanCVaR class:
 
 .. code-block:: python
 
-   opt = ft.MeanCVaR(R, A, b, G, h, options={'demean': False, 'R_scalar': 10000})
+   opt = ft.MeanCVaR(R, G, h, A, b, options={'demean': False, 'R_scalar': 10000})
 
 The following parameters can be adjusted:
 
