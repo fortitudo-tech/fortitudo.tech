@@ -16,12 +16,31 @@
 
 import numpy as np
 import pytest
-from context import R, MeanCVaR, cvar_options, MeanVariance, covariance_matrix
+from context import (R, MeanCVaR, cvar_options, MeanVariance,
+                     covariance_matrix, call_option, put_option)
+
+tol = 1e-7
 
 R = R.values
 S, I = R.shape
 mean = np.mean(R, axis=0)
 cov_matrix = np.cov(R, rowvar=False)
+
+put_atmf = put_option(1, 1, 0.15, 0, 1)
+call_atmf = call_option(1, 1, 0.15, 0, 1)
+v = np.hstack((np.ones((I)), [put_atmf], [call_atmf]))
+
+dm_equity_price = 1 + R[:, 4]
+zeros_vec = np.zeros(S)
+put_atmf_pnl = np.maximum(zeros_vec, 1 - dm_equity_price) - put_atmf
+call_atmf_pnl = np.maximum(zeros_vec, dm_equity_price - 1) - call_atmf
+R_options = np.hstack((R, put_atmf_pnl[:, np.newaxis], call_atmf_pnl[:, np.newaxis]))
+
+np.random.seed(1)
+p = np.random.randint(1, S, (S, 1))
+p = p / np.sum(p)
+mean_random = R_options.T @ p
+cov_matrix_random = covariance_matrix(R_options, p).values
 
 G = -np.eye(I)
 h = np.zeros(I)
@@ -29,24 +48,16 @@ A = np.zeros((1, I))
 A[0, 6] = 1
 b = np.array([0.1])
 
-tol = 1e-7
-np.random.seed(1)
-p = np.random.randint(1, S, (S, 1))
-p = p / np.sum(p)
-mean_random = R.T @ p
-cov_matrix_random = covariance_matrix(R, p).values
-
-
-opt0 = MeanCVaR(R, p=p)
-opt1 = MeanVariance(mean_random, cov_matrix_random)
+opt0 = MeanCVaR(R_options, v=v, p=p)
+opt1 = MeanVariance(mean_random, cov_matrix_random, v=v)
 
 
 @pytest.mark.parametrize("opt", [(opt0), (opt1)])
 def test_long_short(opt):
     min_risk_pf = opt.efficient_portfolio()
     target_return_pf = opt.efficient_portfolio(0.06)
-    assert np.abs(np.sum(min_risk_pf) - 1) <= tol
-    assert np.abs(np.sum(target_return_pf) - 1) <= tol
+    assert np.abs(v @ min_risk_pf - 1) <= tol
+    assert np.abs(v @ target_return_pf - 1) <= tol
     assert np.abs(mean_random.T @ target_return_pf - 0.06) <= tol
     with pytest.raises(ValueError):
         opt.efficient_frontier()
