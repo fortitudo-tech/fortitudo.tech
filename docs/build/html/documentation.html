@@ -301,6 +301,8 @@ Pooling views.</p>
 <span class="math notranslate nohighlight">\(e\in\mathbb{R}^{I}\)</span>, subject to the constraints</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\mu'e&amp;\geq\mu_{target},\\v'e&amp;=1,\\Ge&amp;\leq h,\\Ae&amp;=b.\end{split}\]</div>
+<p>Here, <span class="math notranslate nohighlight">\(v\in\mathbb{R}^{I}\)</span> is a vector of relative market values. See example
+5 for how to use this parameter.</p>
 <p>A method for solving the CVaR problem was first introduced by <span id="id5">Rockafellar and Uryasev [<a class="reference internal" href="references.html#id4" title="R. Tyrrell Rockafellar and S. Uryasev. Optimization of conditional value-at-risk. Journal of Risk, 2(3):21-41, 2000. URL: https://doi.org/10.21314/JOR.2000.038.">2000</a>]</span>,
 while the implemented algorithm is based on <span id="id6">Künzi-Bay and Mayer [<a class="reference internal" href="references.html#id5" title="A. Künzi-Bay and J. Mayer. Computational aspects of minimizing conditional value-at-risk. CMS, 3:3–27, 2006. URL: https://doi.org/10.1007/s10287-005-0042-0.">2006</a>]</span>. The notation
 in relation to the P&amp;L simulations <span class="math notranslate nohighlight">\(R\)</span> follows <span id="id7">Vorobets [<a class="reference internal" href="references.html#id3" title="A. Vorobets. Sequential entropy pooling heuristics. SSRN, 2021. URL: https://ssrn.com/abstract=3936392.">2021</a>]</span>.
