@@ -16,45 +16,55 @@
 
 import numpy as np
 import pytest
-from context import R, MeanCVaR, cvar_options, MeanVariance, covariance_matrix
+from context import (R, MeanCVaR, cvar_options, MeanVariance,
+                     covariance_matrix, call_option, put_option)
+
+tol = 1e-7
 
 R = R.values
 S, I = R.shape
 mean = np.mean(R, axis=0)
 cov_matrix = np.cov(R, rowvar=False)
 
-G = -np.eye(I)
-h = np.zeros(I)
-A = np.zeros((2, I))
-A[0, 6] = 1
-A[1, :] = 1
-b = np.array([0.1, 1])
+put_atmf = put_option(1, 1, 0.15, 0, 1)
+call_atmf = call_option(1, 1, 0.15, 0, 1)
+v = np.hstack((np.ones((I)), [put_atmf], [call_atmf]))
 
-tol = 1e-7
+dm_equity_price = 1 + R[:, 4]
+zeros_vec = np.zeros(S)
+put_atmf_pnl = np.maximum(zeros_vec, 1 - dm_equity_price) - put_atmf
+call_atmf_pnl = np.maximum(zeros_vec, dm_equity_price - 1) - call_atmf
+R_options = np.hstack((R, put_atmf_pnl[:, np.newaxis], call_atmf_pnl[:, np.newaxis]))
+
 np.random.seed(1)
 p = np.random.randint(1, S, (S, 1))
 p = p / np.sum(p)
-mean_random = R.T @ p
-cov_matrix_random = covariance_matrix(R, p).values
+mean_random = R_options.T @ p
+cov_matrix_random = covariance_matrix(R_options, p).values
 
+G = -np.eye(I)
+h = np.zeros(I)
+A = np.zeros((1, I))
+A[0, 6] = 1
+b = np.array([0.1])
 
-opt0 = MeanCVaR(R, p=p)
-opt1 = MeanVariance(mean_random, cov_matrix_random)
+opt0 = MeanCVaR(R_options, v=v, p=p)
+opt1 = MeanVariance(mean_random, cov_matrix_random, v=v)
 
 
 @pytest.mark.parametrize("opt", [(opt0), (opt1)])
 def test_long_short(opt):
     min_risk_pf = opt.efficient_portfolio()
     target_return_pf = opt.efficient_portfolio(0.06)
-    assert np.abs(np.sum(min_risk_pf) - 1) <= tol
-    assert np.abs(np.sum(target_return_pf) - 1) <= tol
+    assert np.abs(v @ min_risk_pf - 1) <= tol
+    assert np.abs(v @ target_return_pf - 1) <= tol
     assert np.abs(mean_random.T @ target_return_pf - 0.06) <= tol
     with pytest.raises(ValueError):
         opt.efficient_frontier()
 
 
-opt2 = MeanCVaR(R, G=G, h=h, options={'demean': False})
-opt3 = MeanVariance(mean, cov_matrix, G=G, h=h)
+opt2 = MeanCVaR(R, G, h, options={'demean': False})
+opt3 = MeanVariance(mean, cov_matrix, G, h)
 
 
 @pytest.mark.parametrize("opt", [(opt2), (opt3)])
@@ -69,8 +79,8 @@ def test_long_only(opt):
     assert np.max(np.abs(frontier_lo[:, 0] - min_risk_lo[:, 0])) <= tol
 
 
-opt4 = MeanCVaR(R, A, b, G, h)
-opt5 = MeanVariance(mean, cov_matrix, A, b, G, h)
+opt4 = MeanCVaR(R, G, h, A, b)
+opt5 = MeanVariance(mean, cov_matrix, G, h, A, b)
 
 
 @pytest.mark.parametrize("opt", [(opt4), (opt5)])
@@ -89,7 +99,7 @@ def test_equality_constraint(opt):
 
 def test_options():
     cvar_options['demean'] = False
-    opt6 = MeanCVaR(R, A, b, G, h)
+    opt6 = MeanCVaR(R, G, h, A, b)
     assert opt6._demean is False
     with pytest.raises(ValueError):
         MeanCVaR(R, options={'demean': 'X'})
@@ -114,9 +124,9 @@ def test_infeasible_constraints():
 
 def test_alpha_parameter():
     assert opt0._alpha == 0.95
-    opt7 = MeanCVaR(R, A, b, G, h, alpha=0.9)
+    opt7 = MeanCVaR(R, G, h, A, b, alpha=0.9)
     assert opt7._alpha == 0.9
     with pytest.raises(ValueError):
-        MeanCVaR(R, A, b, G, h, alpha=1.1)
+        MeanCVaR(R, G, h, A, b, alpha=1.1)
     with pytest.raises(ValueError):
-        MeanCVaR(R, A, b, G, h, alpha='x')
+        MeanCVaR(R, G, h, A, b, alpha='x')

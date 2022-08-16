@@ -71,7 +71,10 @@ The MeanCVaR and MeanVariance objects solve the problem
 with :math:`\mathcal{R}\left(e\right)` being the CVaR or variance for exposures
 :math:`e\in\mathbb{R}^{I}`, subject to the constraints
 
-.. math:: \mu'e&\geq\mu_{target},\\Ae&=b,\\Ge&\leq h.
+.. math:: \mu'e&\geq\mu_{target},\\v'e&=1,\\Ge&\leq h,\\Ae&=b.
+
+Here, :math:`v\in\mathbb{R}^{I}` is a vector of relative market values. See example
+5 for how to use this parameter.
 
 A method for solving the CVaR problem was first introduced by :cite:t:`optCVaR`,
 while the implemented algorithm is based on :cite:t:`compCVaR`. The notation
@@ -101,7 +104,7 @@ or for a particular instance of the MeanCVaR class:
 
 .. code-block:: python
 
-   opt = ft.MeanCVaR(R, A, b, G, h, options={'demean': False, 'R_scalar': 10000})
+   opt = ft.MeanCVaR(R, G, h, A, b, options={'demean': False, 'R_scalar': 10000})
 
 The following parameters can be adjusted:
 

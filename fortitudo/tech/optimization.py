@@ -83,10 +83,12 @@ class MeanCVaR(Optimization):
 
     Args:
         R: Matrix with P&L simulations and shape (S, I).
-        A: Equality constraints matrix with shape (M, I).
-        b: Equality constraints matrix with shape (M,).
         G: Inequality constraints matrix with shape (N, I).
         h: Inequality constraints vector with shape (N,).
+        A: Equality constraints matrix with shape (M, I).
+        b: Equality constraints matrix with shape (M,).
+        v: Vector of relative market values and shape (I,).
+            Default: np.ones(I).
         p: Vector containing scenario probabilities with shape (S, 1).
             Default: np.ones((S, 1)) / S.
         alpha: Alpha value for alpha-VaR and alpha-CVaR. Default: 0.95.
@@ -96,19 +98,17 @@ class MeanCVaR(Optimization):
         ValueError: If constraints are infeasible.
     """
     def __init__(
-            self, R: np.ndarray, A: np.ndarray = None, b: np.ndarray = None,
-            G: np.ndarray = None, h: np.ndarray = None, p: np.ndarray = None,
-            alpha: float = None, **kwargs: dict):
+            self, R: np.ndarray, G: np.ndarray = None, h: np.ndarray = None,
+            A: np.ndarray = None, b: np.ndarray = None, v: np.ndarray = None,
+            p: np.ndarray = None, alpha: float = None, **kwargs: dict):
 
         self._set_options(kwargs.get('options', globals()['cvar_options']))
         self._S, self._I = R.shape
 
-        if A is None:
-            self._A = sparse(matrix(np.hstack((np.ones((1, self._I)), np.zeros((1, 2))))))
-            self._b = matrix([1.])
+        if v is None:
+            self._v = np.hstack((np.ones((1, self._I)), np.zeros((1, 2))))
         else:
-            self._A = sparse(matrix(np.hstack((A, np.zeros((A.shape[0], 2))))))
-            self._b = matrix(b)
+            self._v = np.hstack((v[np.newaxis, :], np.zeros((1, 2))))
 
         if G is None:
             self._G = sparse(matrix(np.hstack((np.zeros((1, self._I + 1)), [[-1]]))))
@@ -117,6 +117,13 @@ class MeanCVaR(Optimization):
             self._G = sparse(matrix(
                 np.block([[G, np.zeros((G.shape[0], 2))], [np.zeros(self._I + 1), -1]])))
             self._h = matrix(np.hstack((h, [0.])))
+
+        if A is None:
+            self._A = sparse(matrix(self._v))
+            self._b = matrix([1.])
+        else:
+            self._A = sparse(matrix(np.block([[A, np.zeros((A.shape[0], 2))], [self._v]])))
+            self._b = matrix(np.hstack((b, [1.])))
 
         _ = self._calculate_max_expected_return(feasibility_check=True)
 
@@ -262,18 +269,20 @@ class MeanVariance(Optimization):
     Args:
         mean: Mean vector with shape (I,).
         covariance_matrix: Covariance matrix with shape (I, I).
-        A: Equality constraints matrix with shape (M, I).
-        b: Equality constraints matrix with shape (M,).
         G: Inequality constraints matrix with shape (N, I).
         h: Inequality constraints vector with shape (N,).
+        A: Equality constraints matrix with shape (M, I).
+        b: Equality constraints matrix with shape (M,).
+        v: Vector of relative market values and shape (I,).
+            Default: np.ones(I).
 
     Raises:
         ValueError: If constraints are infeasible.
     """
     def __init__(
             self, mean: np.ndarray, covariance_matrix: np.ndarray,
-            A: np.ndarray = None, b: np.ndarray = None,
-            G: np.ndarray = None, h: np.ndarray = None):
+            G: np.ndarray = None, h: np.ndarray = None, A: np.ndarray = None,
+            b: np.ndarray = None, v: np.ndarray = None):
 
         self._I = len(mean)
         self._mean = mean
@@ -281,12 +290,10 @@ class MeanVariance(Optimization):
         self._P = matrix(covariance_matrix)
         self._q = matrix(np.zeros(self._I))
 
-        if A is None:
-            self._A = sparse(matrix((np.ones((1, self._I)))))
-            self._b = matrix([1.])
+        if v is None:
+            self._v = np.ones((1, self._I))
         else:
-            self._A = sparse(matrix(A))
-            self._b = matrix(b)
+            self._v = v[np.newaxis, :]
 
         if G is None:
             self._G = sparse(matrix(np.zeros((1, self._I))))
@@ -294,6 +301,13 @@ class MeanVariance(Optimization):
         else:
             self._G = sparse(matrix(G))
             self._h = matrix(h)
+
+        if A is None:
+            self._A = sparse(matrix(self._v))
+            self._b = matrix([1.])
+        else:
+            self._A = sparse(matrix(np.vstack((A, self._v))))
+            self._b = matrix(np.hstack((b, [1.])))
 
         _ = self._calculate_max_expected_return(feasibility_check=True)
 
