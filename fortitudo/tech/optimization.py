@@ -69,8 +69,8 @@ class Optimization:
         frontier = np.full((self._I, num_portfolios), np.nan)
         frontier[:, 0] = self.efficient_portfolio()[:, 0]
 
-        max_expected_return = self._calculate_max_expected_return()
         min_expected_return = float(self._mean @ frontier[:, 0])
+        max_expected_return = self._calculate_max_expected_return()
         delta = (max_expected_return - min_expected_return) / (num_portfolios - 1)
 
         for p in range(1, num_portfolios):
