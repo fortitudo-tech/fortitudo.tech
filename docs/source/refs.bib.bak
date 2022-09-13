@@ -11,7 +11,7 @@
   url     = {https://ssrn.com/abstract=1213325},
 }
 
-@Article{SeqEntropyPooling,
+@Article{Vorobets2021,
   author  = {A. Vorobets},
   journal = {SSRN},
   title   = {Sequential Entropy Pooling Heuristics},

@@ -22,7 +22,8 @@ import pandas as pd
 
 
 def load_pnl() -> pd.DataFrame:
-    """Function for loading the P&L simulation from Vorobets (2021).
+    """Function for loading the P&L simulation from https://ssrn.com/abstract=3936392
+    and https://ssrn.com/abstract=4217884.
 
     Returns:
         P&L simulation.
@@ -32,7 +33,7 @@ def load_pnl() -> pd.DataFrame:
 
 
 def load_parameters() -> Tuple[list, np.ndarray, np.ndarray]:
-    """Function for loading the P&L parameters from Vorobets (2022).
+    """Function for loading the P&L parameters from https://ssrn.com/abstract=4034316.
 
     Returns:
         Instrument names, means vector, and covariance matrix.
