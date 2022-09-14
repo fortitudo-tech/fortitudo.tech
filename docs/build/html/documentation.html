@@ -33,7 +33,7 @@
             <a href="index.html" class="icon icon-home"> fortitudo.tech
           </a>
               <div class="version">
-                v0.6
+                v0.6.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -100,7 +100,7 @@ time series data for more information.</p>
 <span class="target" id="module-fortitudo.tech.data"></span><dl class="py function">
 <dt class="sig sig-object py" id="fortitudo.tech.data.load_parameters">
 <span class="sig-name descname"><span class="pre">load_parameters</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fortitudo.tech.data.load_parameters" title="Permalink to this definition"></a></dt>
-<dd><p>Function for loading the P&amp;L parameters from Vorobets (2022).</p>
+<dd><p>Function for loading the P&amp;L parameters from <a class="reference external" href="https://ssrn.com/abstract=4034316">https://ssrn.com/abstract=4034316</a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>]</p>
@@ -114,7 +114,8 @@ time series data for more information.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="fortitudo.tech.data.load_pnl">
 <span class="sig-name descname"><span class="pre">load_pnl</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fortitudo.tech.data.load_pnl" title="Permalink to this definition"></a></dt>
-<dd><p>Function for loading the P&amp;L simulation from Vorobets (2021).</p>
+<dd><p>Function for loading the P&amp;L simulation from <a class="reference external" href="https://ssrn.com/abstract=3936392">https://ssrn.com/abstract=3936392</a>
+and <a class="reference external" href="https://ssrn.com/abstract=4217884">https://ssrn.com/abstract=4217884</a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code></p>
@@ -301,11 +302,12 @@ Pooling views.</p>
 <span class="math notranslate nohighlight">\(e\in\mathbb{R}^{I}\)</span>, subject to the constraints</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\mu'e&amp;\geq\mu_{target},\\v'e&amp;=1,\\Ge&amp;\leq h,\\Ae&amp;=b.\end{split}\]</div>
-<p>Here, <span class="math notranslate nohighlight">\(v\in\mathbb{R}^{I}\)</span> is a vector of relative market values. See example
-5 for how to use this parameter.</p>
-<p>A method for solving the CVaR problem was first introduced by <span id="id5">Rockafellar and Uryasev [<a class="reference internal" href="references.html#id4" title="R. Tyrrell Rockafellar and S. Uryasev. Optimization of conditional value-at-risk. Journal of Risk, 2(3):21-41, 2000. URL: https://doi.org/10.21314/JOR.2000.038.">2000</a>]</span>,
-while the implemented algorithm is based on <span id="id6">Künzi-Bay and Mayer [<a class="reference internal" href="references.html#id5" title="A. Künzi-Bay and J. Mayer. Computational aspects of minimizing conditional value-at-risk. CMS, 3:3–27, 2006. URL: https://doi.org/10.1007/s10287-005-0042-0.">2006</a>]</span>. The notation
-in relation to the P&amp;L simulations <span class="math notranslate nohighlight">\(R\)</span> follows <span id="id7">Vorobets [<a class="reference internal" href="references.html#id3" title="A. Vorobets. Sequential entropy pooling heuristics. SSRN, 2021. URL: https://ssrn.com/abstract=3936392.">2021</a>]</span>.
+<p>Here, <span class="math notranslate nohighlight">\(v\in\mathbb{R}^{I}\)</span> is the vector of relative market values introduced
+by <span id="id5">Vorobets [<a class="reference internal" href="references.html#id7" title="A. Vorobets. Portfolio management framework for derivative instruments. SSRN, 2022. URL: https://ssrn.com/abstract=4217884.">2022</a>]</span>. See <a class="reference external" href="https://github.com/fortitudo-tech/fortitudo.tech/blob/main/examples/5_DerivativesFramework.ipynb">this example</a> for how to use this
+parameter.</p>
+<p>A method for solving the CVaR problem was first introduced by <span id="id6">Rockafellar and Uryasev [<a class="reference internal" href="references.html#id4" title="R. Tyrrell Rockafellar and S. Uryasev. Optimization of conditional value-at-risk. Journal of Risk, 2(3):21-41, 2000. URL: https://doi.org/10.21314/JOR.2000.038.">2000</a>]</span>,
+while the implemented algorithm is based on <span id="id7">Künzi-Bay and Mayer [<a class="reference internal" href="references.html#id5" title="A. Künzi-Bay and J. Mayer. Computational aspects of minimizing conditional value-at-risk. CMS, 3:3–27, 2006. URL: https://doi.org/10.1007/s10287-005-0042-0.">2006</a>]</span>. The notation
+in relation to the P&amp;L simulations <span class="math notranslate nohighlight">\(R\)</span> follows <span id="id8">Vorobets [<a class="reference internal" href="references.html#id3" title="A. Vorobets. Sequential entropy pooling heuristics. SSRN, 2021. URL: https://ssrn.com/abstract=3936392.">2021</a>]</span>.
 For the variance risk measure, a standard quadratic programming solver is used.</p>
 <span class="target" id="module-fortitudo.tech.optimization"></span><dl class="py class">
 <dt class="sig sig-object py" id="fortitudo.tech.optimization.MeanCVaR">

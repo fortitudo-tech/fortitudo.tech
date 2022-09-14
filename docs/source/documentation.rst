@@ -73,8 +73,10 @@ with :math:`\mathcal{R}\left(e\right)` being the CVaR or variance for exposures
 
 .. math:: \mu'e&\geq\mu_{target},\\v'e&=1,\\Ge&\leq h,\\Ae&=b.
 
-Here, :math:`v\in\mathbb{R}^{I}` is a vector of relative market values. See example
-5 for how to use this parameter.
+Here, :math:`v\in\mathbb{R}^{I}` is the vector of relative market values introduced
+by :cite:t:`Vorobets2022a`. See `this example <https://github.com/fortitudo-tech/
+fortitudo.tech/blob/main/examples/5_DerivativesFramework.ipynb>`_ for how to use this
+parameter.
 
 A method for solving the CVaR problem was first introduced by :cite:t:`optCVaR`,
 while the implemented algorithm is based on :cite:t:`compCVaR`. The notation
