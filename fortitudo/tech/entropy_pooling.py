@@ -47,8 +47,9 @@ def entropy_pooling(
         len_bh = len_b + len_h
         bounds = Bounds([-np.inf] * len_b + [0] * len_h, [np.inf] * len_bh)
         lhs = np.vstack((A, G))
+        rhs = np.vstack((b, h))
         solution = minimize(
-            _dual_inequality, x0=np.zeros(len_bh), args=(log_p, lhs, np.vstack((b, h))),
+            _dual_inequality, x0=np.zeros(len_bh), args=(log_p, lhs, rhs),
             method='TNC', jac=True, bounds=bounds, options={'maxiter': 10000})
         q = np.exp(log_p - 1 - lhs.T @ solution.x[:, np.newaxis])
     return q
