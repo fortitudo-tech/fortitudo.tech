@@ -36,11 +36,11 @@ def entropy_pooling(
     """
     log_p = np.log(p)
     if G is None:
+        lhs = A
         solution = minimize(
             _dual_equality, x0=np.zeros(A.shape[0]), args=(log_p, A, b),
             method='Newton-CG', jac=True, hess=_hessian_equality,
             options={'maxiter': 10000})
-        q = np.exp(log_p - 1 - A.T @ solution.x[:, np.newaxis])
     else:
         len_b = len(b)
         len_h = len(h)
@@ -51,7 +51,7 @@ def entropy_pooling(
         solution = minimize(
             _dual_inequality, x0=np.zeros(len_bh), args=(log_p, lhs, rhs),
             method='TNC', jac=True, bounds=bounds, options={'maxiter': 10000})
-        q = np.exp(log_p - 1 - lhs.T @ solution.x[:, np.newaxis])
+    q = np.exp(log_p - 1 - lhs.T @ solution.x[:, np.newaxis])
     return q
 
 
