@@ -55,13 +55,33 @@ def entropy_pooling(
     return q
 
 
+def _dual(lagrange_multipliers: np.ndarray, log_p: np.ndarray, lhs: np.ndarray, rhs: np.ndarray):
+    """Function computing Entropy Pooling dual objective and gradient.
+
+    Args:
+        lagrange_multipliers: Lagrange multipliers with shape (M,) or (M + N,).
+        log_p: Log of prior probability vector with shape (S, 1).
+        lhs: Matrix with shape (M, S) or (M + N, S).
+        rhs: Vector with shape (M, S) or (M + N, 1).
+
+    Returns:
+        Tuple containing the dual objective value and gradient.
+    """
+    lagrange_multipliers = lagrange_multipliers[:, np.newaxis]
+    log_x = log_p - 1 - lhs.T @ lagrange_multipliers
+    x = np.exp(log_x)
+    gradient = rhs - lhs @ x
+    dual_objective = x.T @ (log_x - log_p) - lagrange_multipliers.T @ gradient
+    return dual_objective, gradient
+
+
 def _dual_equality(
-        equality_multipliers: np.ndarray, log_p: np.ndarray, A: np.ndarray,
+        lagrange_multipliers: np.ndarray, log_p: np.ndarray, A: np.ndarray,
         b: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
     """Function computing equality constrained objective and gradient.
 
     Args:
-        equality_multipliers: Lagrange multipliers with shape (M,).
+        lagrange_multipliers: Lagrange multipliers with shape (M,).
         log_p: Log of prior probability vector with shape (S, 1).
         A: Equality constraint matrix with shape (M, S).
         b: Equality constraint vector with shape (M, 1).
@@ -69,11 +89,7 @@ def _dual_equality(
     Returns:
         Tuple containing the dual objective value and gradient.
     """
-    equality_multipliers = equality_multipliers[:, np.newaxis]
-    log_x = log_p - 1 - A.T @ equality_multipliers
-    x = np.exp(log_x)
-    gradient = b - A @ x
-    dual_objective = x.T @ (log_x - log_p) - equality_multipliers.T @ gradient
+    dual_objective, gradient = _dual(lagrange_multipliers, log_p, A, b)
     return -dual_objective, gradient.flatten()
 
 
@@ -91,21 +107,17 @@ def _dual_inequality(
     Returns:
         Tuple containing the dual objective value and gradient.
     """
-    lagrange_multipliers = lagrange_multipliers[:, np.newaxis]
-    log_x = log_p - 1 - lhs.T @ lagrange_multipliers
-    x = np.exp(log_x)
-    gradient = rhs - lhs @ x
-    dual_objective = x.T @ (log_x - log_p) - lagrange_multipliers.T @ gradient
+    dual_objective, gradient = _dual(lagrange_multipliers, log_p, lhs, rhs)
     return -1000 * dual_objective, 1000 * gradient
 
 
 def _hessian_equality(
-        equality_multipliers: np.ndarray, log_p: np.ndarray,
+        lagrange_multipliers: np.ndarray, log_p: np.ndarray,
         A: np.ndarray, b: np.ndarray) -> np.ndarray:
     """Function computing equality constrained hessian.
 
     Args:
-        equality_multipliers: Lagrange multipliers with shape (M,).
+        lagrange_multipliers: Lagrange multipliers with shape (M,).
         log_p: Log of prior probability vector with shape (S, 1).
         A: Equality constraint matrix with shape (M, S).
         b: Equality constraint vector with shape (M, 1).
@@ -113,6 +125,6 @@ def _hessian_equality(
     Returns:
         Hessian matrix with shape (M, M).
     """
-    x = np.exp(log_p - 1 - A.T @ equality_multipliers[:, np.newaxis])
+    x = np.exp(log_p - 1 - A.T @ lagrange_multipliers[:, np.newaxis])
     hessian = A @ (x @ np.ones((1, A.shape[0])) * A.T)
     return hessian
