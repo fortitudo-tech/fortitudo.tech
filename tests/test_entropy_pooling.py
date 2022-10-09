@@ -61,3 +61,8 @@ def test_equality_inequality(p):
     assert np.abs(np.sum(q) - 1) <= tol
     assert np.all(q > 0)
     assert q.shape == (S, 1)
+
+
+def test_method():
+    with pytest.raises(ValueError):
+        _ = entropy_pooling(p1, A, b, method='X')
