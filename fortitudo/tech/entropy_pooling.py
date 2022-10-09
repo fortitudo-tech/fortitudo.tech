@@ -20,8 +20,8 @@ from typing import Tuple
 
 
 def entropy_pooling(
-        p: np.ndarray, A: np.ndarray, b: np.ndarray,
-        G: np.ndarray = None, h: np.ndarray = None) -> np.ndarray:
+        p: np.ndarray, A: np.ndarray, b: np.ndarray, G: np.ndarray = None,
+        h: np.ndarray = None, method: str = 'TNC') -> np.ndarray:
     """Function for computing Entropy Pooling posterior probabilities.
 
     Args:
@@ -30,32 +30,36 @@ def entropy_pooling(
         b: Equality constraint vector with shape (M, 1).
         G: Inequality constraint matrix with shape (N, S).
         h: Inequality constraint vector with shape (N, 1).
+        method: Optimization method: {'TNC', 'L-BFGS-B'}. Default 'TNC'.
 
     Returns:
         Posterior probability vector with shape (S, 1).
     """
+    if method not in ('TNC', 'L-BFGS-B'):
+        raise ValueError(f'method {method} not supported. Please choose TNC or L-BFGS-B.')
+
     log_p = np.log(p)
+    len_b = len(b)
     if G is None:
         lhs = A
-        solution = minimize(
-            _dual_equality, x0=np.zeros(A.shape[0]), args=(log_p, A, b),
-            method='Newton-CG', jac=True, hess=_hessian_equality,
-            options={'maxiter': 10000})
+        rhs = b
+        bounds = Bounds([-np.inf] * len_b, [np.inf] * len_b)
     else:
-        len_b = len(b)
-        len_h = len(h)
-        len_bh = len_b + len_h
-        bounds = Bounds([-np.inf] * len_b + [0] * len_h, [np.inf] * len_bh)
         lhs = np.vstack((A, G))
         rhs = np.vstack((b, h))
-        solution = minimize(
-            _dual_inequality, x0=np.zeros(len_bh), args=(log_p, lhs, rhs),
-            method='TNC', jac=True, bounds=bounds, options={'maxfun': 10000})
+        len_h = len(h)
+        bounds = Bounds([-np.inf] * len_b + [0] * len_h, [np.inf] * (len_b + len_h))
+
+    solution = minimize(
+        _dual, x0=np.zeros(lhs.shape[0]), args=(log_p, lhs, rhs),
+        method=method, jac=True, bounds=bounds, options={'maxfun': 10000})
     q = np.exp(log_p - 1 - lhs.T @ solution.x[:, np.newaxis])
     return q
 
 
-def _dual(lagrange_multipliers: np.ndarray, log_p: np.ndarray, lhs: np.ndarray, rhs: np.ndarray):
+def _dual(
+        lagrange_multipliers: np.ndarray, log_p: np.ndarray,
+        lhs: np.ndarray, rhs: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
     """Function computing Entropy Pooling dual objective and gradient.
 
     Args:
@@ -72,59 +76,4 @@ def _dual(lagrange_multipliers: np.ndarray, log_p: np.ndarray, lhs: np.ndarray, 
     x = np.exp(log_x)
     gradient = rhs - lhs @ x
     dual_objective = x.T @ (log_x - log_p) - lagrange_multipliers.T @ gradient
-    return dual_objective, gradient
-
-
-def _dual_equality(
-        lagrange_multipliers: np.ndarray, log_p: np.ndarray, A: np.ndarray,
-        b: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
-    """Function computing equality constrained objective and gradient.
-
-    Args:
-        lagrange_multipliers: Lagrange multipliers with shape (M,).
-        log_p: Log of prior probability vector with shape (S, 1).
-        A: Equality constraint matrix with shape (M, S).
-        b: Equality constraint vector with shape (M, 1).
-
-    Returns:
-        Tuple containing the dual objective value and gradient.
-    """
-    dual_objective, gradient = _dual(lagrange_multipliers, log_p, A, b)
-    return -dual_objective, gradient.flatten()
-
-
-def _dual_inequality(
-        lagrange_multipliers: np.ndarray, log_p: np.ndarray, lhs: np.ndarray,
-        rhs: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
-    """Function computing inequality constrained objective and gradient.
-
-    Args:
-        lagrange_multipliers: Lagrange multipliers with shape (M + N,).
-        log_p: Log of prior probability vector with shape (S, 1).
-        lhs: Matrix with shape (M + N, S).
-        rhs: Vector with shape (M + N, 1).
-
-    Returns:
-        Tuple containing the dual objective value and gradient.
-    """
-    dual_objective, gradient = _dual(lagrange_multipliers, log_p, lhs, rhs)
     return -1000 * dual_objective, 1000 * gradient
-
-
-def _hessian_equality(
-        lagrange_multipliers: np.ndarray, log_p: np.ndarray,
-        A: np.ndarray, b: np.ndarray) -> np.ndarray:
-    """Function computing equality constrained hessian.
-
-    Args:
-        lagrange_multipliers: Lagrange multipliers with shape (M,).
-        log_p: Log of prior probability vector with shape (S, 1).
-        A: Equality constraint matrix with shape (M, S).
-        b: Equality constraint vector with shape (M, 1).
-
-    Returns:
-        Hessian matrix with shape (M, M).
-    """
-    x = np.exp(log_p - 1 - A.T @ lagrange_multipliers[:, np.newaxis])
-    hessian = A @ (x @ np.ones((1, A.shape[0])) * A.T)
-    return hessian
