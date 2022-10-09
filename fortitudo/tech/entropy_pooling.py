@@ -21,7 +21,7 @@ from typing import Tuple
 
 def entropy_pooling(
         p: np.ndarray, A: np.ndarray, b: np.ndarray, G: np.ndarray = None,
-        h: np.ndarray = None, method: str = 'TNC') -> np.ndarray:
+        h: np.ndarray = None, method: str = None) -> np.ndarray:
     """Function for computing Entropy Pooling posterior probabilities.
 
     Args:
@@ -35,7 +35,9 @@ def entropy_pooling(
     Returns:
         Posterior probability vector with shape (S, 1).
     """
-    if method not in ('TNC', 'L-BFGS-B'):
+    if method is None:
+        method = 'TNC'
+    elif method not in ('TNC', 'L-BFGS-B'):
         raise ValueError(f'Method {method} not supported. Choose TNC or L-BFGS-B.')
 
     log_p = np.log(p)

@@ -17,6 +17,7 @@
         <script src="_static/underscore.js"></script>
         <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
         <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -46,11 +47,40 @@
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation Instructions</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Documentation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#data">Data</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#entropy-pooling">Entropy Pooling</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#functions">Functions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#option-pricing">Option Pricing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#portfolio-optimization">Portfolio Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#data">Data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#fortitudo.tech.data.load_parameters"><code class="docutils literal notranslate"><span class="pre">load_parameters()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#fortitudo.tech.data.load_pnl"><code class="docutils literal notranslate"><span class="pre">load_pnl()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#fortitudo.tech.data.load_time_series"><code class="docutils literal notranslate"><span class="pre">load_time_series()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#entropy-pooling">Entropy Pooling</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#fortitudo.tech.entropy_pooling.entropy_pooling"><code class="docutils literal notranslate"><span class="pre">entropy_pooling()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#functions">Functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#fortitudo.tech.functions.correlation_matrix"><code class="docutils literal notranslate"><span class="pre">correlation_matrix()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#fortitudo.tech.functions.covariance_matrix"><code class="docutils literal notranslate"><span class="pre">covariance_matrix()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#fortitudo.tech.functions.simulation_moments"><code class="docutils literal notranslate"><span class="pre">simulation_moments()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#option-pricing">Option Pricing</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#fortitudo.tech.option_pricing.call_option"><code class="docutils literal notranslate"><span class="pre">call_option()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#fortitudo.tech.option_pricing.put_option"><code class="docutils literal notranslate"><span class="pre">put_option()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#portfolio-optimization">Portfolio Optimization</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#fortitudo.tech.optimization.MeanCVaR"><code class="docutils literal notranslate"><span class="pre">MeanCVaR</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#fortitudo.tech.optimization.MeanCVaR.efficient_frontier"><code class="docutils literal notranslate"><span class="pre">MeanCVaR.efficient_frontier()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#fortitudo.tech.optimization.MeanCVaR.efficient_portfolio"><code class="docutils literal notranslate"><span class="pre">MeanCVaR.efficient_portfolio()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#fortitudo.tech.optimization.MeanVariance"><code class="docutils literal notranslate"><span class="pre">MeanVariance</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#fortitudo.tech.optimization.MeanVariance.efficient_frontier"><code class="docutils literal notranslate"><span class="pre">MeanVariance.efficient_frontier()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#fortitudo.tech.optimization.MeanVariance.efficient_portfolio"><code class="docutils literal notranslate"><span class="pre">MeanVariance.efficient_portfolio()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
@@ -153,7 +183,7 @@ and <a class="reference external" href="https://ssrn.com/abstract=4217884">https
 code is implemented using notation from <span id="id4">Vorobets [<a class="reference internal" href="references.html#id3" title="A. Vorobets. Sequential entropy pooling heuristics. SSRN, 2021. URL: https://ssrn.com/abstract=3936392.">2021</a>]</span>.</p>
 <span class="target" id="module-fortitudo.tech.entropy_pooling"></span><dl class="py function">
 <dt class="sig sig-object py" id="fortitudo.tech.entropy_pooling.entropy_pooling">
-<span class="sig-name descname"><span class="pre">entropy_pooling</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">A</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">G</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fortitudo.tech.entropy_pooling.entropy_pooling" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">entropy_pooling</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">A</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">G</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fortitudo.tech.entropy_pooling.entropy_pooling" title="Permalink to this definition"></a></dt>
 <dd><p>Function for computing Entropy Pooling posterior probabilities.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -163,6 +193,7 @@ code is implemented using notation from <span id="id4">Vorobets [<a class="refer
 <li><p><strong>b</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>) – Equality constraint vector with shape (M, 1).</p></li>
 <li><p><strong>G</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>]) – Inequality constraint matrix with shape (N, S).</p></li>
 <li><p><strong>h</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>]) – Inequality constraint vector with shape (N, 1).</p></li>
+<li><p><strong>method</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]) – Optimization method: {‘TNC’, ‘L-BFGS-B’}. Default ‘TNC’.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type</dt>
