@@ -36,7 +36,7 @@ def entropy_pooling(
         Posterior probability vector with shape (S, 1).
     """
     if method not in ('TNC', 'L-BFGS-B'):
-        raise ValueError(f'method {method} not supported. Please choose TNC or L-BFGS-B.')
+        raise ValueError(f'Method {method} not supported. Choose TNC or L-BFGS-B.')
 
     log_p = np.log(p)
     len_b = len(b)
@@ -51,13 +51,13 @@ def entropy_pooling(
         bounds = Bounds([-np.inf] * len_b + [0] * len_h, [np.inf] * (len_b + len_h))
 
     solution = minimize(
-        _dual, x0=np.zeros(lhs.shape[0]), args=(log_p, lhs, rhs),
+        _dual_objective, x0=np.zeros(lhs.shape[0]), args=(log_p, lhs, rhs),
         method=method, jac=True, bounds=bounds, options={'maxfun': 10000})
     q = np.exp(log_p - 1 - lhs.T @ solution.x[:, np.newaxis])
     return q
 
 
-def _dual(
+def _dual_objective(
         lagrange_multipliers: np.ndarray, log_p: np.ndarray,
         lhs: np.ndarray, rhs: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
     """Function computing Entropy Pooling dual objective and gradient.
