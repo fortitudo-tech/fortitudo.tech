@@ -99,6 +99,45 @@ def correlation_matrix(R: Union[pd.DataFrame, np.ndarray], p: np.ndarray = None)
     return pd.DataFrame(corr, index=cov.index)
 
 
+def portfolio_var(
+        e: np.ndarray, R: Union[pd.DataFrame, np.ndarray], p: np.ndarray,
+        alpha: float = None, demean: bool = None) -> Union[float, np.ndarray]:
+    """Function for computing portfolio CVaR and optionally VaR.
+
+    Args:
+        e: Vector of portfolio exposures with shape (I, num_portfolios).
+        R: P&L / risk factor simulation with shape (S, I).
+        p: probability vector with shape (S, 1). Default np.ones((S, 1)) / S.
+        alpha: alpha level for alpha-CVaR and alpha-VaR. Default: 0.95.
+        demean: Boolean indicating whether to use demeaned P&L. Default: True.
+
+    Returns:
+        Portfolio alpha-VaR.
+    """
+    if alpha is None:
+        alpha = 0.95
+    if demean is None:
+        demean = True
+
+    _, R, p = _simulation_check(R, p)
+    if demean:
+        R = R - p.T @ R
+
+    num_portfolios = e.shape[1]
+    var = np.full((1, num_portfolios), np.nan)
+    pf_pnl = R @ e
+    for port in range(num_portfolios):
+        idx_sorted = np.argsort(pf_pnl[:, port], axis=0)
+        p_sorted = p[idx_sorted, 0]
+        var_index = np.searchsorted(np.cumsum(p_sorted) - p_sorted / 2, 1 - alpha)
+        var[0, port] = np.mean(pf_pnl[idx_sorted[var_index - 1:var_index + 1], port])
+
+    if num_portfolios == 1:
+        return -float(var)
+    else:
+        return -var
+
+
 def portfolio_vol(
         e: np.ndarray, R: Union[pd.DataFrame, np.ndarray],
         p: np.ndarray) -> Union[float, np.ndarray]:
