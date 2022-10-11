@@ -97,3 +97,28 @@ def correlation_matrix(R: Union[pd.DataFrame, np.ndarray], p: np.ndarray = None)
     vols_inverse = np.diag(np.sqrt(np.diag(cov.values))**-1)
     corr = vols_inverse @ cov.values @ vols_inverse
     return pd.DataFrame(corr, index=cov.index)
+
+
+def portfolio_vol(
+        e: np.ndarray, R: Union[pd.DataFrame, np.ndarray],
+        p: np.ndarray) -> Union[float, np.ndarray]:
+    """Function for computing portfolio volatility.
+
+    Args:
+        e: Vector of portfolio exposures with shape (I, num_portfolios).
+        R: P&L / risk factor simulation with shape (S, I).
+        p: probability vector with shape (S, 1). Default np.ones((S, 1)) / S.
+
+    Returns:
+        Portfolio volatility / volatilities.
+    """
+    cov = covariance_matrix(R, p).values
+    num_portfolios = e.shape[1]
+    vol = np.full((1, num_portfolios), np.nan)
+    for port in range(num_portfolios):
+        vol[0, port] = np.sqrt(e[:, port].T @ cov @ e[:, port])
+
+    if num_portfolios == 1:
+        return float(vol)
+    else:
+        return vol
