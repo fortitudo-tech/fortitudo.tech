@@ -99,6 +99,58 @@ def correlation_matrix(R: Union[pd.DataFrame, np.ndarray], p: np.ndarray = None)
     return pd.DataFrame(corr, index=cov.index)
 
 
+def _var_cvar_preprocess(e, R, p, alpha, demean) -> Tuple[np.ndarray, np.ndarray, float]:
+    _, R, p = _simulation_check(R, p)
+    if alpha is None:
+        alpha = 0.95
+    if type(alpha) is not float or not 0 < alpha < 1:
+        raise ValueError('alpha must be a float in the interval (0, 1).')
+    if demean is None:
+        demean = True
+    if type(demean) is not bool:
+        raise ValueError('demean must be either True or False.')
+    if demean:
+        R = R - p.T @ R
+    pf_pnl = R @ e
+    return pf_pnl, p, alpha
+
+
+def portfolio_cvar(
+        e: np.ndarray, R: Union[pd.DataFrame, np.ndarray], p: np.ndarray,
+        alpha: float = None, demean: bool = None) -> Union[float, np.ndarray]:
+    """Function for computing portfolio CVaR.
+
+    Args:
+        e: Vector of portfolio exposures with shape (I, num_portfolios).
+        R: P&L / risk factor simulation with shape (S, I).
+        p: probability vector with shape (S, 1). Default np.ones((S, 1)) / S.
+        alpha: alpha level for alpha-CVaR. Default: 0.95.
+        demean: Boolean indicating whether to use demeaned P&L. Default: True.
+
+    Returns:
+        Portfolio alpha-CVaR.
+    """
+    pf_pnl, p, alpha = _var_cvar_preprocess(e, R, p, alpha, demean)
+    var = _var_calc(pf_pnl, p, alpha)
+    num_portfolios = e.shape[1]
+    cvar = np.full((1, num_portfolios), np.nan)
+    for port in range(num_portfolios):
+        cvar_idx = pf_pnl[:, port] <= var[0, port]
+        cvar[0, port] = p[cvar_idx, 0].T @ pf_pnl[cvar_idx, port] / np.sum(p[cvar_idx, 0])
+    return _return_portfolio_risk(-cvar)
+
+
+def _var_calc(pf_pnl: np.ndarray, p: np.ndarray, alpha: float) -> np.ndarray:
+    num_portfolios = pf_pnl.shape[1]
+    var = np.full((1, num_portfolios), np.nan)
+    for port in range(num_portfolios):
+        idx_sorted = np.argsort(pf_pnl[:, port], axis=0)
+        p_sorted = p[idx_sorted, 0]
+        var_index = np.searchsorted(np.cumsum(p_sorted) - p_sorted / 2, 1 - alpha)
+        var[0, port] = np.mean(pf_pnl[idx_sorted[var_index - 1:var_index + 1], port])
+    return var
+
+
 def portfolio_var(
         e: np.ndarray, R: Union[pd.DataFrame, np.ndarray], p: np.ndarray,
         alpha: float = None, demean: bool = None) -> Union[float, np.ndarray]:
@@ -108,34 +160,15 @@ def portfolio_var(
         e: Vector of portfolio exposures with shape (I, num_portfolios).
         R: P&L / risk factor simulation with shape (S, I).
         p: probability vector with shape (S, 1). Default np.ones((S, 1)) / S.
-        alpha: alpha level for alpha-CVaR and alpha-VaR. Default: 0.95.
+        alpha: alpha level for alpha-VaR. Default: 0.95.
         demean: Boolean indicating whether to use demeaned P&L. Default: True.
 
     Returns:
         Portfolio alpha-VaR.
     """
-    if alpha is None:
-        alpha = 0.95
-    if demean is None:
-        demean = True
-
-    _, R, p = _simulation_check(R, p)
-    if demean:
-        R = R - p.T @ R
-
-    num_portfolios = e.shape[1]
-    var = np.full((1, num_portfolios), np.nan)
-    pf_pnl = R @ e
-    for port in range(num_portfolios):
-        idx_sorted = np.argsort(pf_pnl[:, port], axis=0)
-        p_sorted = p[idx_sorted, 0]
-        var_index = np.searchsorted(np.cumsum(p_sorted) - p_sorted / 2, 1 - alpha)
-        var[0, port] = np.mean(pf_pnl[idx_sorted[var_index - 1:var_index + 1], port])
-
-    if num_portfolios == 1:
-        return -float(var)
-    else:
-        return -var
+    pf_pnl, p, alpha = _var_cvar_preprocess(e, R, p, alpha, demean)
+    var = _var_calc(pf_pnl, p, alpha)
+    return _return_portfolio_risk(-var)
 
 
 def portfolio_vol(
@@ -156,8 +189,11 @@ def portfolio_vol(
     vol = np.full((1, num_portfolios), np.nan)
     for port in range(num_portfolios):
         vol[0, port] = np.sqrt(e[:, port].T @ cov @ e[:, port])
+    return _return_portfolio_risk(vol)
 
-    if num_portfolios == 1:
-        return float(vol)
+
+def _return_portfolio_risk(risk: np.ndarray) -> Tuple[float, np.ndarray]:
+    if risk.shape[1] == 1:
+        return float(risk)
     else:
-        return vol
+        return risk
