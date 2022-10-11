@@ -103,11 +103,11 @@ def _var_cvar_preprocess(e, R, p, alpha, demean) -> Tuple[np.ndarray, np.ndarray
     _, R, p = _simulation_check(R, p)
     if alpha is None:
         alpha = 0.95
-    if type(alpha) is not float or not 0 < alpha < 1:
+    elif type(alpha) is not float or not 0 < alpha < 1:
         raise ValueError('alpha must be a float in the interval (0, 1).')
     if demean is None:
         demean = True
-    if type(demean) is not bool:
+    elif type(demean) is not bool:
         raise ValueError('demean must be either True or False.')
     if demean:
         R = R - p.T @ R
