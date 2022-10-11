@@ -116,7 +116,7 @@ def _var_cvar_preprocess(e, R, p, alpha, demean) -> Tuple[np.ndarray, np.ndarray
 
 
 def portfolio_cvar(
-        e: np.ndarray, R: Union[pd.DataFrame, np.ndarray], p: np.ndarray,
+        e: np.ndarray, R: Union[pd.DataFrame, np.ndarray], p: np.ndarray = None,
         alpha: float = None, demean: bool = None) -> Union[float, np.ndarray]:
     """Function for computing portfolio CVaR.
 
@@ -152,7 +152,7 @@ def _var_calc(pf_pnl: np.ndarray, p: np.ndarray, alpha: float) -> np.ndarray:
 
 
 def portfolio_var(
-        e: np.ndarray, R: Union[pd.DataFrame, np.ndarray], p: np.ndarray,
+        e: np.ndarray, R: Union[pd.DataFrame, np.ndarray], p: np.ndarray = None,
         alpha: float = None, demean: bool = None) -> Union[float, np.ndarray]:
     """Function for computing portfolio CVaR and optionally VaR.
 
@@ -173,7 +173,7 @@ def portfolio_var(
 
 def portfolio_vol(
         e: np.ndarray, R: Union[pd.DataFrame, np.ndarray],
-        p: np.ndarray) -> Union[float, np.ndarray]:
+        p: np.ndarray = None) -> Union[float, np.ndarray]:
     """Function for computing portfolio volatility.
 
     Args:
