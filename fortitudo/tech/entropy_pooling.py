@@ -40,7 +40,6 @@ def entropy_pooling(
     elif method not in ('TNC', 'L-BFGS-B'):
         raise ValueError(f'Method {method} not supported. Choose TNC or L-BFGS-B.')
 
-    log_p = np.log(p)
     len_b = len(b)
     if G is None:
         lhs = A
@@ -52,6 +51,7 @@ def entropy_pooling(
         len_h = len(h)
         bounds = Bounds([-np.inf] * len_b + [0] * len_h, [np.inf] * (len_b + len_h))
 
+    log_p = np.log(p)
     solution = minimize(
         _dual_objective, x0=np.zeros(lhs.shape[0]), args=(log_p, lhs, rhs),
         method=method, jac=True, bounds=bounds, options={'maxfun': 10000})
