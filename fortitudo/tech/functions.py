@@ -100,18 +100,21 @@ def correlation_matrix(R: Union[pd.DataFrame, np.ndarray], p: np.ndarray = None)
 
 
 def _var_cvar_preprocess(e, R, p, alpha, demean) -> Tuple[np.ndarray, np.ndarray, float]:
-    _, R, p = _simulation_check(R, p)
     if alpha is None:
         alpha = 0.95
     elif type(alpha) is not float or not 0 < alpha < 1:
         raise ValueError('alpha must be a float in the interval (0, 1).')
+
     if demean is None:
         demean = True
     elif type(demean) is not bool:
         raise ValueError('demean must be either True or False.')
+
+    _, R, p = _simulation_check(R, p)
     if demean:
         R = R - p.T @ R
     pf_pnl = R @ e
+
     return pf_pnl, p, alpha
 
 
