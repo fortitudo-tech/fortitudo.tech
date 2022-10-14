@@ -75,8 +75,8 @@ packages, please report them directly to the maintainers of the upstream package
 Disclaimer
 ----------
 
-This package is completely separate from our proprietary solution and therefore
-not representative of the functionality offered in the Investment Analysis module.
-If you are an institutional investor and want to experience how these technologies
-can be used in very elegant ways, please `request a demo of the Investment Analysis
-module <https://fortitudo.tech/#contact>`_.
+This package is completely separate from our proprietary solutions and therefore
+not representative of the functionality offered therein. If you are an institutional
+investor and want to experience how these technologies can be used in very elegant
+ways, please `request a demo of the Investment Analysis module 
+<https://fortitudo.tech/#contact>`_.
