@@ -95,7 +95,7 @@ class MeanCVaR(Optimization):
         kwargs: options dictionary with Benders algorithm parameters.
 
     Raises:
-        ValueError: If constraints are infeasible.
+        ValueError: If constraints or options parameters are infeasible.
     """
     def __init__(
             self, R: np.ndarray, G: np.ndarray = None, h: np.ndarray = None,
@@ -138,8 +138,8 @@ class MeanCVaR(Optimization):
             self._alpha = alpha
         else:
             raise ValueError('alpha must be a float in the interval (0, 1).')
-        self._c = matrix(np.hstack((np.zeros(self._I), [1], [1 / (1 - self._alpha)])))
 
+        self._c = matrix(np.hstack((np.zeros(self._I), [1], [1 / (1 - self._alpha)])))
         self._mean = self._p @ R
         self._expected_return_row = matrix(np.hstack((-self._mean, np.zeros((1, 2)))))
         if self._demean:
