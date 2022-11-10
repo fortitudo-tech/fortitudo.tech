@@ -71,7 +71,7 @@ def _dual_objective(
         rhs: Vector with shape (M, 1) or (M + N, 1).
 
     Returns:
-        Tuple containing the dual objective value and gradient.
+        Dual objective value and gradient.
     """
     lagrange_multipliers = lagrange_multipliers[:, np.newaxis]
     log_x = log_p - 1 - lhs.T @ lagrange_multipliers
