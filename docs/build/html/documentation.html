@@ -263,7 +263,7 @@ Pooling views.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>e</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>) – Vector of portfolio exposures with shape (I, num_portfolios).</p></li>
+<li><p><strong>e</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>) – Vector / matrix of portfolio exposures with shape (I, num_portfolios).</p></li>
 <li><p><strong>R</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>]) – P&amp;L / risk factor simulation with shape (S, I).</p></li>
 <li><p><strong>p</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>]) – probability vector with shape (S, 1). Default np.ones((S, 1)) / S.</p></li>
 <li><p><strong>alpha</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]) – alpha level for alpha-CVaR. Default: 0.95.</p></li>
@@ -286,7 +286,7 @@ Pooling views.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>e</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>) – Vector of portfolio exposures with shape (I, num_portfolios).</p></li>
+<li><p><strong>e</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>) – Vector / matrix of portfolio exposures with shape (I, num_portfolios).</p></li>
 <li><p><strong>R</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>]) – P&amp;L / risk factor simulation with shape (S, I).</p></li>
 <li><p><strong>p</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>]) – probability vector with shape (S, 1). Default np.ones((S, 1)) / S.</p></li>
 <li><p><strong>alpha</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]) – alpha level for alpha-VaR. Default: 0.95.</p></li>
@@ -309,7 +309,7 @@ Pooling views.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>e</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>) – Vector of portfolio exposures with shape (I, num_portfolios).</p></li>
+<li><p><strong>e</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>) – Vector / matrix of portfolio exposures with shape (I, num_portfolios).</p></li>
 <li><p><strong>R</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>]) – P&amp;L / risk factor simulation with shape (S, I).</p></li>
 <li><p><strong>p</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>]) – probability vector with shape (S, 1). Default np.ones((S, 1)) / S.</p></li>
 </ul>
@@ -431,7 +431,7 @@ Default: np.ones((S, 1)) / S.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Raises</dt>
-<dd class="field-even"><p><strong>ValueError</strong> – If constraints are infeasible.</p>
+<dd class="field-even"><p><strong>ValueError</strong> – If constraints or options parameters are infeasible.</p>
 </dd>
 </dl>
 <dl class="py method">
