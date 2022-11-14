@@ -124,7 +124,7 @@ def portfolio_cvar(
     """Function for computing portfolio CVaR.
 
     Args:
-        e: Vector of portfolio exposures with shape (I, num_portfolios).
+        e: Vector / matrix of portfolio exposures with shape (I, num_portfolios).
         R: P&L / risk factor simulation with shape (S, I).
         p: probability vector with shape (S, 1). Default np.ones((S, 1)) / S.
         alpha: alpha level for alpha-CVaR. Default: 0.95.
@@ -160,7 +160,7 @@ def portfolio_var(
     """Function for computing portfolio CVaR and optionally VaR.
 
     Args:
-        e: Vector of portfolio exposures with shape (I, num_portfolios).
+        e: Vector / matrix of portfolio exposures with shape (I, num_portfolios).
         R: P&L / risk factor simulation with shape (S, I).
         p: probability vector with shape (S, 1). Default np.ones((S, 1)) / S.
         alpha: alpha level for alpha-VaR. Default: 0.95.
@@ -180,7 +180,7 @@ def portfolio_vol(
     """Function for computing portfolio volatility.
 
     Args:
-        e: Vector of portfolio exposures with shape (I, num_portfolios).
+        e: Vector / matrix of portfolio exposures with shape (I, num_portfolios).
         R: P&L / risk factor simulation with shape (S, I).
         p: probability vector with shape (S, 1). Default np.ones((S, 1)) / S.
 
