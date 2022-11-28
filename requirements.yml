@@ -5,7 +5,7 @@ channels:
 dependencies:
   - _libgcc_mutex=0.1=main
   - _openmp_mutex=5.1=1_gnu
-  - attrs=21.4.0=pyhd3eb1b0_0
+  - attrs=22.1.0=py310h06a4308_0
   - blas=1.0=mkl
   - bottleneck=1.3.5=py310ha9d4c09_0
   - bzip2=1.0.8=h7b6447c_0
@@ -23,14 +23,14 @@ dependencies:
   - ld_impl_linux-64=2.38=h1181459_1
   - libblas=3.9.0=12_linux64_mkl
   - libcblas=3.9.0=12_linux64_mkl
-  - libffi=3.3=he6710b0_2
+  - libffi=3.4.2=h6a678d5_6
   - libgcc-ng=11.2.0=h1234567_1
   - libgfortran-ng=11.2.0=h00389a5_1
   - libgfortran5=11.2.0=h1234567_1
   - libgomp=11.2.0=h1234567_1
   - liblapack=3.9.0=12_linux64_mkl
   - libstdcxx-ng=11.2.0=h1234567_1
-  - libuuid=1.0.3=h7f8727e_2
+  - libuuid=1.41.5=h5eee18b_0
   - metis=5.1.0=h58526e2_1006
   - mkl=2021.4.0=h06a4308_640
   - mkl-service=2.4.0=py310h7f8727e_0
@@ -38,42 +38,42 @@ dependencies:
   - mkl_random=1.2.2=py310h00e6091_0
   - mpfr=4.1.0=h9202a9a_1
   - ncurses=6.3=h5eee18b_3
-  - numexpr=2.8.3=py310hcea2de6_0
-  - numpy=1.23.1=py310h1794996_0
-  - numpy-base=1.23.1=py310hcba007f_0
-  - openssl=1.1.1q=h7f8727e_0
+  - numexpr=2.8.4=py310h8879344_0
+  - numpy=1.23.4=py310hd5efca6_0
+  - numpy-base=1.23.4=py310h8e6c178_0
+  - openssl=1.1.1s=h7f8727e_0
   - packaging=21.3=pyhd3eb1b0_0
-  - pandas=1.4.4=py310h6a678d5_0
+  - pandas=1.5.1=py310h1128e8f_0
   - pip=22.2.2=py310h06a4308_0
   - pluggy=1.0.0=py310h06a4308_1
   - py=1.11.0=pyhd3eb1b0_0
   - pyparsing=3.0.9=py310h06a4308_0
   - pytest=7.1.2=py310h06a4308_0
   - pytest-cov=3.0.0=pyhd3eb1b0_0
-  - python=3.10.6=haa1d7c7_0
+  - python=3.10.8=h7a1cb2a_1
   - python-dateutil=2.8.2=pyhd3eb1b0_0
   - python_abi=3.10=2_cp310
   - pytz=2022.1=py310h06a4308_0
-  - readline=8.1.2=h7f8727e_1
-  - scipy=1.9.1=py310hd5efca6_0
-  - setuptools=63.4.1=py310h06a4308_0
+  - readline=8.2=h5eee18b_0
+  - scipy=1.9.3=py310hd5efca6_0
+  - setuptools=65.5.0=py310h06a4308_0
   - six=1.16.0=pyhd3eb1b0_1
-  - sqlite=3.39.3=h5082296_0
+  - sqlite=3.40.0=h5082296_0
   - suitesparse=5.10.1=hd8046ac_0
   - tbb=2020.2=h4bd325d_4
   - tk=8.6.12=h1ccaba5_0
   - toml=0.10.2=pyhd3eb1b0_0
   - tomli=2.0.1=py310h06a4308_0
-  - tzdata=2022c=h04d1e81_0
+  - tzdata=2022f=h04d1e81_0
   - wheel=0.37.1=pyhd3eb1b0_0
   - xz=5.2.6=h5eee18b_0
-  - zlib=1.2.12=h5eee18b_3
+  - zlib=1.2.13=h5eee18b_0
   - pip:
     - alabaster==0.7.12
-    - babel==2.10.3
+    - babel==2.11.0
     - charset-normalizer==2.1.1
     - docutils==0.17.1
-    - flake8==5.0.4
+    - flake8==6.0.0
     - idna==3.4
     - imagesize==1.4.1
     - jinja2==3.1.2
@@ -82,15 +82,15 @@ dependencies:
     - mccabe==0.7.0
     - pybtex==0.24.0
     - pybtex-docutils==1.0.2
-    - pycodestyle==2.9.1
-    - pyflakes==2.5.0
+    - pycodestyle==2.10.0
+    - pyflakes==3.0.1
     - pygments==2.13.0
     - pyyaml==6.0
     - requests==2.28.1
     - snowballstemmer==2.2.0
-    - sphinx==5.2.3
-    - sphinx-autodoc-typehints==1.19.4
-    - sphinx-rtd-theme==1.0.0
+    - sphinx==5.3.0
+    - sphinx-autodoc-typehints==1.19.5
+    - sphinx-rtd-theme==1.1.1
     - sphinxcontrib-applehelp==1.0.2
     - sphinxcontrib-bibtex==2.5.0
     - sphinxcontrib-devhelp==1.0.2
@@ -98,4 +98,4 @@ dependencies:
     - sphinxcontrib-jsmath==1.0.1
     - sphinxcontrib-qthelp==1.0.3
     - sphinxcontrib-serializinghtml==1.1.5
-    - urllib3==1.26.12
+    - urllib3==1.26.13
