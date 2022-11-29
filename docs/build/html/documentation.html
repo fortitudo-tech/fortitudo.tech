@@ -104,8 +104,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Documentation</li>
+      <li><a href="index.html" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active">Documentation</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -120,16 +120,18 @@
 <h2>Data<a class="headerlink" href="#data" title="Permalink to this heading"></a></h2>
 <p>The P&amp;L parameters from <span id="id1">Vorobets [<a class="reference internal" href="references.html#id6" title="A. Vorobets. Variance for intuition, cvar for optimization. SSRN, 2022. URL: https://ssrn.com/abstract=4034316.">2022</a>]</span> and simulation from
 <span id="id2">Vorobets [<a class="reference internal" href="references.html#id3" title="A. Vorobets. Sequential entropy pooling heuristics. SSRN, 2021. URL: https://ssrn.com/abstract=3936392.">2021</a>]</span> follow with this package. The simulation assumes
-that returns follow a log-normal distribution, while the parameters are given
-by <a class="reference external" href="https://www.afkastforventninger.dk/en/common-return-expectations/">the Danish common return expectations for the 2nd half of 2021</a>.</p>
-<p>The parameters and P&amp;L simulation are used in the examples and allows you to
-immediately start exploring the functionality of this package. You can also use
-it to test your understanding of the theory by replicating results.</p>
+that returns follow a log-normal distribution, while the parameters are
+given by <a class="reference external" href="https://www.afkastforventninger.dk/en/common-return-expectations/">the Danish common return expectations for the 2nd half of 2021</a>.</p>
+<p>The parameters and P&amp;L simulation are used in the examples and allow you to
+immediately start exploring the functionality of this package. You can also
+use it to test your understanding of the theory by replicating results, e.g.,
+the sequential heuristics results from <span id="id3">Vorobets [<a class="reference internal" href="references.html#id3" title="A. Vorobets. Sequential entropy pooling heuristics. SSRN, 2021. URL: https://ssrn.com/abstract=3936392.">2021</a>]</span>.</p>
 <p>In addition to the above, a simulated time series of an equity index, an
 associated implied volatility surface, a risk-free zero-coupon curve, and
 a credit spread curve is included. You can use this time series data to,
-e.g., validate your risk modeling approach. See the example that uses the
-time series data for more information.</p>
+e.g., validate your risk modeling approach. See the <a class="reference external" href="https://github.com/fortitudo-tech/fortitudo.tech/blob/main/examples/4_TimeSeries.ipynb">example that uses the
+time series data</a>
+for more information.</p>
 <span class="target" id="module-fortitudo.tech.data"></span><dl class="py function">
 <dt class="sig sig-object py" id="fortitudo.tech.data.load_parameters">
 <span class="sig-name descname"><span class="pre">load_parameters</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fortitudo.tech.data.load_parameters" title="Permalink to this definition"></a></dt>
@@ -182,8 +184,8 @@ and <a class="reference external" href="https://ssrn.com/abstract=4217884">https
 <p>subject to the constraints</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}Ax=b, \\Gx\leq h.\end{split}\]</div>
-<p>The approach was first introduced by <span id="id3">Meucci [<a class="reference internal" href="references.html#id2" title="A. Meucci. Fully flexible views: theory and practice. Risk, 21(10):97-102, 2008. URL: https://ssrn.com/abstract=1213325.">2008</a>]</span>, while the
-code is implemented using notation from <span id="id4">Vorobets [<a class="reference internal" href="references.html#id3" title="A. Vorobets. Sequential entropy pooling heuristics. SSRN, 2021. URL: https://ssrn.com/abstract=3936392.">2021</a>]</span>.</p>
+<p>The approach was first introduced by <span id="id4">Meucci [<a class="reference internal" href="references.html#id2" title="A. Meucci. Fully flexible views: theory and practice. Risk, 21(10):97-102, 2008. URL: https://ssrn.com/abstract=1213325.">2008</a>]</span>, while the
+code is implemented using notation from <span id="id5">Vorobets [<a class="reference internal" href="references.html#id3" title="A. Vorobets. Sequential entropy pooling heuristics. SSRN, 2021. URL: https://ssrn.com/abstract=3936392.">2021</a>]</span>.</p>
 <span class="target" id="module-fortitudo.tech.entropy_pooling"></span><dl class="py function">
 <dt class="sig sig-object py" id="fortitudo.tech.entropy_pooling.entropy_pooling">
 <span class="sig-name descname"><span class="pre">entropy_pooling</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">A</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">G</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fortitudo.tech.entropy_pooling.entropy_pooling" title="Permalink to this definition"></a></dt>
@@ -404,11 +406,11 @@ Pooling views.</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\mu'e&amp;\geq\mu_{target},\\v'e&amp;=1,\\Ge&amp;\leq h,\\Ae&amp;=b.\end{split}\]</div>
 <p>Here, <span class="math notranslate nohighlight">\(v\in\mathbb{R}^{I}\)</span> is the vector of relative market values introduced
-by <span id="id5">Vorobets [<a class="reference internal" href="references.html#id7" title="A. Vorobets. Portfolio management framework for derivative instruments. SSRN, 2022. URL: https://ssrn.com/abstract=4217884.">2022</a>]</span>. See <a class="reference external" href="https://github.com/fortitudo-tech/fortitudo.tech/blob/main/examples/5_DerivativesFramework.ipynb">this example</a> for how to use this
+by <span id="id6">Vorobets [<a class="reference internal" href="references.html#id7" title="A. Vorobets. Portfolio management framework for derivative instruments. SSRN, 2022. URL: https://ssrn.com/abstract=4217884.">2022</a>]</span>. See <a class="reference external" href="https://github.com/fortitudo-tech/fortitudo.tech/blob/main/examples/5_DerivativesFramework.ipynb">this example</a> for how to use this
 parameter.</p>
-<p>A method for solving the CVaR problem was first introduced by <span id="id6">Rockafellar and Uryasev [<a class="reference internal" href="references.html#id4" title="R. Tyrrell Rockafellar and S. Uryasev. Optimization of conditional value-at-risk. Journal of Risk, 2(3):21-41, 2000. URL: https://doi.org/10.21314/JOR.2000.038.">2000</a>]</span>,
-while the implemented algorithm is based on <span id="id7">Künzi-Bay and Mayer [<a class="reference internal" href="references.html#id5" title="A. Künzi-Bay and J. Mayer. Computational aspects of minimizing conditional value-at-risk. CMS, 3:3–27, 2006. URL: https://doi.org/10.1007/s10287-005-0042-0.">2006</a>]</span>. The notation
-in relation to the P&amp;L simulations <span class="math notranslate nohighlight">\(R\)</span> follows <span id="id8">Vorobets [<a class="reference internal" href="references.html#id3" title="A. Vorobets. Sequential entropy pooling heuristics. SSRN, 2021. URL: https://ssrn.com/abstract=3936392.">2021</a>]</span>.
+<p>A method for solving the CVaR problem was first introduced by <span id="id7">Rockafellar and Uryasev [<a class="reference internal" href="references.html#id4" title="R. Tyrrell Rockafellar and S. Uryasev. Optimization of conditional value-at-risk. Journal of Risk, 2(3):21-41, 2000. URL: https://doi.org/10.21314/JOR.2000.038.">2000</a>]</span>,
+while the implemented algorithm is based on <span id="id8">Künzi-Bay and Mayer [<a class="reference internal" href="references.html#id5" title="A. Künzi-Bay and J. Mayer. Computational aspects of minimizing conditional value-at-risk. CMS, 3:3–27, 2006. URL: https://doi.org/10.1007/s10287-005-0042-0.">2006</a>]</span>. The notation
+in relation to the P&amp;L simulations <span class="math notranslate nohighlight">\(R\)</span> follows <span id="id9">Vorobets [<a class="reference internal" href="references.html#id3" title="A. Vorobets. Sequential entropy pooling heuristics. SSRN, 2021. URL: https://ssrn.com/abstract=3936392.">2021</a>]</span>.
 For the variance risk measure, a standard quadratic programming solver is used.</p>
 <span class="target" id="module-fortitudo.tech.optimization"></span><dl class="py class">
 <dt class="sig sig-object py" id="fortitudo.tech.optimization.MeanCVaR">

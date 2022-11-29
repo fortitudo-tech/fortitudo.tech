@@ -83,6 +83,7 @@ Disclaimer
 ----------
 
 This package is completely separate from our proprietary solutions and therefore
-not representative of the functionality offered therein. If you are an institutional
-investor and want to experience how these technologies can be used in very elegant
+not representative of the functionality offered therein. The examples for this
+package illustrate only elementary use cases. If you are an institutional investor
+and want to experience how these technologies can be used in more sophisticated
 ways, please request a demo by sending an email to demo@fortitudo.tech.
