@@ -6,19 +6,21 @@ Data
 
 The P&L parameters from :cite:t:`Vorobets2022` and simulation from 
 :cite:t:`Vorobets2021` follow with this package. The simulation assumes
-that returns follow a log-normal distribution, while the parameters are given
-by `the Danish common return expectations for the 2nd half of 2021 
+that returns follow a log-normal distribution, while the parameters are
+given by `the Danish common return expectations for the 2nd half of 2021 
 <https://www.afkastforventninger.dk/en/common-return-expectations/>`_.
 
-The parameters and P&L simulation are used in the examples and allows you to
-immediately start exploring the functionality of this package. You can also use
-it to test your understanding of the theory by replicating results.
+The parameters and P&L simulation are used in the examples and allow you to
+immediately start exploring the functionality of this package. You can also
+use it to test your understanding of the theory by replicating results, e.g.,
+the sequential heuristics results from :cite:t:`Vorobets2021`.
 
 In addition to the above, a simulated time series of an equity index, an
 associated implied volatility surface, a risk-free zero-coupon curve, and
 a credit spread curve is included. You can use this time series data to,
-e.g., validate your risk modeling approach. See the example that uses the
-time series data for more information.
+e.g., validate your risk modeling approach. See the `example that uses the
+time series data <https://github.com/fortitudo-tech/fortitudo.tech/blob/main/examples/4_TimeSeries.ipynb>`_
+for more information.
 
 .. automodule:: fortitudo.tech.data
    :members:

@@ -52,10 +52,10 @@ def entropy_pooling(
         bounds = Bounds([-np.inf] * len_b + [0] * len_h, [np.inf] * (len_b + len_h))
 
     log_p = np.log(p)
-    solution = minimize(
+    dual_solution = minimize(
         _dual_objective, x0=np.zeros(lhs.shape[0]), args=(log_p, lhs, rhs),
         method=method, jac=True, bounds=bounds, options={'maxfun': 10000})
-    q = np.exp(log_p - 1 - lhs.T @ solution.x[:, np.newaxis])
+    q = np.exp(log_p - 1 - lhs.T @ dual_solution.x[:, np.newaxis])
     return q
 
 
@@ -77,5 +77,5 @@ def _dual_objective(
     log_x = log_p - 1 - lhs.T @ lagrange_multipliers
     x = np.exp(log_x)
     gradient = rhs - lhs @ x
-    dual_objective = x.T @ (log_x - log_p) - lagrange_multipliers.T @ gradient
-    return -1000 * dual_objective, 1000 * gradient
+    objective = x.T @ (log_x - log_p) - lagrange_multipliers.T @ gradient
+    return -1000 * objective, 1000 * gradient

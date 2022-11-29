@@ -17,5 +17,4 @@ jobs:
         with:
           activate-environment: fortitudo.tech-dev
           environment-file: requirements.yml
-          auto-activate-base: false
       - run: pytest --cov=fortitudo/tech
