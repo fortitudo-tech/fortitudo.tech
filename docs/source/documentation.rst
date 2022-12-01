@@ -133,3 +133,17 @@ or :const:`'abstol'` conditions are satisfied. The parameters have been tested
 with "percentage return" P&L and work well. In most cases, the algorithm stops
 due to relative convergence in less than 100 iterations. If you use P&L
 simulations that are scaled differently, you might need to adjust them.
+
+Simulation
+-------------
+
+This package includes a very simple exponential decay simulation model. The
+exponentially decaying probabilities can be used directly with historical
+scenarios, e.g., as a prior probability for Entropy Pooling views / stress-tests,
+or for a normal distribution calibration which new samples can be generated from.
+
+You can see how to use this functionality in `the modeling example <https://github.com/
+fortitudo-tech/fortitudo.tech/blob/main/examples>`_.
+
+.. automodule:: fortitudo.tech.risk_model
+   :members:
