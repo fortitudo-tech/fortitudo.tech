@@ -14,7 +14,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-from multiprocessing.sharedctypes import Value
 import numpy as np
 import pytest
 from context import (R, simulation_moments, covariance_matrix, correlation_matrix,
