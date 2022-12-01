@@ -1,7 +1,7 @@
 .. image:: https://github.com/fortitudo-tech/fortitudo.tech/actions/workflows/tests.yml/badge.svg
    :target: https://github.com/fortitudo-tech/fortitudo.tech/actions/workflows/tests.yml
 
-.. image:: https://static.pepy.tech/personalized-badge/fortitudo-tech?period=total&units=international_system&left_color=black&right_color=blue&left_text=Downloads
+.. image:: https://static.pepy.tech/personalized-badge/fortitudo-tech?period=total&units=international_system&left_color=grey&right_color=blue&left_text=Downloads
  :target: https://pepy.tech/project/fortitudo-tech
 
 Fortitudo Technologies Open Source
