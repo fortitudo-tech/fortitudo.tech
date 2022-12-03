@@ -21,7 +21,6 @@ from context import R, exp_decay_probs, normal_exp_decay_calib, covariance_matri
 T, I = R.shape
 simulation_names = R.columns
 tol = 1e-10
-tol2 = 1e-4
 
 p = exp_decay_probs(R, T / 2)
 p1 = exp_decay_probs(R.values, T / 2)
@@ -32,7 +31,7 @@ mean1, cov_matrix1 = normal_exp_decay_calib(R.values, T / 2)
 def test_exp_decay_probs():
     assert p.shape == (T, 1)
     assert np.abs(np.sum(p) - 1) <= tol
-    assert np.abs(p[-int(T / 2)] / p[-1] - 0.5) <= tol2
+    assert np.abs(p[-int(T / 2 + 1)] / p[-1] - 0.5) <= tol
     assert np.all(np.abs(p - p1)) <= tol
 
 
