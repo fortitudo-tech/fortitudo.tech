@@ -1,8 +1,11 @@
 .. image:: https://github.com/fortitudo-tech/fortitudo.tech/actions/workflows/tests.yml/badge.svg
    :target: https://github.com/fortitudo-tech/fortitudo.tech/actions/workflows/tests.yml
 
+.. image:: https://codecov.io/gh/fortitudo-tech/fortitudo.tech/branch/main/graph/badge.svg?token=Z16XK92Gkl 
+   :target: https://codecov.io/gh/fortitudo-tech/fortitudo.tech
+
 .. image:: https://static.pepy.tech/personalized-badge/fortitudo-tech?period=total&units=international_system&left_color=grey&right_color=blue&left_text=Downloads
- :target: https://pepy.tech/project/fortitudo-tech
+   :target: https://pepy.tech/project/fortitudo-tech
 
 Fortitudo Technologies Open Source
 ==================================
