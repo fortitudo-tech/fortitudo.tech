@@ -13,8 +13,10 @@ The repository contains the following examples:
    CVaR as default
 4) An illustration of how to work with the time series simulation that follows
    with this package
-5) The accompanied code for :cite:t:`Vorobets2022a` with an example of how to use
-   the :math:`v` parameter for portfolio optimization
+5) The accompanied code for :cite:t:`Vorobets2022a` with an example of how to
+   use the relative market values :math:`v` parameter for portfolio optimization
+6) How to use the simulation / P&L modeling functionality with historical time
+   series for FAANG stocks
 
 The examples are good places to start exploring the functionality of this package.
 We have very limited resources for support in relation to these, but please let

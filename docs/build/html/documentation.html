@@ -34,7 +34,7 @@
             <a href="index.html" class="icon icon-home"> fortitudo.tech
           </a>
               <div class="version">
-                v0.7.1
+                v0.8
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -84,6 +84,11 @@
 </li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="#simulation">Simulation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#fortitudo.tech.simulation.exp_decay_probs"><code class="docutils literal notranslate"><span class="pre">exp_decay_probs()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#fortitudo.tech.simulation.normal_exp_decay_calib"><code class="docutils literal notranslate"><span class="pre">normal_exp_decay_calib()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
@@ -130,8 +135,7 @@ the sequential heuristics results from <span id="id3">Vorobets [<a class="refere
 associated implied volatility surface, a risk-free zero-coupon curve, and
 a credit spread curve is included. You can use this time series data to,
 e.g., validate your risk modeling approach. See the <a class="reference external" href="https://github.com/fortitudo-tech/fortitudo.tech/blob/main/examples/4_TimeSeries.ipynb">example that uses the
-time series data</a>
-for more information.</p>
+time series data</a> for more information.</p>
 <span class="target" id="module-fortitudo.tech.data"></span><dl class="py function">
 <dt class="sig sig-object py" id="fortitudo.tech.data.load_parameters">
 <span class="sig-name descname"><span class="pre">load_parameters</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fortitudo.tech.data.load_parameters" title="Permalink to this definition"></a></dt>
@@ -574,6 +578,54 @@ or <code class="xref py py-const docutils literal notranslate"><span class="pre"
 with “percentage return” P&amp;L and work well. In most cases, the algorithm stops
 due to relative convergence in less than 100 iterations. If you use P&amp;L
 simulations that are scaled differently, you might need to adjust them.</p>
+</section>
+<section id="simulation">
+<h2>Simulation<a class="headerlink" href="#simulation" title="Permalink to this heading"></a></h2>
+<p>This package includes a very simple exponential decay simulation model. The
+exponentially decaying probabilities can be used directly with historical
+scenarios, e.g., as a prior probability for Entropy Pooling views / stress-tests,
+or for a normal distribution calibration which new samples can be generated from.</p>
+<p>You can see how to use this functionality in <a class="reference external" href="https://github.com/fortitudo-tech/fortitudo.tech/blob/main/examples/6_Simulation.ipynb">the modeling example</a>.</p>
+<span class="target" id="module-fortitudo.tech.simulation"></span><dl class="py function">
+<dt class="sig sig-object py" id="fortitudo.tech.simulation.exp_decay_probs">
+<span class="sig-name descname"><span class="pre">exp_decay_probs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">R</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">half_life</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fortitudo.tech.simulation.exp_decay_probs" title="Permalink to this definition"></a></dt>
+<dd><p>Function for computing exponential decay probabilities.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>R</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>]) – P&amp;L / risk factor simulation with shape (T, I).</p></li>
+<li><p><strong>half_life</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>) – Exponential decay half life.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Exponentially decaying probabilities vector with shape (T, 1).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="fortitudo.tech.simulation.normal_exp_decay_calib">
+<span class="sig-name descname"><span class="pre">normal_exp_decay_calib</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">R</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">half_life</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fortitudo.tech.simulation.normal_exp_decay_calib" title="Permalink to this definition"></a></dt>
+<dd><p>Function for computing exponential decay mean vector and covariance matrix.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>R</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>]) – P&amp;L / risk factor simulation with shape (T, I).</p></li>
+<li><p><strong>half_life</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>) – Exponential decay half life.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>], <code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code>]]</p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Mean vector with shape (I, 1) and covariance matrix with shape (I, I).</p>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
 </section>
 

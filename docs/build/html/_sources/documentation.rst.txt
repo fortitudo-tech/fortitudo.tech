@@ -19,8 +19,8 @@ In addition to the above, a simulated time series of an equity index, an
 associated implied volatility surface, a risk-free zero-coupon curve, and
 a credit spread curve is included. You can use this time series data to,
 e.g., validate your risk modeling approach. See the `example that uses the
-time series data <https://github.com/fortitudo-tech/fortitudo.tech/blob/main/examples/4_TimeSeries.ipynb>`_
-for more information.
+time series data <https://github.com/fortitudo-tech/fortitudo.tech/blob/main/
+examples/4_TimeSeries.ipynb>`_ for more information.
 
 .. automodule:: fortitudo.tech.data
    :members:
@@ -133,3 +133,17 @@ or :const:`'abstol'` conditions are satisfied. The parameters have been tested
 with "percentage return" P&L and work well. In most cases, the algorithm stops
 due to relative convergence in less than 100 iterations. If you use P&L
 simulations that are scaled differently, you might need to adjust them.
+
+Simulation
+----------
+
+This package includes a very simple exponential decay simulation model. The
+exponentially decaying probabilities can be used directly with historical
+scenarios, e.g., as a prior probability for Entropy Pooling views / stress-tests,
+or for a normal distribution calibration which new samples can be generated from.
+
+You can see how to use this functionality in `the modeling example <https://github.com/
+fortitudo-tech/fortitudo.tech/blob/main/examples/6_Simulation.ipynb>`_.
+
+.. automodule:: fortitudo.tech.simulation
+   :members:
