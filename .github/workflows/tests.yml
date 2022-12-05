@@ -17,4 +17,5 @@ jobs:
         with:
           activate-environment: fortitudo.tech-dev
           environment-file: requirements.yml
-      - run: pytest --cov=fortitudo/tech --cov-fail-under=100
+      - run: pytest --cov=fortitudo/tech --cov-fail-under=100 --cov-report=xml
+      - uses: codecov/codecov-action@v3
