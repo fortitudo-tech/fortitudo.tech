@@ -9,8 +9,8 @@ dependencies:
   - blas=1.0=mkl
   - bottleneck=1.3.5=py310ha9d4c09_0
   - bzip2=1.0.8=h7b6447c_0
-  - ca-certificates=2022.9.24=ha878542_0
-  - certifi=2022.9.24=pyhd8ed1ab_0
+  - ca-certificates=2022.12.7=ha878542_0
+  - certifi=2022.12.7=pyhd8ed1ab_0
   - coverage=6.3.2=py310h7f8727e_0
   - cvxopt=1.3.0=py310h3151893_0
   - dsdp=5.8=hd9d9efa_1203
@@ -43,7 +43,7 @@ dependencies:
   - numpy-base=1.23.4=py310h8e6c178_0
   - openssl=1.1.1s=h7f8727e_0
   - packaging=21.3=pyhd3eb1b0_0
-  - pandas=1.5.1=py310h1128e8f_0
+  - pandas=1.5.2=py310h1128e8f_0
   - pip=22.2.2=py310h06a4308_0
   - pluggy=1.0.0=py310h06a4308_1
   - py=1.11.0=pyhd3eb1b0_0
@@ -64,38 +64,38 @@ dependencies:
   - tk=8.6.12=h1ccaba5_0
   - toml=0.10.2=pyhd3eb1b0_0
   - tomli=2.0.1=py310h06a4308_0
-  - tzdata=2022f=h04d1e81_0
+  - tzdata=2022g=h04d1e81_0
   - wheel=0.37.1=pyhd3eb1b0_0
-  - xz=5.2.6=h5eee18b_0
+  - xz=5.2.8=h5eee18b_0
   - zlib=1.2.13=h5eee18b_0
   - pip:
-    - alabaster==0.7.12
-    - babel==2.11.0
-    - charset-normalizer==2.1.1
-    - docutils==0.17.1
-    - flake8==6.0.0
-    - idna==3.4
-    - imagesize==1.4.1
-    - jinja2==3.1.2
-    - latexcodec==2.0.1
-    - markupsafe==2.1.1
-    - mccabe==0.7.0
-    - pybtex==0.24.0
-    - pybtex-docutils==1.0.2
-    - pycodestyle==2.10.0
-    - pyflakes==3.0.1
-    - pygments==2.13.0
-    - pyyaml==6.0
-    - requests==2.28.1
-    - snowballstemmer==2.2.0
-    - sphinx==5.3.0
-    - sphinx-autodoc-typehints==1.19.5
-    - sphinx-rtd-theme==1.1.1
-    - sphinxcontrib-applehelp==1.0.2
-    - sphinxcontrib-bibtex==2.5.0
-    - sphinxcontrib-devhelp==1.0.2
-    - sphinxcontrib-htmlhelp==2.0.0
-    - sphinxcontrib-jsmath==1.0.1
-    - sphinxcontrib-qthelp==1.0.3
-    - sphinxcontrib-serializinghtml==1.1.5
-    - urllib3==1.26.13
+      - alabaster==0.7.12
+      - babel==2.11.0
+      - charset-normalizer==2.1.1
+      - docutils==0.17.1
+      - flake8==6.0.0
+      - idna==3.4
+      - imagesize==1.4.1
+      - jinja2==3.1.2
+      - latexcodec==2.0.1
+      - markupsafe==2.1.1
+      - mccabe==0.7.0
+      - pybtex==0.24.0
+      - pybtex-docutils==1.0.2
+      - pycodestyle==2.10.0
+      - pyflakes==3.0.1
+      - pygments==2.13.0
+      - pyyaml==6.0
+      - requests==2.28.1
+      - snowballstemmer==2.2.0
+      - sphinx==5.3.0
+      - sphinx-autodoc-typehints==1.19.5
+      - sphinx-rtd-theme==1.1.1
+      - sphinxcontrib-applehelp==1.0.2
+      - sphinxcontrib-bibtex==2.5.0
+      - sphinxcontrib-devhelp==1.0.2
+      - sphinxcontrib-htmlhelp==2.0.0
+      - sphinxcontrib-jsmath==1.0.1
+      - sphinxcontrib-qthelp==1.0.3
+      - sphinxcontrib-serializinghtml==1.1.5
+      - urllib3==1.26.13
