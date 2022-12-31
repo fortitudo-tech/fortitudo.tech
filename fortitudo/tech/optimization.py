@@ -287,7 +287,7 @@ class MeanVariance(Optimization):
         self._I = len(mean)
         self._mean = mean
         self._expected_return_row = -matrix(mean).T
-        self._P = matrix(covariance_matrix)
+        self._P = matrix(1000 * covariance_matrix)
         self._q = matrix(np.zeros(self._I))
 
         if v is None:

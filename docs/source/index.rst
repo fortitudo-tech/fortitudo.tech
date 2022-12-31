@@ -2,13 +2,12 @@ Fortitudo Technologies Open Source
 ==================================
 
 This package allows you to freely explore open-source implementations of some
-of our fundamental technologies under the `GNU General Public License, Version 3
-<https://www.gnu.org/licenses/gpl-3.0.html>`_.
+of our fundamental technologies, e.g., Entropy Pooling and CVaR optimization.
 
 The package is intended for advanced users who are comfortable specifying
 portfolio constraints and Entropy Pooling views using matrices and vectors.
 This gives full flexibility in relation to working with these technologies
-and allows you to build your own high-level interfaces if you want. Hence,
+and allows you to build your own high-level interfaces if you wish. Hence,
 input checking is intentionally kept to a minimum.
 
 Fortitudo Technologies is a fintech company offering novel investment technologies
