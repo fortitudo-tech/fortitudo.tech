@@ -1,5 +1,5 @@
 Contributing
-============
+------------
 
 You are welcome to contribute to this package by forking the `fortitudo.tech 
 GitHub repository <https://github.com/fortitudo-tech/fortitudo.tech>`_ and

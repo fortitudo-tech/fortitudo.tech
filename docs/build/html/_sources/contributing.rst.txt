@@ -20,7 +20,7 @@ your code follows the basic rules of the style guide. The most important
 modifications/additions are:
 
 1) We allow line length to be 99 characters for both code and docstrings,
-2) We allow the use of capital I as a variable,
+2) We allow the use of capital I (eye) as a variable,
 3) We use type hints introduced in `PEP 484 <https://www.python.org/dev/peps/pep-0484/>`_,
 4) We do not group operators according to priority.
 

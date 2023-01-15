@@ -11,7 +11,8 @@ Fortitudo Technologies Open Source
 ==================================
 
 This package allows you to freely explore open-source implementations of some
-of our fundamental technologies, e.g., Entropy Pooling and CVaR optimization.
+of our fundamental technologies, e.g., Entropy Pooling and CVaR optimization 
+in Python.
 
 The package is intended for advanced users who are comfortable specifying
 portfolio constraints and Entropy Pooling views using matrices and vectors.
@@ -19,9 +20,10 @@ This gives full flexibility in relation to working with these technologies
 and allows you to build your own high-level interfaces if you wish. Hence,
 input checking is intentionally kept to a minimum.
 
-Fortitudo Technologies is a fintech company offering novel investment technologies
-as well as quantitative and digitalization consultancy to the investment management
-industry. For more information, please visit our `website <https://fortitudo.tech>`_.
+Fortitudo Technologies is a fintech company that offers novel investment
+technologies as well as quantitative and digitalization consultancy to the
+investment management industry. For more information, please visit our
+`website <https://fortitudo.tech>`_.
 
 Installation Instructions
 -------------------------
@@ -40,52 +42,15 @@ package using pip. You can do this by following these steps::
    conda install -c conda-forge cvxopt=1.3 -y
    pip install fortitudo.tech
 
-Contributing
-------------
-
-You are welcome to contribute to this package by forking the `fortitudo.tech 
-GitHub repository <https://github.com/fortitudo-tech/fortitudo.tech>`_ and
-creating pull requests. Pull requests should always be sent to the dev branch.
-We especially appreciate contributions in relation to packaging, e.g., making
-the package available on conda-forge.
-
-Using the conda environment specified in the requirements.yml file and located
-in the root directory of the repository is the easiest way to start contributing
-to the code::
-
-    conda env create --file requirements.yml
-
-The style guide mostly follows `PEP 8 <https://www.python.org/dev/peps/pep-0008/>`_,
-but it uses some important modifications that can be found in .vscode/settings.json.
-If you use Visual Studio Code, you can use these settings to make sure that
-your code follows the basic rules of the style guide. The most important
-modifications/additions are:
-
-1) We allow line length to be 99 characters for both code and docstrings,
-2) We allow the use of capital I as a variable,
-3) We use type hints introduced in `PEP 484 <https://www.python.org/dev/peps/pep-0484/>`_,
-4) We do not group operators according to priority.
-
-We generally follow naming conventions with descriptive variable and function
-names, but we often use short variable names for the very mathematical parts of
-the code to replicate the variables used in the references. We believe this makes
-it easier to link the code to the theory.
-
-We encourage you to keep individual contributions small in addition to avoid
-imposing object-oriented design patterns.
-
-Code of Conduct
----------------
-
-We welcome feedback and bug reports, but we have very limited resources for
-support and feature requests. If you experience bugs with some of the upstream
-packages, please report them directly to the maintainers of the upstream packages.
+The examples might require you to install additional packages, e.g., seaborn and
+ipykernel / notebook / jupyterlab if you want to run the notebooks. Using pip to
+install these packages should not cause any dependency issues.
 
 Disclaimer
 ----------
 
 This package is completely separate from our proprietary solutions and therefore
-not representative of the functionality offered therein. The examples for this
-package illustrate only elementary use cases. If you are an institutional investor
-and want to experience how these technologies can be used in more sophisticated
-ways, please request a demo by sending an email to demo@fortitudo.tech.
+not representative of neither the quality nor functionality offered by the Simulation
+Engine and Investment Analysis modules. If you are an institutional investor and want
+to experience how some of these methods can be used in practice for sophisticated
+investment analysis, please request a demo by sending an email to demo@fortitudo.tech.
