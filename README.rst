@@ -40,13 +40,6 @@ package using pip. You can do this by following these steps::
    conda install -c conda-forge cvxopt=1.3 -y
    pip install fortitudo.tech
 
-Code of Conduct
----------------
-
-We welcome feedback and bug reports, but we have very limited resources for
-support and feature requests. If you experience bugs with some of the upstream
-packages, please report them directly to the maintainers of the upstream packages.
-
 Disclaimer
 ----------
 
