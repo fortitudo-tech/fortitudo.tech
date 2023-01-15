@@ -17,4 +17,4 @@ package using pip. You can do this by following these steps::
 
 The examples might require you to install additional packages, e.g., seaborn and
 ipykernel / notebook / jupyterlab if you want to run the notebooks. Using pip to
-install these packages should not create any conflicts.
+install these packages should not cause any dependency issues.
