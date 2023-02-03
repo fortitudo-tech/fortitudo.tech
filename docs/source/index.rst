@@ -20,7 +20,7 @@ Disclaimer
 ----------
 
 This package is completely separate from our proprietary solutions and therefore
-not representative of neither the quality nor functionality offered by the Simulation
+not representative of neither the quality nor the functionality offered by the Simulation
 Engine and Investment Analysis modules. If you are an institutional investor and want
 to experience how some of these methods can be used in practice for sophisticated
 investment analysis, please request a demo by sending an email to demo@fortitudo.tech.
