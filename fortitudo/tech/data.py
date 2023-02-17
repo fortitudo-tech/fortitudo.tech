@@ -71,7 +71,7 @@ def plot_vol_surface(index: int, vol_surface: np.ndarray) -> Axes:
         vol_surface: Matrix with shape (T, 35) or (S, 35) containing the implied vols.
 
     Returns:
-        Matplotlib Axes with the implied vol surface plot.
+        3d implied vol surface plot.
     """
     strikes = [90, 95, 97.5, 100, 102.5, 105, 110]
     maturities = [1 / 12, 1 / 4, 1 / 2, 1, 2]

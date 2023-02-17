@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Documentation &mdash; fortitudo.tech  documentation</title>
@@ -12,10 +12,8 @@
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
         <script src="_static/sphinx_highlight.js"></script>
         <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -31,14 +29,18 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="index.html" class="icon icon-home"> fortitudo.tech
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            fortitudo.tech
           </a>
               <div class="version">
-                v0.8.2
+                v0.9
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -51,6 +53,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#fortitudo.tech.data.load_parameters"><code class="docutils literal notranslate"><span class="pre">load_parameters()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#fortitudo.tech.data.load_pnl"><code class="docutils literal notranslate"><span class="pre">load_pnl()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#fortitudo.tech.data.load_time_series"><code class="docutils literal notranslate"><span class="pre">load_time_series()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#fortitudo.tech.data.plot_vol_surface"><code class="docutils literal notranslate"><span class="pre">plot_vol_surface()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#entropy-pooling">Entropy Pooling</a><ul>
@@ -109,7 +112,7 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home"></a></li>
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
       <li class="breadcrumb-item active">Documentation</li>
       <li class="wy-breadcrumbs-aside">
       </li>
@@ -141,10 +144,10 @@ time series data</a> for more information.</p>
 <span class="sig-name descname"><span class="pre">load_parameters</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fortitudo.tech.data.load_parameters" title="Permalink to this definition"></a></dt>
 <dd><p>Function for loading the P&amp;L parameters from <a class="reference external" href="https://ssrn.com/abstract=4034316">https://ssrn.com/abstract=4034316</a>.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>]</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>Instrument names, means vector, and covariance matrix.</p>
 </dd>
 </dl>
@@ -156,10 +159,10 @@ time series data</a> for more information.</p>
 <dd><p>Function for loading the P&amp;L simulation from <a class="reference external" href="https://ssrn.com/abstract=3936392">https://ssrn.com/abstract=3936392</a>
 and <a class="reference external" href="https://ssrn.com/abstract=4217884">https://ssrn.com/abstract=4217884</a>.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code></p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>P&amp;L simulation.</p>
 </dd>
 </dl>
@@ -170,11 +173,31 @@ and <a class="reference external" href="https://ssrn.com/abstract=4217884">https
 <span class="sig-name descname"><span class="pre">load_time_series</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fortitudo.tech.data.load_time_series" title="Permalink to this definition"></a></dt>
 <dd><p>Function for loading the time series simulation.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code></p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>Time series simulation.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="fortitudo.tech.data.plot_vol_surface">
+<span class="sig-name descname"><span class="pre">plot_vol_surface</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vol_surface</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fortitudo.tech.data.plot_vol_surface" title="Permalink to this definition"></a></dt>
+<dd><p>Function for plotting the implied vol surface from the time series simulation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>index</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>) – Index for the implied vol surface scenario.</p></li>
+<li><p><strong>vol_surface</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>) – Matrix with shape (T, 35) or (S, 35) containing the implied vols.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Axes</span></code></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>3d implied vol surface plot.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -195,7 +218,7 @@ code is implemented using notation from <span id="id5">Vorobets [<a class="refer
 <span class="sig-name descname"><span class="pre">entropy_pooling</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">A</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">G</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fortitudo.tech.entropy_pooling.entropy_pooling" title="Permalink to this definition"></a></dt>
 <dd><p>Function for computing Entropy Pooling posterior probabilities.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>p</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>) – Prior probability vector with shape (S, 1).</p></li>
 <li><p><strong>A</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>) – Equality constraint matrix with shape (M, S).</p></li>
@@ -205,10 +228,10 @@ code is implemented using notation from <span id="id5">Vorobets [<a class="refer
 <li><p><strong>method</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]) – Optimization method: {‘TNC’, ‘L-BFGS-B’}. Default ‘TNC’.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type</dt>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></p>
 </dd>
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Posterior probability vector with shape (S, 1).</p>
 </dd>
 </dl>
@@ -227,16 +250,16 @@ Pooling views.</p>
 <span class="sig-name descname"><span class="pre">correlation_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">R</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fortitudo.tech.functions.correlation_matrix" title="Permalink to this definition"></a></dt>
 <dd><p>Function for computing the correlation matrix.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>R</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>]) – P&amp;L / risk factor simulation with shape (S, I).</p></li>
 <li><p><strong>p</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>]) – probability vector with shape (S, 1). Default np.ones((S, 1)) / S.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type</dt>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code></p>
 </dd>
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Correlation matrix with shape (I, I).</p>
 </dd>
 </dl>
@@ -247,16 +270,16 @@ Pooling views.</p>
 <span class="sig-name descname"><span class="pre">covariance_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">R</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fortitudo.tech.functions.covariance_matrix" title="Permalink to this definition"></a></dt>
 <dd><p>Function for computing the covariance matrix.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>R</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>]) – P&amp;L / risk factor simulation with shape (S, I).</p></li>
 <li><p><strong>p</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>]) – probability vector with shape (S, 1). Default np.ones((S, 1)) / S.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type</dt>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code></p>
 </dd>
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Covariance matrix with shape (I, I).</p>
 </dd>
 </dl>
@@ -267,7 +290,7 @@ Pooling views.</p>
 <span class="sig-name descname"><span class="pre">portfolio_cvar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">e</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">R</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">demean</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fortitudo.tech.functions.portfolio_cvar" title="Permalink to this definition"></a></dt>
 <dd><p>Function for computing portfolio CVaR.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>e</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>) – Vector / matrix of portfolio exposures with shape (I, num_portfolios).</p></li>
 <li><p><strong>R</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>]) – P&amp;L / risk factor simulation with shape (S, I).</p></li>
@@ -276,10 +299,10 @@ Pooling views.</p>
 <li><p><strong>demean</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code>]) – Boolean indicating whether to use demeaned P&amp;L. Default: True.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type</dt>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>]</p>
 </dd>
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Portfolio alpha-CVaR.</p>
 </dd>
 </dl>
@@ -290,7 +313,7 @@ Pooling views.</p>
 <span class="sig-name descname"><span class="pre">portfolio_var</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">e</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">R</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">demean</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fortitudo.tech.functions.portfolio_var" title="Permalink to this definition"></a></dt>
 <dd><p>Function for computing portfolio CVaR and optionally VaR.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>e</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>) – Vector / matrix of portfolio exposures with shape (I, num_portfolios).</p></li>
 <li><p><strong>R</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>]) – P&amp;L / risk factor simulation with shape (S, I).</p></li>
@@ -299,10 +322,10 @@ Pooling views.</p>
 <li><p><strong>demean</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code>]) – Boolean indicating whether to use demeaned P&amp;L. Default: True.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type</dt>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>]</p>
 </dd>
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Portfolio alpha-VaR.</p>
 </dd>
 </dl>
@@ -313,17 +336,17 @@ Pooling views.</p>
 <span class="sig-name descname"><span class="pre">portfolio_vol</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">e</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">R</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fortitudo.tech.functions.portfolio_vol" title="Permalink to this definition"></a></dt>
 <dd><p>Function for computing portfolio volatility.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>e</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>) – Vector / matrix of portfolio exposures with shape (I, num_portfolios).</p></li>
 <li><p><strong>R</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>]) – P&amp;L / risk factor simulation with shape (S, I).</p></li>
 <li><p><strong>p</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>]) – probability vector with shape (S, 1). Default np.ones((S, 1)) / S.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type</dt>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>]</p>
 </dd>
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Portfolio volatility / volatilities.</p>
 </dd>
 </dl>
@@ -334,16 +357,16 @@ Pooling views.</p>
 <span class="sig-name descname"><span class="pre">simulation_moments</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">R</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fortitudo.tech.functions.simulation_moments" title="Permalink to this definition"></a></dt>
 <dd><p>Function for computing simulation moments (mean, volatility, skewness, and kurtosis).</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>R</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>]) – P&amp;L / risk factor simulation with shape (S, I).</p></li>
 <li><p><strong>p</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>]) – probability vector with shape (S, 1). Default np.ones((S, 1)) / S.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type</dt>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code></p>
 </dd>
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>DataFrame with shape (I, 4) containing simulation moments.</p>
 </dd>
 </dl>
@@ -358,7 +381,7 @@ Pooling views.</p>
 <span class="sig-name descname"><span class="pre">call_option</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">F</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">K</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">T</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fortitudo.tech.option_pricing.call_option" title="Permalink to this definition"></a></dt>
 <dd><p>Function for computing European call option price using Black’s formula.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>F</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>) – Forward price for maturity T.</p></li>
 <li><p><strong>K</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>) – Strike value.</p></li>
@@ -367,10 +390,10 @@ Pooling views.</p>
 <li><p><strong>T</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>) – Time to maturity.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type</dt>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></p>
 </dd>
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>European call option price.</p>
 </dd>
 </dl>
@@ -381,7 +404,7 @@ Pooling views.</p>
 <span class="sig-name descname"><span class="pre">put_option</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">F</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">K</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">T</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fortitudo.tech.option_pricing.put_option" title="Permalink to this definition"></a></dt>
 <dd><p>Function for computing European put option price using Black’s formula.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>F</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>) – Forward price for maturity T.</p></li>
 <li><p><strong>K</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>) – Strike value.</p></li>
@@ -390,10 +413,10 @@ Pooling views.</p>
 <li><p><strong>T</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>) – Time to maturity.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type</dt>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></p>
 </dd>
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>European put option price.</p>
 </dd>
 </dl>
@@ -421,7 +444,7 @@ For the variance risk measure, a standard quadratic programming solver is used.<
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MeanCVaR</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">R</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">G</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">A</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fortitudo.tech.optimization.MeanCVaR" title="Permalink to this definition"></a></dt>
 <dd><p>Class for efficient mean-CVaR optimization using Benders decomposition.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>R</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>) – Matrix with P&amp;L simulations and shape (S, I).</p></li>
 <li><p><strong>G</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>]) – Inequality constraints matrix with shape (N, I).</p></li>
@@ -436,7 +459,7 @@ Default: np.ones((S, 1)) / S.</p></li>
 <li><p><strong>kwargs</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code>) – options dictionary with Benders algorithm parameters.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Raises</dt>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
 <dd class="field-even"><p><strong>ValueError</strong> – If constraints or options parameters are infeasible.</p>
 </dd>
 </dl>
@@ -445,16 +468,16 @@ Default: np.ones((S, 1)) / S.</p></li>
 <span class="sig-name descname"><span class="pre">efficient_frontier</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_portfolios</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fortitudo.tech.optimization.MeanCVaR.efficient_frontier" title="Permalink to this definition"></a></dt>
 <dd><p>Method for computing the efficient frontier.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>num_portfolios</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]) – Number of portfolios used to span the efficient frontier. Default: 9.</p>
 </dd>
-<dt class="field-even">Return type</dt>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></p>
 </dd>
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Efficient frontier with shape (I, num_portfolios).</p>
 </dd>
-<dt class="field-even">Raises</dt>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
 <dd class="field-even"><p><strong>ValueError</strong> – If expected return is unbounded.</p>
 </dd>
 </dl>
@@ -465,14 +488,14 @@ Default: np.ones((S, 1)) / S.</p></li>
 <span class="sig-name descname"><span class="pre">efficient_portfolio</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">return_target</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fortitudo.tech.optimization.MeanCVaR.efficient_portfolio" title="Permalink to this definition"></a></dt>
 <dd><p>Method for computing a mean-CVaR efficient portfolio with return a target.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>return_target</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]) – Return target for the efficient portfolio.
 The minimum CVaR portfolio is computed by default.</p>
 </dd>
-<dt class="field-even">Return type</dt>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></p>
 </dd>
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Efficient portfolio exposures with shape (I, 1).</p>
 </dd>
 </dl>
@@ -485,7 +508,7 @@ The minimum CVaR portfolio is computed by default.</p>
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MeanVariance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mean</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">covariance_matrix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">G</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">A</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fortitudo.tech.optimization.MeanVariance" title="Permalink to this definition"></a></dt>
 <dd><p>Class for efficient mean-variance optimization.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>mean</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>) – Mean vector with shape (I,).</p></li>
 <li><p><strong>covariance_matrix</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>) – Covariance matrix with shape (I, I).</p></li>
@@ -497,7 +520,7 @@ The minimum CVaR portfolio is computed by default.</p>
 Default: np.ones(I).</p></li>
 </ul>
 </dd>
-<dt class="field-even">Raises</dt>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
 <dd class="field-even"><p><strong>ValueError</strong> – If constraints are infeasible.</p>
 </dd>
 </dl>
@@ -506,16 +529,16 @@ Default: np.ones(I).</p></li>
 <span class="sig-name descname"><span class="pre">efficient_frontier</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_portfolios</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fortitudo.tech.optimization.MeanVariance.efficient_frontier" title="Permalink to this definition"></a></dt>
 <dd><p>Method for computing the efficient frontier.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>num_portfolios</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]) – Number of portfolios used to span the efficient frontier. Default: 9.</p>
 </dd>
-<dt class="field-even">Return type</dt>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></p>
 </dd>
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Efficient frontier with shape (I, num_portfolios).</p>
 </dd>
-<dt class="field-even">Raises</dt>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
 <dd class="field-even"><p><strong>ValueError</strong> – If expected return is unbounded.</p>
 </dd>
 </dl>
@@ -526,14 +549,14 @@ Default: np.ones(I).</p></li>
 <span class="sig-name descname"><span class="pre">efficient_portfolio</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">return_target</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fortitudo.tech.optimization.MeanVariance.efficient_portfolio" title="Permalink to this definition"></a></dt>
 <dd><p>Method for computing a mean-variance efficient portfolio with a return target.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>return_target</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]) – Return target for the efficient portfolio.
 The minimum variance portfolio is computed by default.</p>
 </dd>
-<dt class="field-even">Return type</dt>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></p>
 </dd>
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Efficient portfolio exposures with shape (I, 1).</p>
 </dd>
 </dl>
@@ -591,16 +614,16 @@ or for a normal distribution calibration which new samples can be generated from
 <span class="sig-name descname"><span class="pre">exp_decay_probs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">R</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">half_life</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fortitudo.tech.simulation.exp_decay_probs" title="Permalink to this definition"></a></dt>
 <dd><p>Function for computing exponential decay probabilities.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>R</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>]) – P&amp;L / risk factor simulation with shape (T, I).</p></li>
 <li><p><strong>half_life</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>) – Exponential decay half life.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type</dt>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></p>
 </dd>
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Exponentially decaying probabilities vector with shape (T, 1).</p>
 </dd>
 </dl>
@@ -611,16 +634,16 @@ or for a normal distribution calibration which new samples can be generated from
 <span class="sig-name descname"><span class="pre">normal_exp_decay_calib</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">R</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">half_life</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fortitudo.tech.simulation.normal_exp_decay_calib" title="Permalink to this definition"></a></dt>
 <dd><p>Function for computing exponential decay mean vector and covariance matrix.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>R</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>]) – P&amp;L / risk factor simulation with shape (T, I).</p></li>
 <li><p><strong>half_life</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>) – Exponential decay half life.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type</dt>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>], <code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code>]]</p>
 </dd>
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Mean vector with shape (I, 1) and covariance matrix with shape (I, I).</p>
 </dd>
 </dl>
