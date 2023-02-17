@@ -14,11 +14,15 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+import numpy as np
+import pandas as pd
+from matplotlib import cm
+from matplotlib.axes import Axes
+import matplotlib.pyplot as plt
+
 from pkgutil import get_data
 from io import StringIO
 from typing import Tuple
-import numpy as np
-import pandas as pd
 
 
 def load_pnl() -> pd.DataFrame:
@@ -57,3 +61,25 @@ def load_time_series() -> pd.DataFrame:
     """
     ts_string = StringIO(get_data('fortitudo.tech', 'data/time_series.csv').decode())
     return pd.read_csv(ts_string)
+
+
+def plot_vol_surface(index: int, vol_surface: np.ndarray) -> Axes:
+    """Function for plotting the implied vol surface from the time series simulation.
+
+    Args:
+        index: Index for the implied vol surface scenario.
+        vol_surface: Matrix with shape (T, 35) or (S, 35) containing the implied vols.
+
+    Returns:
+        Matplotlib Axes with the implied vol surface plot.
+    """
+    strikes = [90, 95, 97.5, 100, 102.5, 105, 110]
+    maturities = [1 / 12, 1 / 4, 1 / 2, 1, 2]
+    strikes, maturities = np.meshgrid(strikes, maturities)
+    vol_surface = np.reshape(vol_surface[index], (5, 7))
+    _, ax = plt.subplots(subplot_kw={"projection": "3d"}, figsize=(10, 10))
+    ax.set_xlabel('Strike', fontsize=12)
+    ax.set_ylabel('Maturity', fontsize=12)
+    ax.set_zlabel('Implied vol', fontsize=12)
+    ax.plot_surface(strikes, maturities, vol_surface, cmap=cm.coolwarm)
+    return ax

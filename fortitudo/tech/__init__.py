@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-from .data import load_pnl, load_parameters, load_time_series
+from .data import load_pnl, load_parameters, load_time_series, plot_vol_surface
 from .entropy_pooling import entropy_pooling
 from .functions import (simulation_moments, covariance_matrix, correlation_matrix,
                         portfolio_cvar, portfolio_var, portfolio_vol)
