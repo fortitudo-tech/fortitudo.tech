@@ -17,6 +17,7 @@
 import numpy as np
 import pandas as pd
 from matplotlib import cm
+from matplotlib.figure import Figure
 from matplotlib.axes import Axes
 import matplotlib.pyplot as plt
 
@@ -63,7 +64,9 @@ def load_time_series() -> pd.DataFrame:
     return pd.read_csv(ts_string)
 
 
-def plot_vol_surface(index: int, vol_surface: np.ndarray) -> Axes:
+def plot_vol_surface(
+        index: int, vol_surface: np.ndarray, figsize: Tuple = (7, 7),
+        fontsize: int = 10) -> Tuple[Figure, Axes]:
     """Function for plotting the implied vol surface from the time series simulation.
 
     Args:
@@ -77,9 +80,9 @@ def plot_vol_surface(index: int, vol_surface: np.ndarray) -> Axes:
     maturities = [1 / 12, 1 / 4, 1 / 2, 1, 2]
     strikes, maturities = np.meshgrid(strikes, maturities)
     vol_surface = np.reshape(vol_surface[index], (5, 7))
-    _, ax = plt.subplots(subplot_kw={"projection": "3d"}, figsize=(10, 10))
-    ax.set_xlabel('Strike', fontsize=12)
-    ax.set_ylabel('Maturity', fontsize=12)
-    ax.set_zlabel('Implied vol', fontsize=12)
+    fig, ax = plt.subplots(subplot_kw={'projection': '3d'}, figsize=figsize)
+    ax.set_xlabel('Strike', fontsize=fontsize)
+    ax.set_ylabel('Maturity', fontsize=fontsize)
+    ax.set_zlabel('Implied vol', fontsize=fontsize)
     ax.plot_surface(strikes, maturities, vol_surface, cmap=cm.coolwarm)
-    return ax
+    return fig, ax

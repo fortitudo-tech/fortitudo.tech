@@ -15,6 +15,7 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import numpy as np
+from matplotlib.figure import Figure
 from context import load_parameters, time_series, plot_vol_surface, R
 
 
@@ -32,4 +33,5 @@ def test_time_series():
 
 
 def test_plot_vol_surface():
-    _ = plot_vol_surface(0, time_series.values[:, 34:69])
+    fig, _ = plot_vol_surface(0, time_series.values[:, 34:69])
+    assert type(fig) is Figure
