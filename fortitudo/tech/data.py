@@ -65,24 +65,28 @@ def load_time_series() -> pd.DataFrame:
 
 
 def plot_vol_surface(
-        index: int, vol_surface: np.ndarray, figsize: Tuple = (7, 7),
-        fontsize: int = 10) -> Tuple[Figure, Axes]:
+        index: int, vol_surface: np.ndarray, figsize: Tuple[float, float] = None
+        ) -> Tuple[Figure, Axes]:
     """Function for plotting the implied vol surface from the time series simulation.
 
     Args:
         index: Index for the implied vol surface scenario.
         vol_surface: Matrix with shape (T, 35) or (S, 35) containing the implied vols.
+        figsize: Figure size. Default (10, 7).
 
     Returns:
         3d implied vol surface plot.
     """
+    if figsize is None:
+        figsize = (10, 7)
+
     strikes = [90, 95, 97.5, 100, 102.5, 105, 110]
     maturities = [1 / 12, 1 / 4, 1 / 2, 1, 2]
     strikes, maturities = np.meshgrid(strikes, maturities)
     vol_surface = np.reshape(vol_surface[index], (5, 7))
     fig, ax = plt.subplots(subplot_kw={'projection': '3d'}, figsize=figsize)
-    ax.set_xlabel('Strike', fontsize=fontsize)
-    ax.set_ylabel('Maturity', fontsize=fontsize)
-    ax.set_zlabel('Implied vol', fontsize=fontsize)
+    ax.set_xlabel('Strike')
+    ax.set_ylabel('Maturity')
+    ax.set_zlabel('Implied vol')
     ax.plot_surface(strikes, maturities, vol_surface, cmap=cm.coolwarm)
     return fig, ax
