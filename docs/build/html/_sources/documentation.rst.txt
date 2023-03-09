@@ -13,14 +13,17 @@ given by `the Danish common return expectations for the 2nd half of 2021
 The parameters and P&L simulation are used in the examples and allow you to
 immediately start exploring the functionality of this package. You can also
 use it to test your understanding of the theory by replicating results, e.g.,
-the sequential heuristics results from :cite:t:`Vorobets2021`.
+the sequential Entropy Pooling results from :cite:t:`Vorobets2021`.
 
-In addition to the above, a simulated time series of an equity index, an
+In addition to the above, simulated time series of an equity index, an
 associated implied volatility surface, a risk-free zero-coupon curve, and
 a credit spread curve is included. You can use this time series data to,
-e.g., validate your risk modeling approach. See the `example that uses the
-time series data <https://github.com/fortitudo-tech/fortitudo.tech/blob/main/
-examples/4_TimeSeries.ipynb>`_ for more information.
+e.g., validate your risk modeling approach. See `this introduction example
+<https://github.com/fortitudo-tech/fortitudo.tech/blob/main/examples/4_TimeSeries
+.ipynb>`_ and `this modeling example <https://github.com/fortitudo-tech/
+fortitudo.tech/blob/main/examples/7_RiskFactorViews.ipynb>`_ for an example
+of how to use the data with a very simple risk model as well as Entropy Pooling
+views on risk factors.
 
 .. automodule:: fortitudo.tech.data
    :members:
@@ -142,8 +145,9 @@ exponentially decaying probabilities can be used directly with historical
 scenarios, e.g., as a prior probability for Entropy Pooling views / stress-tests,
 or for a normal distribution calibration which new samples can be generated from.
 
-You can see how to use this functionality in `the modeling example <https://github.com/
-fortitudo-tech/fortitudo.tech/blob/main/examples/6_Simulation.ipynb>`_.
+You can see how to use this functionality in `the exponential decay modeling
+example <https://github.com/fortitudo-tech/fortitudo.tech/blob/main/examples/
+6_SimulationExpDecay.ipynb>`_.
 
 .. automodule:: fortitudo.tech.simulation
    :members:

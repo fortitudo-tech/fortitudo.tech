@@ -15,7 +15,8 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import numpy as np
-from context import load_parameters, time_series, R
+from matplotlib.figure import Figure
+from context import load_parameters, time_series, plot_vol_surface, R
 
 
 def test_load_data():
@@ -29,3 +30,8 @@ def test_load_data():
 def test_time_series():
     assert time_series.shape == (5040, 79)
     assert np.all(time_series.values >= 0)
+
+
+def test_plot_vol_surface():
+    fig, _ = plot_vol_surface(0, time_series.values[:, 34:69])
+    assert type(fig) is Figure
