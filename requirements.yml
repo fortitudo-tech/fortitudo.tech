@@ -19,28 +19,28 @@ dependencies:
   - charset-normalizer=2.0.4=pyhd3eb1b0_0
   - contourpy=1.0.5=py310hdb19cb5_0
   - coverage=6.3.2=py310h7f8727e_0
-  - cryptography=38.0.4=py310h9ce1e76_0
-  - cvxopt=1.3.0=py310h3151893_0
+  - cryptography=39.0.1=py310h9ce1e76_0
+  - cvxopt=1.3.0=py310h3151893_1
   - cycler=0.11.0=pyhd3eb1b0_0
   - dbus=1.13.18=hb2f20db_0
   - dsdp=5.8=hd9d9efa_1203
   - expat=2.4.9=h6a678d5_0
-  - fftw=3.3.9=h27cfd23_1
+  - fftw=3.3.10=nompi_h77c792f_102
   - fontconfig=2.14.1=h52c9d5c_1
   - fonttools=4.25.0=pyhd3eb1b0_0
   - freetype=2.12.1=h4a9f257_0
-  - giflib=5.2.1=h5eee18b_1
+  - giflib=5.2.1=h5eee18b_3
   - glib=2.69.1=he621ea3_2
   - glpk=4.65=h9202a9a_1004
   - gmp=6.2.1=h58526e2_0
   - gsl=2.7=he838d99_0
-  - gst-plugins-base=1.14.0=h8213a91_2
-  - gstreamer=1.14.0=h28cd5cc_2
+  - gst-plugins-base=1.14.1=h6a678d5_1
+  - gstreamer=1.14.1=h5eee18b_1
   - icu=58.2=he6710b0_3
   - idna=3.4=py310h06a4308_0
   - iniconfig=1.1.1=pyhd3eb1b0_0
   - intel-openmp=2021.4.0=h06a4308_3561
-  - jpeg=9e=h7f8727e_0
+  - jpeg=9e=h5eee18b_1
   - kiwisolver=1.4.4=py310h6a678d5_0
   - krb5=1.19.4=h568e23c_0
   - lcms2=2.12=h3be6417_0
@@ -52,7 +52,7 @@ dependencies:
   - libbrotlienc=1.0.9=h5eee18b_7
   - libcblas=3.9.0=12_linux64_mkl
   - libclang=10.0.1=default_hb85057a_2
-  - libdeflate=1.8=h7f8727e_5
+  - libdeflate=1.17=h5eee18b_0
   - libedit=3.1.20221030=h5eee18b_0
   - libevent=2.1.12=h8f2d780_0
   - libffi=3.4.2=h6a678d5_6
@@ -62,20 +62,20 @@ dependencies:
   - libgomp=11.2.0=h1234567_1
   - liblapack=3.9.0=12_linux64_mkl
   - libllvm10=10.0.1=hbcb73fb_5
-  - libpng=1.6.37=hbc83047_0
+  - libpng=1.6.39=h5eee18b_0
   - libpq=12.9=h16c4e8d_3
   - libstdcxx-ng=11.2.0=h1234567_1
-  - libtiff=4.5.0=h6a678d5_1
+  - libtiff=4.5.0=h6a678d5_2
   - libuuid=1.41.5=h5eee18b_0
-  - libwebp=1.2.4=h11a3e52_0
-  - libwebp-base=1.2.4=h5eee18b_0
+  - libwebp=1.2.4=h11a3e52_1
+  - libwebp-base=1.2.4=h5eee18b_1
   - libxcb=1.15=h7f8727e_0
   - libxkbcommon=1.0.1=hfa300c1_0
   - libxml2=2.9.14=h74e7548_0
   - libxslt=1.1.35=h4e12654_0
   - lz4-c=1.9.4=h6a678d5_0
-  - matplotlib=3.6.2=py310h06a4308_0
-  - matplotlib-base=3.6.2=py310h945d387_0
+  - matplotlib=3.7.0=py310h06a4308_0
+  - matplotlib-base=3.7.0=py310h1128e8f_0
   - metis=5.1.0=h58526e2_1006
   - mkl=2021.4.0=h06a4308_640
   - mkl-service=2.4.0=py310h7f8727e_0
@@ -91,22 +91,22 @@ dependencies:
   - numpy-base=1.23.5=py310h8e6c178_0
   - openssl=1.1.1t=h7f8727e_0
   - packaging=22.0=py310h06a4308_0
-  - pandas=1.5.2=py310h1128e8f_0
+  - pandas=1.5.3=py310h1128e8f_0
   - pcre=8.45=h295c915_0
-  - pillow=9.3.0=py310h6a678d5_2
-  - pip=22.3.1=py310h06a4308_0
+  - pillow=9.4.0=py310h6a678d5_0
+  - pip=23.0.1=py310h06a4308_0
   - pluggy=1.0.0=py310h06a4308_1
   - ply=3.11=py310h06a4308_0
   - pooch=1.4.0=pyhd3eb1b0_0
   - py=1.11.0=pyhd3eb1b0_0
   - pycparser=2.21=pyhd3eb1b0_0
-  - pyopenssl=22.0.0=pyhd3eb1b0_0
+  - pyopenssl=23.0.0=py310h06a4308_0
   - pyparsing=3.0.9=py310h06a4308_0
   - pyqt=5.15.7=py310h6a678d5_1
   - pysocks=1.7.1=py310h06a4308_0
   - pytest=7.1.2=py310h06a4308_0
   - pytest-cov=3.0.0=pyhd3eb1b0_0
-  - python=3.10.9=h7a1cb2a_0
+  - python=3.10.9=h7a1cb2a_2
   - python-dateutil=2.8.2=pyhd3eb1b0_0
   - python_abi=3.10=2_cp310
   - pytz=2022.7=py310h06a4308_0
@@ -115,7 +115,7 @@ dependencies:
   - qtwebkit=5.212=h4eab89a_4
   - readline=8.2=h5eee18b_0
   - requests=2.28.1=py310h06a4308_0
-  - scipy=1.10.0=py310hd5efca6_0
+  - scipy=1.10.0=py310hd5efca6_1
   - setuptools=65.6.3=py310h06a4308_0
   - sip=6.6.2=py310h6a678d5_0
   - six=1.16.0=pyhd3eb1b0_1
@@ -128,13 +128,13 @@ dependencies:
   - tornado=6.2=py310h5eee18b_0
   - tzdata=2022g=h04d1e81_0
   - urllib3=1.26.14=py310h06a4308_0
-  - wheel=0.37.1=pyhd3eb1b0_0
+  - wheel=0.38.4=py310h06a4308_0
   - xz=5.2.10=h5eee18b_1
   - zlib=1.2.13=h5eee18b_0
   - zstd=1.5.2=ha4553b6_0
   - pip:
       - alabaster==0.7.13
-      - babel==2.11.0
+      - babel==2.12.1
       - docutils==0.18.1
       - flake8==6.0.0
       - imagesize==1.4.1
