@@ -1,0 +1,14 @@
+name: fortitudo.tech-examples
+channels:
+  - conda-forge
+dependencies:
+  - python=3.10
+  - scipy
+  - seaborn
+  - pandas
+  - cvxopt=1.3
+  - pip
+  - pip:
+      - fortitudo.tech
+      - pyportfolioopt
+      - yfinance
