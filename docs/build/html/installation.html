@@ -35,7 +35,7 @@
             fortitudo.tech
           </a>
               <div class="version">
-                v0.9
+                v0.9.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -85,7 +85,7 @@
 <p>For best performance, we recommend that you install the package in a <a class="reference external" href="https://conda.io/projects/conda/en/latest/user-guide/concepts/environments.html">conda environment</a>
 and let conda handle the installation of dependencies before installing the
 package using pip. You can do this by following these steps:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">create</span> <span class="o">-</span><span class="n">n</span> <span class="n">fortitudo</span><span class="o">.</span><span class="n">tech</span> <span class="n">python</span> <span class="n">scipy</span> <span class="n">pandas</span> <span class="o">-</span><span class="n">y</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">create</span> <span class="o">-</span><span class="n">n</span> <span class="n">fortitudo</span><span class="o">.</span><span class="n">tech</span> <span class="n">python</span><span class="o">=</span><span class="mf">3.10</span> <span class="n">scipy</span> <span class="n">pandas</span> <span class="n">matplotlib</span> <span class="o">-</span><span class="n">y</span>
 <span class="n">conda</span> <span class="n">activate</span> <span class="n">fortitudo</span><span class="o">.</span><span class="n">tech</span>
 <span class="n">conda</span> <span class="n">install</span> <span class="o">-</span><span class="n">c</span> <span class="n">conda</span><span class="o">-</span><span class="n">forge</span> <span class="n">cvxopt</span><span class="o">=</span><span class="mf">1.3</span> <span class="o">-</span><span class="n">y</span>
 <span class="n">pip</span> <span class="n">install</span> <span class="n">fortitudo</span><span class="o">.</span><span class="n">tech</span>
@@ -94,6 +94,11 @@ package using pip. You can do this by following these steps:</p>
 <p>The examples might require you to install additional packages, e.g., seaborn and
 ipykernel / notebook / jupyterlab if you want to run the notebooks. Using pip to
 install these packages should not cause any dependency issues.</p>
+<p>You can also explore the examples in the cloud without any local installations using
+<a class="reference external" href="https://mybinder.org/v2/gh/fortitudo-tech/fortitudo.tech/main?labpath=examples">Binder</a>.
+However, note that Binder servers have very limited ressources and might not support
+some of the optimized routines this package uses. For best performance, you should
+install the package on a machine that supports the <a class="reference external" href="https://en.wikipedia.org/wiki/Math_Kernel_Library">Math Kernel Library</a>.</p>
 </section>
 
 
