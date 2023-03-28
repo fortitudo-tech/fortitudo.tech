@@ -10,7 +10,8 @@ The repository contains the following examples:
    Entropy Pooling method
 3) The accompanied code for :cite:t:`Vorobets2022` with a comparison of
    mean-CVaR and mean-variance optimization explaining why we use demeaned
-   CVaR as default
+   CVaR as default (it's not recommended to run this example with 1,000,000
+   scenarios on Binder, see the comments below)
 4) An illustration of how to work with the time series simulation that follows
    with this package
 5) The accompanied code for :cite:t:`Vorobets2022a` with an example of how to
