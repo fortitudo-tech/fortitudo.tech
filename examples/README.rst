@@ -1,8 +1,8 @@
-Examples
-========
-
 .. image:: https://mybinder.org/badge_logo.svg
    :target: https://mybinder.org/v2/gh/fortitudo-tech/fortitudo.tech/main?labpath=examples
+
+Examples
+========
 
 The examples are good places to start exploring the functionality of this package.
 We have very limited resources for support in relation to these, but please let
