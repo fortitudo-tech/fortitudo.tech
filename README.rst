@@ -16,13 +16,12 @@ in Python.
 
 The package is intended for advanced users who are comfortable specifying
 portfolio constraints and Entropy Pooling views using matrices and vectors.
-This gives full flexibility in relation to working with these technologies
-and allows you to build your own high-level interfaces if you wish. Hence,
-input checking is intentionally kept to a minimum.
+This gives full flexibility in relation to working with these technologies.
+Hence, input checking is intentionally kept to a minimum.
 
-Fortitudo Technologies is a fintech company that offers novel investment
-technologies as well as quantitative and digitalization consultancy to the
-investment management industry. For more information, please visit our
+Fortitudo Technologies is a fintech offering novel investment technologies
+as well as quantitative and digitalization consultancy to the investment
+management industry. For more information, please visit our
 `website <https://fortitudo.tech>`_.
 
 Installation Instructions
@@ -59,5 +58,5 @@ Disclaimer
 This package is completely separate from our proprietary solutions and therefore
 not representative of neither the quality nor the functionality offered by the Simulation
 Engine and Investment Analysis modules. If you are an institutional investor and want
-to experience how some of these methods can be used in practice for sophisticated
-investment analysis, please request a demo by sending an email to demo@fortitudo.tech.
+to experience how these methods can be used for sophisticated analysis in practice,
+please request a demo by sending an email to demo@fortitudo.tech.
