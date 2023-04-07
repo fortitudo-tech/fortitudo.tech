@@ -12,7 +12,8 @@
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/doctools.js"></script>
         <script src="_static/sphinx_highlight.js"></script>
@@ -36,7 +37,7 @@
             fortitudo.tech
           </a>
               <div class="version">
-                v0.9
+                v0.9.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -87,7 +88,8 @@ The repository contains the following examples:</p>
 Entropy Pooling method</p></li>
 <li><p>The accompanied code for <span id="id2">Vorobets [<a class="reference internal" href="references.html#id6" title="A. Vorobets. Variance for intuition, cvar for optimization. SSRN, 2022. URL: https://ssrn.com/abstract=4034316.">2022</a>]</span> with a comparison of
 mean-CVaR and mean-variance optimization explaining why we use demeaned
-CVaR as default</p></li>
+CVaR as default (it’s not recommended to run this example with 1,000,000
+scenarios on Binder, see the comments below)</p></li>
 <li><p>An illustration of how to work with the time series simulation that follows
 with this package</p></li>
 <li><p>The accompanied code for <span id="id3">Vorobets [<a class="reference internal" href="references.html#id7" title="A. Vorobets. Portfolio management framework for derivative instruments. SSRN, 2022. URL: https://ssrn.com/abstract=4217884.">2022</a>]</span> with an example of how to
@@ -101,6 +103,11 @@ combine this with Entropy Pooling views on risk factors</p></li>
 We have very limited resources for support in relation to these, but please let
 us know if you have suggestions for how we can improve them and make them easier
 to understand.</p>
+<p>You can explore the examples in the cloud without any local installations using
+<a class="reference external" href="https://mybinder.org/v2/gh/fortitudo-tech/fortitudo.tech/main?labpath=examples">Binder</a>.
+However, note that Binder servers have very limited ressources and might not support
+some of the optimized routines this package uses. For best performance, you should
+install the package on a machine that supports the <a class="reference external" href="https://en.wikipedia.org/wiki/Math_Kernel_Library">Math Kernel Library</a>.</p>
 </section>
 
 

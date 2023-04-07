@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "fortitudo.tech"
-version = "0.9"
+version = "0.9.1"
 description = "Investment and risk technologies maintained by Fortitudo Technologies."
 authors = ["Fortitudo Technologies <software@fortitudo.tech>"]
 license = "GPL-3.0-or-later"
@@ -33,7 +33,7 @@ include = [
 [tool.poetry.dependencies]
 python = "^3.8, <3.11"
 scipy = "^1.6"
-cvxopt = "^1.2"
+cvxopt = "1.3.0"
 pandas = "^1.3.4"
 numpy = "^1.22"
 matplotlib = "^3.4"
