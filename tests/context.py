@@ -21,8 +21,8 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')
 from fortitudo.tech import (
     entropy_pooling, MeanCVaR, cvar_options, MeanVariance, load_parameters,
     simulation_moments, covariance_matrix, correlation_matrix, portfolio_cvar,
-    portfolio_var, portfolio_vol, load_pnl, load_time_series, plot_vol_surface,
-    call_option, put_option, exp_decay_probs, normal_exp_decay_calib)
+    portfolio_var, portfolio_vol, load_pnl, load_risk_factors, load_time_series,
+    plot_vol_surface, call_option, put_option, exp_decay_probs, normal_exp_decay_calib)
 
 from fortitudo.tech.functions import _simulation_check
 

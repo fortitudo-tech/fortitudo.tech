@@ -15,8 +15,9 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import numpy as np
+from pandas import DataFrame
 from matplotlib.figure import Figure
-from context import load_parameters, time_series, plot_vol_surface, R
+from context import load_parameters, load_risk_factors, time_series, plot_vol_surface, R
 
 
 def test_load_data():
@@ -25,6 +26,12 @@ def test_load_data():
     I = R.shape[1]
     assert means.shape == (I,)
     assert covariance_matrix.shape == (I, I)
+
+
+def test_load_risk_factors():
+    risk_factors = load_risk_factors()
+    assert type(risk_factors) is DataFrame
+    assert risk_factors.shape == (5039, 82)
 
 
 def test_time_series():
