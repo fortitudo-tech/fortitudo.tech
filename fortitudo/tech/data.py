@@ -54,6 +54,16 @@ def load_parameters() -> Tuple[list, np.ndarray, np.ndarray]:
     return instrument_names, means, covariance_matrix
 
 
+def load_risk_factors() -> pd.DataFrame:
+    """Function for loading the risk factor simulation from 7_RiskFactorViews.ipynb.
+
+    Returns:
+        Risk factor simulation.
+    """
+    rf_string = StringIO(get_data('fortitudo.tech', 'data/risk_factors.csv').decode())
+    return pd.read_csv(rf_string)
+
+
 def load_time_series() -> pd.DataFrame:
     """Function for loading the time series simulation.
 
