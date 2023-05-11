@@ -7,7 +7,7 @@ The repository contains the following examples:
 
 1) How to combine CVaR optimization with Entropy Pooling views / stress-tests
 2) A replication of the results from :cite:t:`Vorobets2021` for the original
-   Entropy Pooling method
+   Entropy Pooling heuristic
 3) The accompanied code for :cite:t:`Vorobets2022` with a comparison of
    mean-CVaR and mean-variance optimization explaining why we use demeaned
    CVaR as default (it's not recommended to run this example with 1,000,000
@@ -20,6 +20,9 @@ The repository contains the following examples:
    historical time series for FAANG stocks
 7) How to use the time series simulation for risk factor and P&L simulation and
    combine this with Entropy Pooling views on risk factors
+8) The accompanied code for :cite:t:`Vorobets2023` illustrating how Bayesian
+   networks can be used in combination with Entropy Pooling for causal and
+   predictive market views and stress-testing
 
 The examples are good places to start exploring the functionality of this package.
 We have very limited resources for support in relation to these, but please let
