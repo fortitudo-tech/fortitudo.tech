@@ -34,9 +34,8 @@ For best performance, we recommend that you install the package in a `conda envi
 and let conda handle the installation of dependencies before installing the
 package using pip. You can do this by following these steps::
 
-   conda create -n fortitudo.tech python=3.10 scipy pandas matplotlib -y
+   conda create -n fortitudo.tech -c conda-forge python=3.11 scipy pandas=1.5 matplotlib cvxopt
    conda activate fortitudo.tech
-   conda install -c conda-forge cvxopt=1.3 -y
    pip install fortitudo.tech
 
 The examples might require you to install additional packages, e.g., seaborn and
