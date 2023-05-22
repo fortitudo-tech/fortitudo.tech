@@ -21,9 +21,9 @@ portfolio constraints and Entropy Pooling views using matrices and vectors.
 This gives full flexibility in relation to working with these technologies.
 Hence, input checking is intentionally kept to a minimum.
 
-Fortitudo Technologies is a fintech company offering novel investment software
-as well as quantitative and digitalization consultancy to the investment management
-industry. For more information, please visit our `website <https://fortitudo.tech>`_.
+Fortitudo Technologies offers novel investment software as well as quantitative and
+digitalization consultancy to the investment management industry. For more information,
+please visit our `website <https://fortitudo.tech>`_.
 
 Installation Instructions
 -------------------------
