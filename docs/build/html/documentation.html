@@ -37,7 +37,7 @@
             fortitudo.tech
           </a>
               <div class="version">
-                v0.10
+                v0.10.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -208,7 +208,7 @@ and <a class="reference external" href="https://ssrn.com/abstract=4217884">https
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>index</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>) – Index for the implied vol surface scenario.</p></li>
 <li><p><strong>vol_surface</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>) – Matrix with shape (T, 35) or (S, 35) containing the implied vols.</p></li>
-<li><p><strong>figsize</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]]) – Figure size. Default (10, 7).</p></li>
+<li><p><strong>figsize</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]) – Figure size. Default (10, 7).</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -241,9 +241,9 @@ code is implemented using notation from <span id="id5">Vorobets [<a class="refer
 <li><p><strong>p</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>) – Prior probability vector with shape (S, 1).</p></li>
 <li><p><strong>A</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>) – Equality constraint matrix with shape (M, S).</p></li>
 <li><p><strong>b</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>) – Equality constraint vector with shape (M, 1).</p></li>
-<li><p><strong>G</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>]) – Inequality constraint matrix with shape (N, S).</p></li>
-<li><p><strong>h</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>]) – Inequality constraint vector with shape (N, 1).</p></li>
-<li><p><strong>method</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]) – Optimization method: {‘TNC’, ‘L-BFGS-B’}. Default ‘TNC’.</p></li>
+<li><p><strong>G</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>) – Inequality constraint matrix with shape (N, S).</p></li>
+<li><p><strong>h</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>) – Inequality constraint vector with shape (N, 1).</p></li>
+<li><p><strong>method</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – Optimization method: {‘TNC’, ‘L-BFGS-B’}. Default ‘TNC’.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -271,7 +271,7 @@ Pooling views.</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>R</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>]) – P&amp;L / risk factor simulation with shape (S, I).</p></li>
-<li><p><strong>p</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>]) – probability vector with shape (S, 1). Default np.ones((S, 1)) / S.</p></li>
+<li><p><strong>p</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>) – probability vector with shape (S, 1). Default np.ones((S, 1)) / S.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -291,7 +291,7 @@ Pooling views.</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>R</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>]) – P&amp;L / risk factor simulation with shape (S, I).</p></li>
-<li><p><strong>p</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>]) – probability vector with shape (S, 1). Default np.ones((S, 1)) / S.</p></li>
+<li><p><strong>p</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>) – probability vector with shape (S, 1). Default np.ones((S, 1)) / S.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -312,9 +312,9 @@ Pooling views.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>e</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>) – Vector / matrix of portfolio exposures with shape (I, num_portfolios).</p></li>
 <li><p><strong>R</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>]) – P&amp;L / risk factor simulation with shape (S, I).</p></li>
-<li><p><strong>p</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>]) – probability vector with shape (S, 1). Default np.ones((S, 1)) / S.</p></li>
-<li><p><strong>alpha</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]) – alpha level for alpha-CVaR. Default: 0.95.</p></li>
-<li><p><strong>demean</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code>]) – Boolean indicating whether to use demeaned P&amp;L. Default: True.</p></li>
+<li><p><strong>p</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>) – probability vector with shape (S, 1). Default np.ones((S, 1)) / S.</p></li>
+<li><p><strong>alpha</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>) – alpha level for alpha-CVaR. Default: 0.95.</p></li>
+<li><p><strong>demean</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code>) – Boolean indicating whether to use demeaned P&amp;L. Default: True.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -335,9 +335,9 @@ Pooling views.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>e</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>) – Vector / matrix of portfolio exposures with shape (I, num_portfolios).</p></li>
 <li><p><strong>R</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>]) – P&amp;L / risk factor simulation with shape (S, I).</p></li>
-<li><p><strong>p</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>]) – probability vector with shape (S, 1). Default np.ones((S, 1)) / S.</p></li>
-<li><p><strong>alpha</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]) – alpha level for alpha-VaR. Default: 0.95.</p></li>
-<li><p><strong>demean</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code>]) – Boolean indicating whether to use demeaned P&amp;L. Default: True.</p></li>
+<li><p><strong>p</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>) – probability vector with shape (S, 1). Default np.ones((S, 1)) / S.</p></li>
+<li><p><strong>alpha</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>) – alpha level for alpha-VaR. Default: 0.95.</p></li>
+<li><p><strong>demean</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code>) – Boolean indicating whether to use demeaned P&amp;L. Default: True.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -358,7 +358,7 @@ Pooling views.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>e</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>) – Vector / matrix of portfolio exposures with shape (I, num_portfolios).</p></li>
 <li><p><strong>R</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>]) – P&amp;L / risk factor simulation with shape (S, I).</p></li>
-<li><p><strong>p</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>]) – probability vector with shape (S, 1). Default np.ones((S, 1)) / S.</p></li>
+<li><p><strong>p</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>) – probability vector with shape (S, 1). Default np.ones((S, 1)) / S.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -378,7 +378,7 @@ Pooling views.</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>R</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>]) – P&amp;L / risk factor simulation with shape (S, I).</p></li>
-<li><p><strong>p</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>]) – probability vector with shape (S, 1). Default np.ones((S, 1)) / S.</p></li>
+<li><p><strong>p</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>) – probability vector with shape (S, 1). Default np.ones((S, 1)) / S.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -465,15 +465,15 @@ For the variance risk measure, a standard quadratic programming solver is used.<
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>R</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>) – Matrix with P&amp;L simulations and shape (S, I).</p></li>
-<li><p><strong>G</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>]) – Inequality constraints matrix with shape (N, I).</p></li>
-<li><p><strong>h</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>]) – Inequality constraints vector with shape (N,).</p></li>
-<li><p><strong>A</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>]) – Equality constraints matrix with shape (M, I).</p></li>
-<li><p><strong>b</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>]) – Equality constraints matrix with shape (M,).</p></li>
-<li><p><strong>v</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>]) – Vector of relative market values and shape (I,).
+<li><p><strong>G</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>) – Inequality constraints matrix with shape (N, I).</p></li>
+<li><p><strong>h</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>) – Inequality constraints vector with shape (N,).</p></li>
+<li><p><strong>A</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>) – Equality constraints matrix with shape (M, I).</p></li>
+<li><p><strong>b</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>) – Equality constraints matrix with shape (M,).</p></li>
+<li><p><strong>v</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>) – Vector of relative market values and shape (I,).
 Default: np.ones(I).</p></li>
-<li><p><strong>p</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>]) – Vector containing scenario probabilities with shape (S, 1).
+<li><p><strong>p</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>) – Vector containing scenario probabilities with shape (S, 1).
 Default: np.ones((S, 1)) / S.</p></li>
-<li><p><strong>alpha</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]) – Alpha value for alpha-VaR and alpha-CVaR. Default: 0.95.</p></li>
+<li><p><strong>alpha</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>) – Alpha value for alpha-VaR and alpha-CVaR. Default: 0.95.</p></li>
 <li><p><strong>kwargs</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code>) – options dictionary with Benders algorithm parameters.</p></li>
 </ul>
 </dd>
@@ -487,7 +487,7 @@ Default: np.ones((S, 1)) / S.</p></li>
 <dd><p>Method for computing the efficient frontier.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>num_portfolios</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]) – Number of portfolios used to span the efficient frontier. Default: 9.</p>
+<dd class="field-odd"><p><strong>num_portfolios</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>) – Number of portfolios used to span the efficient frontier. Default: 9.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></p>
@@ -507,7 +507,7 @@ Default: np.ones((S, 1)) / S.</p></li>
 <dd><p>Method for computing a mean-CVaR efficient portfolio with return a target.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>return_target</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]) – Return target for the efficient portfolio.
+<dd class="field-odd"><p><strong>return_target</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>) – Return target for the efficient portfolio.
 The minimum CVaR portfolio is computed by default.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -530,11 +530,11 @@ The minimum CVaR portfolio is computed by default.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>mean</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>) – Mean vector with shape (I,).</p></li>
 <li><p><strong>covariance_matrix</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>) – Covariance matrix with shape (I, I).</p></li>
-<li><p><strong>G</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>]) – Inequality constraints matrix with shape (N, I).</p></li>
-<li><p><strong>h</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>]) – Inequality constraints vector with shape (N,).</p></li>
-<li><p><strong>A</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>]) – Equality constraints matrix with shape (M, I).</p></li>
-<li><p><strong>b</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>]) – Equality constraints matrix with shape (M,).</p></li>
-<li><p><strong>v</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>]) – Vector of relative market values and shape (I,).
+<li><p><strong>G</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>) – Inequality constraints matrix with shape (N, I).</p></li>
+<li><p><strong>h</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>) – Inequality constraints vector with shape (N,).</p></li>
+<li><p><strong>A</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>) – Equality constraints matrix with shape (M, I).</p></li>
+<li><p><strong>b</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>) – Equality constraints matrix with shape (M,).</p></li>
+<li><p><strong>v</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>) – Vector of relative market values and shape (I,).
 Default: np.ones(I).</p></li>
 </ul>
 </dd>
@@ -548,7 +548,7 @@ Default: np.ones(I).</p></li>
 <dd><p>Method for computing the efficient frontier.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>num_portfolios</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]) – Number of portfolios used to span the efficient frontier. Default: 9.</p>
+<dd class="field-odd"><p><strong>num_portfolios</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>) – Number of portfolios used to span the efficient frontier. Default: 9.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></p>
@@ -568,7 +568,7 @@ Default: np.ones(I).</p></li>
 <dd><p>Method for computing a mean-variance efficient portfolio with a return target.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>return_target</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]) – Return target for the efficient portfolio.
+<dd class="field-odd"><p><strong>return_target</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>) – Return target for the efficient portfolio.
 The minimum variance portfolio is computed by default.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>

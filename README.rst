@@ -4,6 +4,9 @@
 .. image:: https://codecov.io/gh/fortitudo-tech/fortitudo.tech/branch/main/graph/badge.svg?token=Z16XK92Gkl 
    :target: https://codecov.io/gh/fortitudo-tech/fortitudo.tech
 
+.. image:: https://static.pepy.tech/personalized-badge/fortitudo-tech?period=total&units=international_system&left_color=grey&right_color=blue&left_text=Downloads
+ :target: https://pepy.tech/project/fortitudo-tech
+
 .. image:: https://mybinder.org/badge_logo.svg
    :target: https://mybinder.org/v2/gh/fortitudo-tech/fortitudo.tech/main?labpath=examples
 
@@ -18,9 +21,9 @@ portfolio constraints and Entropy Pooling views using matrices and vectors.
 This gives full flexibility in relation to working with these technologies.
 Hence, input checking is intentionally kept to a minimum.
 
-Fortitudo Technologies is a fintech company offering novel investment software
-as well as quantitative and digitalization consultancy to the investment management
-industry. For more information, please visit our `website <https://fortitudo.tech>`_.
+Fortitudo Technologies offers novel investment software as well as quantitative and
+digitalization consultancy to the investment management industry. For more information,
+please visit our `website <https://fortitudo.tech>`_.
 
 Installation Instructions
 -------------------------
@@ -34,9 +37,8 @@ For best performance, we recommend that you install the package in a `conda envi
 and let conda handle the installation of dependencies before installing the
 package using pip. You can do this by following these steps::
 
-   conda create -n fortitudo.tech python=3.10 scipy pandas matplotlib -y
+   conda create -n fortitudo.tech -c conda-forge python=3.11 scipy pandas=1.5 matplotlib cvxopt
    conda activate fortitudo.tech
-   conda install -c conda-forge cvxopt=1.3 -y
    pip install fortitudo.tech
 
 The examples might require you to install additional packages, e.g., seaborn and
