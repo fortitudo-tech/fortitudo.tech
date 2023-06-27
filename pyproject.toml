@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "fortitudo.tech"
-version = "0.10.1"
-description = "Investment and risk technologies maintained by Fortitudo Technologies."
+version = "0.10.2"
+description = "Python investment and risk management software maintained by Fortitudo Technologies."
 authors = ["Fortitudo Technologies <software@fortitudo.tech>"]
 license = "GPL-3.0-or-later"
 readme = "README.rst"

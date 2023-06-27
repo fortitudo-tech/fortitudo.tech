@@ -27,8 +27,8 @@ from typing import Tuple
 
 
 def load_pnl() -> pd.DataFrame:
-    """Function for loading the P&L simulation from https://ssrn.com/abstract=3936392
-    and https://ssrn.com/abstract=4217884.
+    """Function for loading the P&L simulation from https://ssrn.com/abstract=3936392,
+    https://ssrn.com/abstract=4217884, and https://ssrn.com/abstract=4444291.
 
     Returns:
         P&L simulation.
@@ -55,7 +55,8 @@ def load_parameters() -> Tuple[list, np.ndarray, np.ndarray]:
 
 
 def load_risk_factors() -> pd.DataFrame:
-    """Function for loading the risk factor simulation from 7_RiskFactorViews.ipynb.
+    """Function for loading the risk factor simulation from 7_RiskFactorViews.ipynb that is used
+    in https://ssrn.com/abstract=4444291.
 
     Returns:
         Risk factor simulation.
@@ -65,7 +66,7 @@ def load_risk_factors() -> pd.DataFrame:
 
 
 def load_time_series() -> pd.DataFrame:
-    """Function for loading the time series simulation.
+    """Function for loading an SDE based time series simulation.
 
     Returns:
         Time series simulation.

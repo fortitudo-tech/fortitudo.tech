@@ -86,7 +86,7 @@ class MeanCVaR(Optimization):
         G: Inequality constraints matrix with shape (N, I).
         h: Inequality constraints vector with shape (N,).
         A: Equality constraints matrix with shape (M, I).
-        b: Equality constraints matrix with shape (M,).
+        b: Equality constraints vector with shape (M,).
         v: Vector of relative market values and shape (I,).
             Default: np.ones(I).
         p: Vector containing scenario probabilities with shape (S, 1).
@@ -272,7 +272,7 @@ class MeanVariance(Optimization):
         G: Inequality constraints matrix with shape (N, I).
         h: Inequality constraints vector with shape (N,).
         A: Equality constraints matrix with shape (M, I).
-        b: Equality constraints matrix with shape (M,).
+        b: Equality constraints vector with shape (M,).
         v: Vector of relative market values and shape (I,).
             Default: np.ones(I).
 
