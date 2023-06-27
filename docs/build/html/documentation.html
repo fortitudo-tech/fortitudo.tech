@@ -330,7 +330,7 @@ Pooling views.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="fortitudo.tech.functions.portfolio_var">
 <span class="sig-name descname"><span class="pre">portfolio_var</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">e</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">R</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">demean</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fortitudo.tech.functions.portfolio_var" title="Permalink to this definition"></a></dt>
-<dd><p>Function for computing portfolio CVaR and optionally VaR.</p>
+<dd><p>Function for computing portfolio VaR.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -469,7 +469,7 @@ For the variance risk measure, a standard quadratic programming solver is used.<
 <li><p><strong>G</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>) – Inequality constraints matrix with shape (N, I).</p></li>
 <li><p><strong>h</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>) – Inequality constraints vector with shape (N,).</p></li>
 <li><p><strong>A</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>) – Equality constraints matrix with shape (M, I).</p></li>
-<li><p><strong>b</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>) – Equality constraints matrix with shape (M,).</p></li>
+<li><p><strong>b</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>) – Equality constraints vector with shape (M,).</p></li>
 <li><p><strong>v</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>) – Vector of relative market values and shape (I,).
 Default: np.ones(I).</p></li>
 <li><p><strong>p</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>) – Vector containing scenario probabilities with shape (S, 1).
@@ -534,7 +534,7 @@ The minimum CVaR portfolio is computed by default.</p>
 <li><p><strong>G</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>) – Inequality constraints matrix with shape (N, I).</p></li>
 <li><p><strong>h</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>) – Inequality constraints vector with shape (N,).</p></li>
 <li><p><strong>A</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>) – Equality constraints matrix with shape (M, I).</p></li>
-<li><p><strong>b</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>) – Equality constraints matrix with shape (M,).</p></li>
+<li><p><strong>b</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>) – Equality constraints vector with shape (M,).</p></li>
 <li><p><strong>v</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>) – Vector of relative market values and shape (I,).
 Default: np.ones(I).</p></li>
 </ul>
