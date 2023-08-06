@@ -2,12 +2,11 @@ name: fortitudo.tech-examples
 channels:
   - conda-forge
 dependencies:
-  - python
+  - python=3.10
   - scipy
   - seaborn
   - pandas=1.5
   - cvxopt=1.3
-  - libblas=*=*mkl
   - pip
   - pip:
       - fortitudo.tech
