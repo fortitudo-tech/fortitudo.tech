@@ -1,5 +1,5 @@
 Contributing
-------------
+============
 
 You are welcome to contribute to this package by forking the `fortitudo.tech 
 GitHub repository <https://github.com/fortitudo-tech/fortitudo.tech>`_ and
@@ -19,10 +19,10 @@ If you use Visual Studio Code, you can use these settings to make sure that
 your code follows the basic rules of the style guide. The most important
 modifications/additions are:
 
-1) We allow line length to be 99 characters for both code and docstrings,
-2) We allow the use of capital I (eye) as a variable,
-3) We use type hints introduced in `PEP 484 <https://www.python.org/dev/peps/pep-0484/>`_,
-4) We do not group operators according to priority.
+1) We allow line length to be 99 characters for both code and docstrings
+2) We allow the use of capital I (eye) as a variable
+3) We use type hints introduced in `PEP 484 <https://www.python.org/dev/peps/pep-0484/>`_
+4) We do not group operators according to priority
 
 We generally follow naming conventions with descriptive variable and function
 names, but we often use short variable names for the very mathematical parts of

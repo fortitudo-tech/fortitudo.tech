@@ -23,6 +23,8 @@ The repository contains the following examples:
 8) The accompanied code for :cite:t:`Vorobets2023` illustrating how Bayesian
    networks can be used in combination with Entropy Pooling for causal and
    predictive market views and stress-testing
+9) Example illustrating the effect of parameter uncertainty in mean-variance
+   optimization.
 
 The examples are good places to start exploring the functionality of this package.
 We have very limited resources for support in relation to these, but please let
