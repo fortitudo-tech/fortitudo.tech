@@ -9,9 +9,14 @@ portfolio constraints and Entropy Pooling views using matrices and vectors.
 This gives full flexibility in relation to working with these technologies.
 Hence, input checking is intentionally kept to a minimum.
 
-Fortitudo Technologies offers novel investment software as well as quantitative and
-digitalization consultancy to the investment management industry. For more information,
-please visit our `website <https://fortitudo.tech>`_.
+If you like this package, we invite you to show your support by giving it a
+GitHub star. The greater the number of stars it receives, the more dedicated
+time and energy we'll invest in enhancing its functionality, providing additional
+examples, and refining the code.
+
+Fortitudo Technologies offers novel investment software as well as quantitative
+and digitalization consultancy to the investment management industry. For more
+information, please visit our `website <https://fortitudo.tech>`_.
 
 Disclaimer
 ----------
