@@ -197,6 +197,6 @@ def portfolio_vol(
 
 def _return_portfolio_risk(risk: np.ndarray) -> Tuple[float, np.ndarray]:
     if risk.shape[1] == 1:
-        return float(risk)
+        return risk[0, 0]
     else:
         return risk
