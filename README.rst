@@ -22,8 +22,8 @@ This gives full flexibility in relation to working with these technologies.
 Hence, input checking is intentionally kept to a minimum.
 
 If you like this package, we invite you to show your support by giving it a
-GitHub star. The greater the number of stars it receives, the more dedicated
-time and energy we'll invest in enhancing its functionality, providing additional
+GitHub star. The greater the number of stars it receives, the more time and
+energy we'll invest in enhancing its functionality, providing additional
 examples, and refining the code.
 
 Fortitudo Technologies offers novel investment software as well as quantitative
@@ -55,13 +55,14 @@ You can also explore the examples in the cloud without any local installations u
 However, note that Binder servers have very limited resources and might not support
 some of the optimized routines this package uses. For best performance, you should
 install the package on a machine that supports the `Math Kernel Library <https://en.
-wikipedia.org/wiki/Math_Kernel_Library>`_.
+wikipedia.org/wiki/Math_Kernel_Library>`_. If you want access to a stable and optimized
+environment with persistent storage, you can subscribe to our Data Science Server.
 
 Disclaimer
 ----------
 
 This package is completely separate from our proprietary solutions and therefore
-not representative of neither the quality nor the functionality offered by the Simulation
-Engine and Investment Analysis modules. If you are an institutional investor who wants
-to experience how these methods can be used for sophisticated analysis in practice,
+not representative of the quality and functionality offered by the Simulation Engine
+and Investment Analysis modules. If you are an institutional investor who wants to
+experience how these methods can be used for sophisticated analysis in practice,
 please request a demo by sending an email to demo@fortitudo.tech.
