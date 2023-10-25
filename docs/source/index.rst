@@ -3,6 +3,7 @@ Fortitudo Technologies Open Source
 
 This package allows you to explore open-source implementations of some of our
 fundamental technologies, e.g., Entropy Pooling and CVaR optimization in Python.
+For a high-level introduction, see this `Medium article <https://medium.com/@ft_anvo/entropy-pooling-and-cvar-portfolio-optimization-in-python-ffed736a8347>`_.
 
 The package is intended for advanced users who are comfortable specifying
 portfolio constraints and Entropy Pooling views using matrices and vectors.
@@ -11,8 +12,8 @@ Hence, input checking is intentionally kept to a minimum.
 
 If you like this package, we invite you to show your support by giving it a
 GitHub star. The greater the number of stars it receives, the more time and
-energy we'll invest in enhancing its functionality, providing additional
-examples, and refining the code.
+energy we will invest in enhancing its functionality and providing additional
+examples.
 
 Fortitudo Technologies offers novel investment software as well as quantitative
 and digitalization consultancy to the investment management industry. For more
