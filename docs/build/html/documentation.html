@@ -75,6 +75,7 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#option-pricing">Option Pricing</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#fortitudo.tech.option_pricing.call_option"><code class="docutils literal notranslate"><span class="pre">call_option()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#fortitudo.tech.option_pricing.forward"><code class="docutils literal notranslate"><span class="pre">forward()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#fortitudo.tech.option_pricing.put_option"><code class="docutils literal notranslate"><span class="pre">put_option()</span></code></a></li>
 </ul>
 </li>
@@ -416,6 +417,28 @@ Pooling views.</p>
 </dd>
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>European call option price.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="fortitudo.tech.option_pricing.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">S</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">q</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">T</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fortitudo.tech.option_pricing.forward" title="Link to this definition"></a></dt>
+<dd><p>Function for computing the continuously compounded forward price.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>S</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></span>) – Spot price.</p></li>
+<li><p><strong>r</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></span>) – Risk-free rate for maturity T.</p></li>
+<li><p><strong>q</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></span>) – Dividend yield.</p></li>
+<li><p><strong>T</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></span>) – Time to maturity.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Forward price for maturity T.</p>
 </dd>
 </dl>
 </dd></dl>
