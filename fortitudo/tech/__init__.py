@@ -19,5 +19,5 @@ from .entropy_pooling import entropy_pooling
 from .functions import (simulation_moments, covariance_matrix, correlation_matrix,
                         portfolio_cvar, portfolio_var, portfolio_vol)
 from .optimization import cvar_options, MeanCVaR, MeanVariance
-from .option_pricing import call_option, put_option
+from .option_pricing import forward, call_option, put_option
 from .simulation import exp_decay_probs, normal_exp_decay_calib

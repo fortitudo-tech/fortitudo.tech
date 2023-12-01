@@ -19,6 +19,21 @@ from scipy.stats import norm
 from typing import Tuple
 
 
+def forward(S: float, r: float, q: float, T: float) -> float:
+    """Function for computing the continuously compounded forward price.
+
+    Args:
+        S: Spot price.
+        r: Risk-free rate for maturity T.
+        q: Dividend yield.
+        T: Time to maturity.
+
+    Returns:
+        Forward price for maturity T.
+    """
+    return S * np.exp((r - q) * T)
+
+
 def _d1_d2(F: float, K: float, sigma: float, T: float) -> Tuple[float, float]:
     """Function for computing the parameters d1 and d2 in Black's model.
 
