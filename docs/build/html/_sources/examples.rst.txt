@@ -26,10 +26,11 @@ The repository contains the following examples:
 9) Example illustrating the effect of parameter uncertainty in mean-variance
    optimization.
 
-The examples are good places to start exploring the functionality of this package.
-We have very limited resources for support in relation to these, but please let
-us know if you have suggestions for how we can improve them and make them easier
-to understand.
+See this `YouTube playlist <https://www.youtube.com/playlist?list=PLfI2BKNVj_b2rurUsCtc2F8lqtPWqcs2K>`_
+for a walkthrough of the package's functionality and examples. The examples are
+good places to start exploring the functionality of this package. We have very
+limited resources for support in relation to these, but please let us know if you
+have suggestions for how we can improve them and make them easier to understand.
 
 You can explore the examples in the cloud without any local installations using
 `Binder <https://mybinder.org/v2/gh/fortitudo-tech/fortitudo.tech/main?labpath=examples>`_.
