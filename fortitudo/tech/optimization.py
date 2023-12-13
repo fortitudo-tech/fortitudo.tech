@@ -154,13 +154,13 @@ class MeanCVaR(Optimization):
             options: Dictionary containing algorithm parameters.
         """
         self._demean = options.get('demean', True)
-        if type(self._demean) != bool:
+        if not isinstance(self._demean, bool):
             raise ValueError('demean must be a boolean equal to True or False.')
         self._R_scalar = options.get('R_scalar', 1000)
         if type(self._R_scalar) not in (int, float) or self._R_scalar <= 0:
             raise ValueError('R_scalar must be a postive integer or float.')
         self._maxiter = options.get('maxiter', 500)
-        if type(self._maxiter) != int or self._maxiter < 100:
+        if not isinstance(self._maxiter, int) or self._maxiter < 100:
             raise ValueError('maxiter must be a postive integer greater than or equal to 100.')
         self._reltol = options.get('reltol', 1e-8)
         if not 1e-8 <= self._reltol <= 1e-4:

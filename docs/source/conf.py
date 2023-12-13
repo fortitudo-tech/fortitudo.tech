@@ -38,7 +38,7 @@ copyright = '2021-2023, Fortitudo Technologies'
 author = 'Fortitudo Technologies'
 
 # The full version, including alpha/beta/rc tags
-version = 'v1.0.1'
+version = 'v1.0.2'
 
 
 # -- General configuration ---------------------------------------------------
@@ -61,6 +61,7 @@ bibtex_reference_style = 'author_year'
 add_module_names = False
 typehints_document_rtype = True
 html_show_sourcelink = False
+toc_object_entries_show_parents = 'hide'
 
 # Add any paths that contain templates here, relative to this directory.
 # templates_path = ['_templates']
