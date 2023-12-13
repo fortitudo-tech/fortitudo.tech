@@ -30,7 +30,7 @@ def _simulation_check(
     Returns:
         Validated and preprocessed simulation_names, R, and p.
     """
-    if type(R) == pd.DataFrame:
+    if isinstance(R, pd.DataFrame):
         simulation_names = R.columns
         R = R.values
     else:
