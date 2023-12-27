@@ -4,9 +4,6 @@
 .. image:: https://codecov.io/gh/fortitudo-tech/fortitudo.tech/branch/main/graph/badge.svg?token=Z16XK92Gkl 
    :target: https://codecov.io/gh/fortitudo-tech/fortitudo.tech
 
-.. image:: https://static.pepy.tech/personalized-badge/fortitudo-tech?period=total&units=international_system&left_color=grey&right_color=blue&left_text=Downloads
- :target: https://pepy.tech/project/fortitudo-tech
-
 .. image:: https://mybinder.org/badge_logo.svg
    :target: https://mybinder.org/v2/gh/fortitudo-tech/fortitudo.tech/main?labpath=examples
 
