@@ -4,9 +4,6 @@
 .. image:: https://codecov.io/gh/fortitudo-tech/fortitudo.tech/branch/main/graph/badge.svg?token=Z16XK92Gkl 
    :target: https://codecov.io/gh/fortitudo-tech/fortitudo.tech
 
-.. image:: https://static.pepy.tech/personalized-badge/fortitudo-tech?period=total&units=international_system&left_color=grey&right_color=blue&left_text=Downloads
- :target: https://pepy.tech/project/fortitudo-tech
-
 .. image:: https://mybinder.org/badge_logo.svg
    :target: https://mybinder.org/v2/gh/fortitudo-tech/fortitudo.tech/main?labpath=examples
 
@@ -17,7 +14,7 @@ This package allows you to explore open-source implementations of some of our
 fundamental technologies, e.g., Entropy Pooling and CVaR optimization in Python.
 See this `YouTube playlist <https://www.youtube.com/playlist?list=PLfI2BKNVj_b2rurUsCtc2F8lqtPWqcs2K>`_
 for a walkthrough of the package's functionality and examples. For a high-level
-introduction to the investment framework, see this `YouTube video <https://youtu.be/FOiY8aRVC90>`_
+introduction to the investment framework, see this `YouTube video <https://youtu.be/4ESigySdGf8>`_
 and `Medium article <https://medium.com/@ft_anvo/entropy-pooling-and-cvar-portfolio-optimization-in-python-ffed736a8347>`_.
 
 The package is intended for advanced users who are comfortable specifying
