@@ -1,7 +1,7 @@
 .. image:: https://github.com/fortitudo-tech/fortitudo.tech/actions/workflows/tests.yml/badge.svg
    :target: https://github.com/fortitudo-tech/fortitudo.tech/actions/workflows/tests.yml
 
-.. image:: https://codecov.io/gh/fortitudo-tech/fortitudo.tech/branch/main/graph/badge.svg?token=Z16XK92Gkl 
+.. image:: https://codecov.io/gh/fortitudo-tech/fortitudo.tech/graph/badge.svg?token=Z16XK92Gkl 
    :target: https://codecov.io/gh/fortitudo-tech/fortitudo.tech
 
 .. image:: https://mybinder.org/badge_logo.svg
