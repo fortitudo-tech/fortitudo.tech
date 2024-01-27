@@ -34,11 +34,11 @@ sys.path.insert(0, os.path.abspath('../..'))
 # -- Project information -----------------------------------------------------
 
 project = 'fortitudo.tech'
-copyright = '2021-2023, Fortitudo Technologies'
+copyright = '2021-2024, Fortitudo Technologies'
 author = 'Fortitudo Technologies'
 
 # The full version, including alpha/beta/rc tags
-version = 'v1.0.2'
+version = 'v1.0.3'
 
 
 # -- General configuration ---------------------------------------------------
