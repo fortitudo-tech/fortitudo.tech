@@ -56,4 +56,22 @@
   url     = {https://ssrn.com/abstract=4217884},
 }
 
+@Article{Vorobets2023,
+  author  = {A. Vorobets},
+  journal = {SSRN},
+  title   = {Causal and Predictive Market Views and Stress-Testing},
+  year    = {2023},
+  url     = {https://ssrn.com/abstract=4444291},
+}
+
+@Article{KristensenVorobets2024,
+  author  = {L. Kristensen and A. Vorobets},
+  journal = {SSRN},
+  title   = {Portfolio Optimization and Parameter Uncertainty},
+  year    = {2024},
+  url     = {https://ssrn.com/abstract=4709317.
+
+The example illustrates the effect of parameter uncertainty in the means, variances, and correlations for mean-variance portfolio optimization. It also tests the out-of-sample performance of the new Exposure Stacking method and compares it to the traditional resampling method.},
+}
+
 @Comment{jabref-meta: databaseType:bibtex;}
