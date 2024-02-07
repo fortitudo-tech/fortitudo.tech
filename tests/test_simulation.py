@@ -1,5 +1,5 @@
 # fortitudo.tech - Novel Investment Technologies.
-# Copyright (C) 2021-2023 Fortitudo Technologies.
+# Copyright (C) 2021-2024 Fortitudo Technologies.
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -38,12 +38,12 @@ def test_exp_decay_probs():
 def test_normal_exp_decay_calib():
     assert mean.shape == (I, 1)
     assert cov_matrix.shape == (I, I)
-    assert type(mean) == pd.DataFrame
-    assert type(cov_matrix) == pd.DataFrame
+    assert type(mean) is pd.DataFrame
+    assert type(cov_matrix) is pd.DataFrame
     assert mean1.shape == (I, 1)
     assert cov_matrix1.shape == (I, I)
-    assert type(mean1) == np.ndarray
-    assert type(cov_matrix1) == np.ndarray
+    assert type(mean1) is np.ndarray
+    assert type(cov_matrix1) is np.ndarray
     assert np.all(np.abs(mean.values - mean1)) <= tol
     assert np.all(np.abs(cov_matrix.values - cov_matrix1)) <= tol
 
