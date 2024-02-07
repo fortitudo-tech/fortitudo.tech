@@ -16,6 +16,8 @@ See this `YouTube playlist <https://www.youtube.com/playlist?list=PLfI2BKNVj_b2r
 for a walkthrough of the package's functionality and examples. For a high-level
 introduction to the investment framework, see this `YouTube video <https://youtu.be/4ESigySdGf8>`_
 and `Medium article <https://medium.com/@ft_anvo/entropy-pooling-and-cvar-portfolio-optimization-in-python-ffed736a8347>`_.
+For an in-depth mathematical introduction to the investment framework, see
+these `SSRN articles <https://ssrn.com/author=2738420>`_.
 
 The package is intended for advanced users who are comfortable specifying
 portfolio constraints and Entropy Pooling views using matrices and vectors.
