@@ -7,7 +7,9 @@ The repository contains the following examples:
 
 1) How to combine CVaR optimization with Entropy Pooling views / stress-tests
 2) A replication of the results from :cite:t:`Vorobets2021` for the original
-   Entropy Pooling heuristic
+   Entropy Pooling heuristic and a separate bonus sequential Entropy Pooling
+   example using the H1 heuristic to implement views on S&P 500 and STOXX 50
+   mean and volatility
 3) The accompanied code for :cite:t:`Vorobets2022` with a comparison of
    mean-CVaR and mean-variance optimization explaining why we use demeaned
    CVaR as default (it's not recommended to run this example with 1,000,000
