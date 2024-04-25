@@ -38,7 +38,7 @@ copyright = '2021-2024, Fortitudo Technologies'
 author = 'Fortitudo Technologies'
 
 # The full version, including alpha/beta/rc tags
-version = 'v1.0.5'
+version = 'v1.0.6'
 
 
 # -- General configuration ---------------------------------------------------
