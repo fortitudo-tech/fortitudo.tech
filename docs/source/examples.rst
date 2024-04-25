@@ -39,6 +39,10 @@ and `Medium article <https://medium.com/@ft_anvo/entropy-pooling-and-cvar-portfo
 For an in-depth mathematical introduction to the investment framework, see
 these `SSRN articles <https://ssrn.com/author=2738420>`_.
 
+For a careful and pedagogical presentation of the investment framework,
+see the `Portfolio Construction and Risk Management Book <https://igg.me/at/pcrm-book>`_
+crowdfunding campaign.
+
 You can explore the examples in the cloud without any local installations using
 `Binder <https://mybinder.org/v2/gh/fortitudo-tech/fortitudo.tech/main?labpath=examples>`_.
 However, note that Binder servers have very limited resources and might not support
