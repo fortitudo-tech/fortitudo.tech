@@ -27,6 +27,8 @@ The repository contains the following examples:
    predictive market views and stress-testing
 9) The accompanied code for :cite:t:`KristensenVorobets2024`, illustrating
    the effect of parameter uncertainty and introducing Exposure Stacking.
+10) The accompanied code for :cite:t:`Vorobets2024`, illustrating how to
+    optimize derivative portfolios using Entropy Pooling and Expsoure Stacking.
 
 See this `YouTube playlist <https://www.youtube.com/playlist?list=PLfI2BKNVj_b2rurUsCtc2F8lqtPWqcs2K>`_
 for a walkthrough of the package's functionality and examples. The examples are
