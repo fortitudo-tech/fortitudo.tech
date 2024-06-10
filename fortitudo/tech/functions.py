@@ -16,6 +16,9 @@
 
 import numpy as np
 import pandas as pd
+from copy import copy
+from cvxopt import matrix
+from cvxopt.solvers import qp
 from typing import Tuple, Union
 
 
@@ -200,3 +203,35 @@ def _return_portfolio_risk(risk: np.ndarray) -> Tuple[float, np.ndarray]:
         return risk[0, 0]
     else:
         return risk
+
+
+def exposure_stacking(L, resampled_portfolios):
+    """Computes the L-fold Exposure Stacking portfolio from https://ssrn.com/abstract=4709317.
+
+    Args:
+        L: Number of partition sets.
+        resampled_portfolios: Resampled portfolio exposures with shape (I, B).
+
+    Returns:
+        Exposure Stacking portfolio.
+    """
+    B = resampled_portfolios.shape[1]
+    partition_size = B // L
+    M = resampled_portfolios.T
+    P = np.zeros((B, B))
+    q = np.zeros((B, 1))
+    for l in range(L):
+        K_l = np.arange(l * partition_size, (l + 1) * partition_size)
+        M_l = copy(M)
+        M_l[K_l, :] = 0
+        P = P + M_l @ M_l.T
+        sum_exposures_K_l = np.sum(resampled_portfolios[:, K_l], axis=1)
+        q = q + (M_l @ sum_exposures_K_l)[:, np.newaxis]
+    P = matrix(2 * partition_size * P)
+    q = matrix(-2 * q)
+    A = matrix(np.ones((1, B)))
+    b = matrix(np.array([[1.]]))
+    G = matrix(-np.identity(B))
+    h = matrix(np.zeros((B, 1)))
+    w = qp(P, q, G, h, A, b)['x']
+    return np.squeeze(M.T @ w)
