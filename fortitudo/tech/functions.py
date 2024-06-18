@@ -216,18 +216,24 @@ def exposure_stacking(L, resampled_portfolios):
         Exposure Stacking portfolio.
     """
     B = resampled_portfolios.shape[1]
-    partition_size = B // L
+    partition_size = B // L  # size of validation set for all except possibly the last
+    indices = np.arange(0, B)
+    partitions = []
+    for l in range(L - 1):
+        partitions.append(indices[l * partition_size:(l + 1) * partition_size])
+    partitions.append(indices[(l + 1) * partition_size:])
+
     M = resampled_portfolios.T
     P = np.zeros((B, B))
     q = np.zeros((B, 1))
-    for l in range(L):
-        K_l = np.arange(l * partition_size, (l + 1) * partition_size)
+    for K_l in partitions:
         M_l = copy(M)
         M_l[K_l, :] = 0
         P = P + M_l @ M_l.T
         sum_exposures_K_l = np.sum(resampled_portfolios[:, K_l], axis=1)
-        q = q + (M_l @ sum_exposures_K_l)[:, np.newaxis]
-    P = matrix(2 * partition_size * P)
+        q = q + len(K_l)**-1 * (M_l @ sum_exposures_K_l)[:, np.newaxis]
+
+    P = matrix(2 * P)
     q = matrix(-2 * q)
     A = matrix(np.ones((1, B)))
     b = matrix(np.array([[1.]]))
