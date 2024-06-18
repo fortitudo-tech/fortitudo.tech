@@ -205,17 +205,17 @@ def _return_portfolio_risk(risk: np.ndarray) -> Tuple[float, np.ndarray]:
         return risk
 
 
-def exposure_stacking(L, resampled_portfolios):
+def exposure_stacking(L, sample_portfolios):
     """Computes the L-fold Exposure Stacking portfolio from https://ssrn.com/abstract=4709317.
 
     Args:
         L: Number of partition sets.
-        resampled_portfolios: Resampled portfolio exposures with shape (I, B).
+        sample_portfolios: Resampled portfolio exposures with shape (I, B).
 
     Returns:
         Exposure Stacking portfolio.
     """
-    B = resampled_portfolios.shape[1]
+    B = sample_portfolios.shape[1]
     partition_size = B // L  # size of validation set for all except possibly the last
     indices = np.arange(0, B)
     partitions = []
@@ -223,14 +223,14 @@ def exposure_stacking(L, resampled_portfolios):
         partitions.append(indices[l * partition_size:(l + 1) * partition_size])
     partitions.append(indices[(l + 1) * partition_size:])
 
-    M = resampled_portfolios.T
+    M = sample_portfolios.T
     P = np.zeros((B, B))
     q = np.zeros((B, 1))
     for K_l in partitions:
         M_l = copy(M)
         M_l[K_l, :] = 0
         P = P + M_l @ M_l.T
-        sum_exposures_K_l = np.sum(resampled_portfolios[:, K_l], axis=1)
+        sum_exposures_K_l = np.sum(sample_portfolios[:, K_l], axis=1)
         q = q + len(K_l)**-1 * (M_l @ sum_exposures_K_l)[:, np.newaxis]
 
     P = matrix(2 * P)
