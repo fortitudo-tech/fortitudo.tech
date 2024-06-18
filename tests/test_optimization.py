@@ -16,8 +16,8 @@
 
 import numpy as np
 import pytest
-from context import (R, MeanCVaR, cvar_options, MeanVariance,
-                     covariance_matrix, call_option, put_option)
+from context import (R, MeanCVaR, cvar_options, MeanVariance, covariance_matrix,
+                     call_option, put_option, exposure_stacking)
 
 tol = 1e-7
 
@@ -130,3 +130,18 @@ def test_alpha_parameter():
         MeanCVaR(R, G, h, A, b, alpha=1.1)
     with pytest.raises(ValueError):
         MeanCVaR(R, G, h, A, b, alpha='x')
+
+
+port1 = opt2.efficient_portfolio(0.06)
+port2 = opt3.efficient_portfolio(0.06)
+port3 = opt4.efficient_portfolio(0.06)
+port4 = opt5.efficient_portfolio(0.06)
+
+exposure_stacking_ports = np.hstack((port1, port2, port3, port4))
+exposure_stacking_port = exposure_stacking(2, exposure_stacking_ports)
+
+
+def test_exposure_stacking():
+    assert len(exposure_stacking_port) == exposure_stacking_ports.shape[0]
+    assert np.all(exposure_stacking_port >= 0 - tol)
+    assert np.abs(np.sum(exposure_stacking_port) - 1) <= tol
