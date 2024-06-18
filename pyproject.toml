@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "fortitudo.tech"
-version = "1.0.7"
-description = "Conditional Value-at-Risk (CVaR) portfolio optimization and Entropy Pooling views / stress-testing in Python."
+version = "1.1"
+description = "Entropy Pooling views and stress-testing combined with Conditional Value-at-Risk (CVaR) portfolio optimization in Python."
 authors = ["Fortitudo Technologies <software@fortitudo.tech>"]
 license = "GPL-3.0-or-later"
 readme = "README.rst"

@@ -17,7 +17,7 @@
         <script src="_static/jquery.js?v=5d32c60e"></script>
         <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
         <script src="_static/documentation_options.js?v=5929fcd5"></script>
-        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
         <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
         <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="_static/js/theme.js"></script>
@@ -39,7 +39,7 @@
             fortitudo.tech
           </a>
               <div class="version">
-                v1.0.7
+                v1.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -67,6 +67,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#functions">Functions</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#fortitudo.tech.functions.correlation_matrix"><code class="docutils literal notranslate"><span class="pre">correlation_matrix()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#fortitudo.tech.functions.covariance_matrix"><code class="docutils literal notranslate"><span class="pre">covariance_matrix()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#fortitudo.tech.functions.exposure_stacking"><code class="docutils literal notranslate"><span class="pre">exposure_stacking()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#fortitudo.tech.functions.portfolio_cvar"><code class="docutils literal notranslate"><span class="pre">portfolio_cvar()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#fortitudo.tech.functions.portfolio_var"><code class="docutils literal notranslate"><span class="pre">portfolio_var()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#fortitudo.tech.functions.portfolio_vol"><code class="docutils literal notranslate"><span class="pre">portfolio_vol()</span></code></a></li>
@@ -303,6 +304,23 @@ Pooling views.</p>
 </dd>
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Covariance matrix with shape (I, I).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="fortitudo.tech.functions.exposure_stacking">
+<span class="sig-name descname"><span class="pre">exposure_stacking</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">L</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_portfolios</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fortitudo.tech.functions.exposure_stacking" title="Link to this definition"></a></dt>
+<dd><p>Computes the L-fold Exposure Stacking portfolio from <a class="reference external" href="https://ssrn.com/abstract=4709317">https://ssrn.com/abstract=4709317</a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>L</strong> – Number of partition sets.</p></li>
+<li><p><strong>sample_portfolios</strong> – Resampled portfolio exposures with shape (I, B).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Exposure Stacking portfolio.</p>
 </dd>
 </dl>
 </dd></dl>
