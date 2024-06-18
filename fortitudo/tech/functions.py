@@ -210,7 +210,7 @@ def exposure_stacking(L, sample_portfolios):
 
     Args:
         L: Number of partition sets.
-        sample_portfolios: Resampled portfolio exposures with shape (I, B).
+        sample_portfolios: Sample portfolio exposures with shape (I, B).
 
     Returns:
         Exposure Stacking portfolio.
