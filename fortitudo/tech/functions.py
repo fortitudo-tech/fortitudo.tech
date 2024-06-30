@@ -218,10 +218,8 @@ def exposure_stacking(L, sample_portfolios):
     B = sample_portfolios.shape[1]
     partition_size = B // L  # size of validation set for all except possibly the last
     indices = np.arange(0, B)
-    partitions = []
-    for l in range(L - 1):
-        partitions.append(indices[l * partition_size:(l + 1) * partition_size])
-    partitions.append(indices[(l + 1) * partition_size:])
+    partitions = [indices[l * partition_size:(l + 1) * partition_size] for l in range(L - 1)]
+    partitions.append(indices[(L - 1) * partition_size:])
 
     M = sample_portfolios.T
     P = np.zeros((B, B))
