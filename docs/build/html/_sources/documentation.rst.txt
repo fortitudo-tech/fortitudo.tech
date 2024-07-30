@@ -42,7 +42,7 @@ subject to the constraints
 The approach was first introduced by :cite:t:`EntropyPooling`, while the
 code is implemented using notation from :cite:t:`Vorobets2021`. For an
 introduction to Entropy Pooling, see `this video <https://youtu.be/qk_5l4ICXfY>`_
-or `this article <https://medium.com/@ft_anvo/entropy-pooling-vs-black-litterman-abb608b810cd?source=friends_link&sk=8b04a3b5c90a3b90ff2e5d8ce21712df>`_.
+or `this Substack post <https://open.substack.com/pub/antonvorobets/p/entropy-pooling-vs-black-litterman-abb608b810cd>`_.
 
 .. automodule:: fortitudo.tech.entropy_pooling
    :members:

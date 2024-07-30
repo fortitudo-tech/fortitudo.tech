@@ -18,4 +18,7 @@ jobs:
           activate-environment: fortitudo.tech-dev
           environment-file: requirements.yml
       - run: pytest --cov=fortitudo/tech --cov-fail-under=100 --cov-report=xml
-      - uses: codecov/codecov-action@v3
+      - name: Upload coverage report to Codecov
+        uses: codecov/codecov-action@v4.0.1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
