@@ -190,4 +190,3 @@ dependencies:
       - sphinxcontrib-qthelp==2.0.0
       - sphinxcontrib-serializinghtml==2.0.0
       - urllib3==2.2.3
-prefix: /home/anton/miniconda3/envs/fortitudo.tech-dev
