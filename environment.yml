@@ -2,7 +2,7 @@ name: fortitudo.tech-examples
 channels:
   - conda-forge
 dependencies:
-  - python=3.10
+  - python
   - scipy
   - seaborn
   - pandas
