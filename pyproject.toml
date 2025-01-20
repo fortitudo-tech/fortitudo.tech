@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "fortitudo.tech"
-version = "1.1.5"
+version = "1.1.6"
 description = "Entropy Pooling views and stress-testing combined with Conditional Value-at-Risk (CVaR) portfolio optimization in Python."
 authors = ["Fortitudo Technologies <software@fortitudo.tech>"]
 license = "GPL-3.0-or-later"
@@ -37,7 +37,7 @@ python = "^3.9, <3.14"
 scipy = "^1.10"
 cvxopt = "^1.3.0"
 pandas = ">=1.3.4"
-numpy = "^1.22"
+numpy = ">=1.22"
 matplotlib = "^3.4"
 
 [tool.poetry.dev-dependencies]
