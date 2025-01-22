@@ -24,8 +24,13 @@ and `Substack post <https://open.substack.com/pub/antonvorobets/p/entropy-poolin
 For a mathematical introduction to the investment framework, see these
 `SSRN articles <https://ssrn.com/author=2738420>`_.
 
-For a pedagogical and deep presentation of the investment framework,
-you can access the `Portfolio Construction and Risk Management Book <https://igg.me/at/pcrm-book>`_.
+For a pedagogical and deep presentation of the investment framework, see the
+`Portfolio Construction and Risk Management Book <https://antonvorobets.substack.com/p/pcrm-book>`_.
+
+Note that if you end up among the top 10 contributors to the Portfolio Construction
+and Risk Management book by February 2, 11:59 PM (GMT-8), you get to try out an
+institutional-grade implementation of the investment framework and methods for
+three months.
 
 Audience
 --------
