@@ -13,7 +13,7 @@ Fortitudo Technologies Open Source
 ==================================
 
 This package allows you to explore open-source implementations of some of our
-fundamental technologies, e.g., Entropy Pooling and CVaR optimization in Python.
+fundamental methods, e.g., Entropy Pooling and CVaR optimization in Python.
 
 See this `YouTube playlist <https://www.youtube.com/playlist?list=PLfI2BKNVj_b2rurUsCtc2F8lqtPWqcs2K>`_
 for a walkthrough of the package's functionality and examples.
