@@ -27,11 +27,6 @@ For a mathematical introduction to the investment framework, see these
 For a pedagogical and deep presentation of the investment framework, see the
 `Portfolio Construction and Risk Management Book <https://antonvorobets.substack.com/p/pcrm-book>`_.
 
-Note that if you end up among the top 10 contributors to the Portfolio Construction
-and Risk Management book by February 2, 11:59 PM (GMT-8), you get to try out an
-institutional-grade implementation of the investment framework and methods for
-three months.
-
 Audience
 --------
 
@@ -52,7 +47,7 @@ Installation Instructions
 
 Installation can be done via pip::
 
-   pip install fortitudo.tech
+   pip install -U fortitudo.tech
 
 For best performance, we recommend that you install the package in a `conda environment
 <https://conda.io/projects/conda/en/latest/user-guide/concepts/environments.html>`_
