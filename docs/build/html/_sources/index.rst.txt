@@ -2,7 +2,7 @@ Fortitudo Technologies Open Source
 ==================================
 
 This package allows you to explore open-source implementations of some of our
-fundamental technologies, e.g., Entropy Pooling and CVaR optimization in Python.
+fundamental methods, e.g., Entropy Pooling and CVaR optimization in Python.
 
 See this `YouTube playlist <https://www.youtube.com/playlist?list=PLfI2BKNVj_b2rurUsCtc2F8lqtPWqcs2K>`_
 for a walkthrough of the package's functionality and examples.
@@ -14,7 +14,7 @@ For a mathematical introduction to the investment framework, see these
 `SSRN articles <https://ssrn.com/author=2738420>`_.
 
 For a pedagogical and deep presentation of the investment framework,
-you can access the `Portfolio Construction and Risk Management Book <https://igg.me/at/pcrm-book>`_.
+see the `Portfolio Construction and Risk Management Book <https://antonvorobets.substack.com/p/pcrm-book>`_.
 
 Audience
 --------
@@ -46,6 +46,11 @@ Code of Conduct
 We welcome feedback and bug reports, but we have very limited resources for
 support and feature requests. If you experience bugs with some of the upstream
 packages, please report them directly to the maintainers of the upstream packages.
+
+.. meta::
+   :description lang=en: Fortitudo Techonologies' open-source Python code that allows you to
+      combine Entropy Pooling with CVaR optimization for fully general distributions.
+   :keywords: Conditional Value-at-Risk, Entropy Pooling, Python, Investment, Quant, Finance
 
 .. toctree::
    :hidden:

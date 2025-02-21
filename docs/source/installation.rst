@@ -3,7 +3,7 @@ Installation Instructions
 
 Installation can be done via pip::
 
-   pip install fortitudo.tech
+   pip install -U fortitudo.tech
 
 For best performance, we recommend that you install the package in a `conda environment
 <https://conda.io/projects/conda/en/latest/user-guide/concepts/environments.html>`_
