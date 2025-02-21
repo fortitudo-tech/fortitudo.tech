@@ -13,7 +13,7 @@ Fortitudo Technologies Open Source
 ==================================
 
 This package allows you to explore open-source implementations of some of our
-fundamental technologies, e.g., Entropy Pooling and CVaR optimization in Python.
+fundamental methods, e.g., Entropy Pooling and CVaR optimization in Python.
 
 See this `YouTube playlist <https://www.youtube.com/playlist?list=PLfI2BKNVj_b2rurUsCtc2F8lqtPWqcs2K>`_
 for a walkthrough of the package's functionality and examples.
@@ -26,11 +26,6 @@ For a mathematical introduction to the investment framework, see these
 
 For a pedagogical and deep presentation of the investment framework, see the
 `Portfolio Construction and Risk Management Book <https://antonvorobets.substack.com/p/pcrm-book>`_.
-
-Note that if you end up among the top 10 contributors to the Portfolio Construction
-and Risk Management book by February 2, 11:59 PM (GMT-8), you get to try out an
-institutional-grade implementation of the investment framework and methods for
-three months.
 
 Audience
 --------
@@ -52,7 +47,7 @@ Installation Instructions
 
 Installation can be done via pip::
 
-   pip install fortitudo.tech
+   pip install -U fortitudo.tech
 
 For best performance, we recommend that you install the package in a `conda environment
 <https://conda.io/projects/conda/en/latest/user-guide/concepts/environments.html>`_
