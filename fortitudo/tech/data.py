@@ -76,8 +76,8 @@ def load_time_series() -> pd.DataFrame:
 
 
 def plot_vol_surface(
-        index: int, vol_surface: np.ndarray, figsize: Tuple[float, float] = None
-        ) -> Tuple[Figure, Axes]:
+        index: int, vol_surface: np.ndarray, figsize: Tuple[float, float] = None,
+        zoom: float = None) -> Tuple[Figure, Axes]:
     """Function for plotting the implied vol surface from the time series simulation.
 
     Args:
@@ -90,6 +90,8 @@ def plot_vol_surface(
     """
     if figsize is None:
         figsize = (10, 7)
+    if zoom is None:
+        zoom = 0.85
 
     strikes = [90, 95, 97.5, 100, 102.5, 105, 110]
     maturities = [1 / 12, 1 / 4, 1 / 2, 1, 2]
@@ -99,5 +101,6 @@ def plot_vol_surface(
     ax.set_xlabel('Strike')
     ax.set_ylabel('Maturity')
     ax.set_zlabel('Implied vol')
+    ax.set_box_aspect(None, zoom=zoom)
     ax.plot_surface(strikes, maturities, vol_surface, cmap=cm.coolwarm)
     return fig, ax
