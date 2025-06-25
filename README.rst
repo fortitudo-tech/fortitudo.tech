@@ -27,6 +27,9 @@ For a mathematical introduction to the investment framework, see these
 For a pedagogical and deep presentation of the investment framework, see the
 `Portfolio Construction and Risk Management Book <https://antonvorobets.substack.com/p/pcrm-book>`_.
 
+To build the deepest understanding of all the theories and methods, you can
+complete the `Applied Quantitative Investment Management Course <https://antonvorobets.substack.com/p/course-q-and-a>`_.
+
 Audience
 --------
 
