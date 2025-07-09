@@ -28,22 +28,29 @@ The repository contains the following examples:
 9) The accompanied code for :cite:t:`KristensenVorobets2024`, illustrating
    the effect of parameter uncertainty and introducing Exposure Stacking.
 10) The accompanied code for :cite:t:`Vorobets2024`, illustrating how to
-    optimize derivative portfolios using Entropy Pooling and Expsoure Stacking.
+    optimize derivative portfolios using Entropy Pooling and Expsoure Stacking
+11) The accompanied code for :cite:t:`KristensenVorobets2025`, illustrating
+    the Fully Flexible Resampling method introduced in the
+    `Portfolio Construction and Risk Management Book <https://antonvorobets.substack.com/p/pcrm-book>`_
+12) The accompanied code for :cite:t:`Vorobets2025` that performs tests
+    for normality of US equity index returns and rejects the Aggregational
+    Gaussianity hypothesis
 
-See this `YouTube playlist <https://www.youtube.com/playlist?list=PLfI2BKNVj_b2rurUsCtc2F8lqtPWqcs2K>`_
+Watch this `YouTube playlist <https://www.youtube.com/playlist?list=PLfI2BKNVj_b2rurUsCtc2F8lqtPWqcs2K>`_
 for a walkthrough of the package's functionality and examples. The examples are
-good places to start exploring the functionality of this package. We have very
-limited resources for support in relation to these, but please let us know if you
-have suggestions for how we can improve them and make them easier to understand.
+good places to start exploring the functionality of this package.
 
 For a high-level introduction to the investment framework, see this `YouTube video <https://youtu.be/4ESigySdGf8>`_
-and `Medium article <https://medium.com/@ft_anvo/entropy-pooling-and-cvar-portfolio-optimization-in-python-ffed736a8347>`_.
-For an in-depth mathematical introduction to the investment framework, see
-these `SSRN articles <https://ssrn.com/author=2738420>`_.
+and `Substack post <https://open.substack.com/pub/antonvorobets/p/entropy-pooling-and-cvar-portfolio-optimization-in-python-ffed736a8347>`_.
 
-For a careful and pedagogical presentation of the investment framework,
-see the `Portfolio Construction and Risk Management Book <https://igg.me/at/pcrm-book>`_
-crowdfunding campaign.
+For a mathematical introduction to the investment framework, see these
+`SSRN articles <https://ssrn.com/author=2738420>`_.
+
+For a pedagogical and deep presentation of the investment framework, see the
+`Portfolio Construction and Risk Management Book <https://antonvorobets.substack.com/p/pcrm-book>`_.
+
+To build the deepest understanding of all the theories and methods, you can
+complete the `Applied Quantitative Investment Management Course <https://antonvorobets.substack.com/t/course>`_.
 
 You can explore the examples in the cloud without any local installations using
 `Binder <https://mybinder.org/v2/gh/fortitudo-tech/fortitudo.tech/main?labpath=examples>`_.

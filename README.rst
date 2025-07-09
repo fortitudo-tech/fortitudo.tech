@@ -15,7 +15,7 @@ Fortitudo Technologies Open Source
 This package allows you to explore open-source implementations of some of our
 fundamental methods, e.g., Entropy Pooling and CVaR optimization in Python.
 
-See this `YouTube playlist <https://www.youtube.com/playlist?list=PLfI2BKNVj_b2rurUsCtc2F8lqtPWqcs2K>`_
+Watch this `YouTube playlist <https://www.youtube.com/playlist?list=PLfI2BKNVj_b2rurUsCtc2F8lqtPWqcs2K>`_
 for a walkthrough of the package's functionality and examples.
 
 For a high-level introduction to the investment framework, see this `YouTube video <https://youtu.be/4ESigySdGf8>`_
@@ -28,7 +28,7 @@ For a pedagogical and deep presentation of the investment framework, see the
 `Portfolio Construction and Risk Management Book <https://antonvorobets.substack.com/p/pcrm-book>`_.
 
 To build the deepest understanding of all the theories and methods, you can
-complete the `Applied Quantitative Investment Management Course <https://antonvorobets.substack.com/p/course-q-and-a>`_.
+complete the `Applied Quantitative Investment Management Course <https://antonvorobets.substack.com/t/course>`_.
 
 Audience
 --------
