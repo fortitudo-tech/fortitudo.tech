@@ -18,6 +18,7 @@ from .data import load_pnl, load_parameters, load_risk_factors, load_time_series
 from .entropy_pooling import entropy_pooling
 from .functions import (simulation_moments, covariance_matrix, correlation_matrix,
                         portfolio_cvar, portfolio_var, portfolio_vol, exposure_stacking)
+from .prepare import prepare_inputs_from_universe_df, prepare_inputs_from_universe_csv
 from .optimization import cvar_options, MeanCVaR, MeanVariance
 from .option_pricing import forward, call_option, put_option
 from .simulation import exp_decay_probs, normal_exp_decay_calib

@@ -17,8 +17,6 @@
 import numpy as np
 import pandas as pd
 from copy import copy
-from cvxopt import matrix
-from cvxopt.solvers import qp
 from typing import Tuple, Union
 
 
@@ -83,7 +81,8 @@ def covariance_matrix(R: Union[pd.DataFrame, np.ndarray], p: np.ndarray = None) 
     """
     simulation_names, R, p = _simulation_check(R, p)
     cov = np.cov(R, rowvar=False, aweights=p[:, 0])
-    return pd.DataFrame(cov, index=enumerate(simulation_names))
+    # Ensure symmetric labeling for rows/columns
+    return pd.DataFrame(cov, index=simulation_names, columns=simulation_names)
 
 
 def correlation_matrix(R: Union[pd.DataFrame, np.ndarray], p: np.ndarray = None) -> pd.DataFrame:
@@ -99,7 +98,7 @@ def correlation_matrix(R: Union[pd.DataFrame, np.ndarray], p: np.ndarray = None)
     cov = covariance_matrix(R, p)
     vols_inverse = np.diag(np.sqrt(np.diag(cov.values))**-1)
     corr = vols_inverse @ cov.values @ vols_inverse
-    return pd.DataFrame(corr, index=cov.index)
+    return pd.DataFrame(corr, index=cov.index, columns=cov.columns)
 
 
 def _var_cvar_preprocess(e, R, p, alpha, demean) -> Tuple[np.ndarray, np.ndarray, float]:
@@ -231,6 +230,9 @@ def exposure_stacking(L, sample_portfolios):
         sum_exposures_K_l = np.sum(sample_portfolios[:, K_l], axis=1)
         q = q + len(K_l)**-1 * (M_l @ sum_exposures_K_l)[:, np.newaxis]
 
+    # Import cvxopt lazily to avoid making it a hard import requirement for non-optimization utilities
+    from cvxopt import matrix
+    from cvxopt.solvers import qp
     P = matrix(2 * P)
     q = matrix(-2 * q)
     A = matrix(np.ones((1, B)))

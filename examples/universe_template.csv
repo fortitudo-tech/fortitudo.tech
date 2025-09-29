@@ -1,0 +1,5 @@
+symbol,name,type,currency,group,proxy_symbol,weight_cap
+SPY,SPDR S&P 500 ETF,ETF,USD,Equity,,0.30
+IEF,iShares 7-10 Year Treasury Bond ETF,ETF,USD,Treasury,,0.50
+TLT,iShares 20+ Year Treasury Bond ETF,ETF,USD,TreasuryLong,,0.40
+,US Treasury 5Y,BOND,USD,Treasury,IEF,0.50

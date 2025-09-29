@@ -1,0 +1,73 @@
+2025-2026 Wharton Global High School Investment Competition: Approved Treasury Bonds List
+
+                         United Startes                                Expiration Date
+United States Treasury 30-Year Bond 6.000% Feb 15, 2026     T-BOND 6.000% 15-Feb-2026
+United States Treasury 30-Year Bond 6.500% Nov 15, 2026     T-BOND 6.500% 15-Nov-2026
+United States Treasury 30-Year Bond 6.625% Feb 15, 2027     T-BOND 6.625% 15-Feb-2027
+United States Treasury 10-Year Bond 2.250% Aug 15, 2027     T-BOND 2.250% 15-Aug-2027
+United States Treasury 30-Year Bond 6.375% Aug 15, 2027     T-BOND 6.375% 15-Aug-2027
+United States Treasury 30-Year Bond 6.125% Nov 15, 2027     T-BOND 6.125% 15-Nov-2027
+United States Treasury 30-Year Bond 2.750% Feb 15, 2028     T-BOND 2.750% 15-Feb-2028
+United States Treasury 30-Year Bond 5.500% Aug 15, 2028     T-BOND 5.500% 15-Aug-2028
+United States Treasury 30-Year Bond 5.250% Nov 15, 2028     T-BOND 5.250% 15-Nov-2028
+United States Treasury 30-Year Bond 5.250% Feb 15, 2029     T-BOND 5.250% 15-Feb-2029
+United States Treasury 30-Year Bond 6.125% Aug 15, 2029     T-BOND 6.125% 15-Aug-2029
+United States Treasury 30-Year Bond 6.250% May 15, 2030     T-BOND 6.250% 15-May-2030
+United States Treasury 30-Year Bond 5.375% Feb 15, 2031     T-BOND 5.375% 15-Feb-2031
+United States Treasury 30-Year Bond 4.500% Feb 15, 2036     T-BOND 4.500% 15-Feb-2036
+United States Treasury 30-Year Bond 4.750% Feb 15, 2037     T-BOND 4.750% 15-Feb-2037
+United States Treasury 30-Year Bond 4.375% Feb 15, 2038     T-BOND 4.375% 15-Feb-2038
+United States Treasury 30-Year Bond 4.500% May 15, 2038     T-BOND 4.500% 15-May-2038
+United States Treasury 30-Year Bond 4.250% May 15, 2039     T-BOND 4.250% 15-May-2039
+United States Treasury 30-Year Bond 4.500% Aug 15, 2039     T-BOND 4.500% 15-Aug-2039
+United States Treasury 30-Year Bond 4.375% Nov 15, 2039     T-BOND 4.375% 15-Nov-2039
+United States Treasury 30-Year Bond 4.625% Feb 15, 2040     T-BOND 4.625% 15-Feb-2040
+United States Treasury 30-Year Bond 3.875% Aug 15, 2040     T-BOND 3.875% 15-Aug-2040
+United States Treasury 30-Year Bond 4.750% Feb 15, 2041     T-BOND 4.750% 15-Feb-2041
+United States Treasury 30-Year Bond 3.125% Nov 15, 2041     T-BOND 3.125% 15-Nov-2041
+United States Treasury 30-Year Bond 3.125% Feb 15, 2042     T-BOND 3.125% 15-Feb-2042
+United States Treasury 30-Year Bond 2.750% Aug 15, 2042     T-BOND 2.750% 15-Aug-2042
+United States Treasury 30-Year Bond 3.125% Feb 15, 2043     T-BOND 3.125% 15-Feb-2043
+United States Treasury 30-Year Bond 2.875% May 15, 2043     T-BOND 2.875% 15-May-2043
+United States Treasury 30-Year Bond 3.625% Aug 15, 2043     T-BOND 3.625% 15-Aug-2043
+United States Treasury 30-Year Bond 3.625% Feb 15, 2044     T-BOND 3.625% 15-Feb-2044
+United States Treasury 30-Year Bond 3.375% May 15, 2044     T-BOND 3.375% 15-May-2044
+United States Treasury 30-Year Bond 3.125% Aug 15, 2044     T-BOND 3.125% 15-Aug-2044
+United States Treasury 30-Year Bond 2.500% Feb 15, 2045     T-BOND 2.500% 15-Feb-2045
+United States Treasury 30-Year Bond 3.000% May 15, 2045     T-BOND 3.000% 15-May-2045
+United States Treasury 30-Year Bond 2.875% Aug 15, 2045     T-BOND 2.875% 15-Aug-2045
+United States Treasury 30-Year Bond 2.500% May 15, 2046     T-BOND 2.500% 15-Feb-2046
+United States Treasury 30-Year Bond 2.875% Nov 15, 2046     T-BOND 2.875% 15-Nov-2046
+United States Treasury 30-Year Bond 3.000% May 15, 2047   T-BOND 3.000% 15-May-2047
+United States Treasury 30-Year Bond 2.750% Aug 15, 2047   T-BOND 2.750% 15-Aug-2047
+United States Treasury 30-Year Bond 2.750% Aug 15, 2047   T-BOND 2.750% 15-Nov-2047
+United States Treasury 30-Year Bond 3.125% May 15, 2048   T-BOND 3.125% 15-May-2048
+
+                        United Kingdom                                 Expiration Date
+United Kingdom Gilt 6.000% Dec 07, 2028                   Gilt 6.000% 07-Dec-2028
+United Kingdom Gilt 1.000% Jan 31, 2032                   Gilt 1.000% 31-Jan-2032
+United Kingdom Gilt 4.250% Jun 07, 2032                   Gilt 4.250% 07-Jun-2032
+United Kingdom Gilt 3.250% Jan 31, 2033                   Gilt 3.250% 31-Jan-2033
+
+                         Germany                                    Expiration Date
+Deutschland Bundesanleihen 2.100% Nov 15, 2029            BUND 2.100% 15-Nov-2029
+Deutschland Bundesanleihen 6.250% Jan 04, 2030            BUND 6.250% 04-Jan-2030
+Deutschland Bundesanleihen 4.750% Jul 04, 2040            BUND 4.750% 04-Jul-2040
+Deutschland Bundesanleihen 1.250% Nov 15 2048             BUND 1.250% 15-Nov-2048
+
+                             France                                  Expiration Date
+Obligation Assimilable du Trésor 5.750% Oct 25, 2031      OAT 5.750% 25-Oct-2031
+Obligation Assimilable du Trésor 4.750% Apr 25, 3035      OAT 4.750% 25-Apr-3035
+Obligation Assimilable du Trésor 2.500% May 25,2043       OAT 2.500% 25-May-2043
+Obligation Assimilable du Trésor 3.250% May 25 2045       OAT 3.250% 25-May-2045
+
+                              Italy                                  Expiration Date
+Buoni del Tesoro Poliennal 5.250% Jan 11, 2029            BTP 5.250% 11-Jan-2029
+Buoni del Tesoro Poliennal 6.000% Jan 05 2031             BTP 6.000% 05-Jan-2031
+Buoni del Tesoro Poliennal 3.100% Jan 03, 2040            BTP 3.100% 03-Jan-2040
+
+                          Netherlands                                 Expiration Date
+Dutch Treasury Certificates 2.500% Jan 15, 2030           DSL 2.500% 15-Jan-2030
+Dutch Treasury Certificates 4.000% Jan 15, 2037           DSL 4.000% 15-Jan-2037
+Dutch Treasury Certificates 3.750% Jan 15, 2042           DSL 3.750 15-Jan-2042
+Dutch Treasury Certificates 2.000% Jan 15, 2054           DSL 2.000% 15-Jan-2054
