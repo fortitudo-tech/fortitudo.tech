@@ -33,7 +33,7 @@ Entropy Pooling
 
 The Entropy Pooling approach solves the problem
 
-.. math:: q=\text{argmin}\left\{ x'\left(\ln x-\ln p\right)\right\},
+.. math:: q=\text{argmin}\left\{ x^{T}\left(\ln x-\ln p\right)\right\},
 
 subject to the constraints
 
