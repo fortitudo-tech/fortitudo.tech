@@ -15,17 +15,14 @@ Fortitudo Technologies Open Source
 This package allows you to explore open-source implementations of some of our
 fundamental methods, e.g., Entropy Pooling and CVaR optimization in Python.
 
-Watch this `YouTube playlist <https://www.youtube.com/playlist?list=PLfI2BKNVj_b2rurUsCtc2F8lqtPWqcs2K>`_
+You can watch this `YouTube playlist <https://www.youtube.com/playlist?list=PLfI2BKNVj_b2rurUsCtc2F8lqtPWqcs2K>`_
 for a walkthrough of the package's functionality and examples.
 
-For a high-level introduction to the investment framework, see this `YouTube video <https://youtu.be/4ESigySdGf8>`_
+For a high-level introduction to the investment framework, watch this `YouTube video <https://youtu.be/4ESigySdGf8>`_
 and `Substack post <https://open.substack.com/pub/antonvorobets/p/entropy-pooling-and-cvar-portfolio-optimization-in-python-ffed736a8347>`_.
 
-For a mathematical introduction to the investment framework, see these
-`SSRN articles <https://ssrn.com/author=2738420>`_.
-
-For a pedagogical and deep presentation of the investment framework, see the
-`Portfolio Construction and Risk Management Book <https://antonvorobets.substack.com/p/pcrm-book>`_.
+For a pedagogical and deep presentation of the investment framework and its methods,
+see the `Portfolio Construction and Risk Management Book <https://antonvorobets.substack.com/p/pcrm-book>`_.
 
 To build the deepest understanding of all the theories and methods, you can
 complete the `Applied Quantitative Investment Management Course <https://antonvorobets.substack.com/t/course>`_.
@@ -77,6 +74,12 @@ Disclaimer
 
 This package is completely separate from our proprietary solutions and therefore
 not representative of the quality and functionality offered by the Investment Simulation
-and Investment Analysis modules. If you are an institutional investor and want to
-experience how these methods can be used for sophisticated analysis in practice,
-please request a demo by sending an email to demo@fortitudo.tech.
+and Investment Analysis modules.
+
+For a short comparison of which CVaR problems the Investment Analysis module can solve
+and at what speed, see the
+`cvar-optimization-benchmarks repository <https://github.com/fortitudo-tech/cvar-optimization-benchmarks>`_.
+
+If you are an institutional investor and want to experience how these methods
+can be used for sophisticated analysis in practice, please request a demo by
+sending an email to demo@fortitudo.tech.
