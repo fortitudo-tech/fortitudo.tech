@@ -78,34 +78,33 @@ class FullyFlexibleResampling:
             raise ValueError(
                 'stationary_transformations must be a 2d matrix, '
                 + f'given {stationary_transformations.shape}.')
-        self._T, self._N = self._stationary_transformations.shape
         if type(stationary_transformations) is pd.DataFrame:
             self._stationary_transformations = stationary_transformations.values
         else:
             self._stationary_transformations = stationary_transformations
+        self._T, self._N = self._stationary_transformations.shape
 
     def _compute_crisp_indices(
-            self, state_variable: np.ndarray, conditioning_values: list[float],
-            state_num: int) -> np.ndarray:
+            self, state_variable: np.ndarray, conditioning_values: list[float]) -> np.ndarray:
         conditioning_values.sort()
         crisp_indices = np.full((self._T, len(conditioning_values) + 1), np.nan)
         crisp_indices[:, 0] = (state_variable <= conditioning_values[0])
         if np.all(crisp_indices[:, 0] == 0):
             raise ValueError(
-                f'State variable {state_num} has conditioning range (-infinity, '
+                'State variable has conditioning range (-infinity, '
                 + f'{conditioning_values[0]}] which does not contain any observations.')
         for i, value in enumerate(conditioning_values[1:], start=1):
             indices = ((state_variable <= value) - np.sum(crisp_indices[:, 0:i], axis=1))
             if np.all(indices == 0):
                 raise ValueError(
-                    f'State variable {state_num} has conditioning range '
+                    'State variable has conditioning range '
                     + f'[{conditioning_values[i - 1]}, {value}] which does not contain any '
                     + 'observations.')
             crisp_indices[:, i] = indices
         crisp_indices[:, -1] = (state_variable > conditioning_values[-1])
         if np.all(crisp_indices[:, -1] == 0):
             raise ValueError(
-                f'State variable {state_num} has conditioning range [{conditioning_values[-1]}, '
+                f'State variable has conditioning range [{conditioning_values[-1]}, '
                 + 'infinity) which does not contain any observations.')
         return crisp_indices.astype(bool)
 
@@ -143,23 +142,39 @@ class FullyFlexibleResampling:
             Matrix with Fully Flexible Resampling probabilities and historical
             states vector.
         """
+        if half_life is None:
+            p = np.ones((self._T, 1)) / self._T
+        else:
+            p = exp_decay_probs(state_variable, half_life)
 
+        crisp_indices = self._compute_crisp_indices(state_variable, conditioning_values)
+        probabilities = self._individual_probabilities(p, state_variable, crisp_indices)
+        state_vector = (crisp_indices @ np.arange(len(conditioning_values) + 1)).astype(int)
         return probabilities, state_vector
 
     def simulate(
-            self, S, H, probabilities, state_vector, initial_state=None) -> np.ndarray:
+            self, S, H, probabilities, states_vector, initial_state=None) -> np.ndarray:
         """Simulation method for Fully Flexible Resampling.
 
         Args:
             S: number of simulated future paths.
             H: simulation horizon.
             probabilities: the resampling probabilities for each state.
-            state_vector: vector containing the historical states.
+            states_vector: vector containing the historical states.
             initial_state: optional initial state. If given none, the latest
                 state is used by default.
 
         Returns:
             Resampled stationary transformations simulations with shape (S, I, H).
         """
+        if initial_state is None:
+            initial_state = states_vector[-1]
 
-        return simulation
+        sim_indices = np.full((S, H), 1)
+        t = np.arange(len(states_vector))
+        for s in range(S):
+            current_state = initial_state
+            for h in range(H):
+                sim_indices[s, h] = np.random.choice(t, p=probabilities[:, current_state])
+                current_state = states_vector[sim_indices[s, h]]
+        return self._stationary_transformations[sim_indices]

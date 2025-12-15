@@ -20,4 +20,4 @@ from .functions import (simulation_moments, covariance_matrix, correlation_matri
                         portfolio_cvar, portfolio_var, portfolio_vol, exposure_stacking)
 from .optimization import cvar_options, MeanCVaR, MeanVariance
 from .option_pricing import forward, call_option, put_option
-from .simulation import exp_decay_probs, normal_exp_decay_calib
+from .simulation import FullyFlexibleResampling, exp_decay_probs, normal_exp_decay_calib
