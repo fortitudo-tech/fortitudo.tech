@@ -82,7 +82,7 @@ class FullyFlexibleResampling:
             self._stationary_transformations = stationary_transformations.values
         else:
             self._stationary_transformations = stationary_transformations
-        self._T, self._N = self._stationary_transformations.shape
+        self._T = self._stationary_transformations.shape[0]
 
     def _compute_crisp_indices(
             self, state_variable: np.ndarray, conditioning_values: list[float]) -> np.ndarray:
@@ -119,13 +119,13 @@ class FullyFlexibleResampling:
     def _individual_probabilities(
             self, p: np.ndarray, state_variable: np.ndarray, crisp_indices: np.ndarray) -> list:
         """Computes the posterior probabilities for each of the ranges."""
-        individual_probabilities = []
+        individual_probabilities = np.full((self._T, crisp_indices.shape[1]), np.nan)
         for i in range(crisp_indices.shape[1]):
             ind = crisp_indices[:, i]
             mean = np.mean(state_variable[ind])
             vol = np.std(state_variable[ind])
-            individual_probabilities.append(
-                self._entropy_pooling_state(p, state_variable, mean, vol))
+            individual_probabilities[:, i] = self._entropy_pooling_state(
+                p, state_variable, mean, vol)[:, 0]
         return individual_probabilities
 
     def compute_probabilities(
@@ -150,7 +150,7 @@ class FullyFlexibleResampling:
         crisp_indices = self._compute_crisp_indices(state_variable, conditioning_values)
         probabilities = self._individual_probabilities(p, state_variable, crisp_indices)
         state_vector = (crisp_indices @ np.arange(len(conditioning_values) + 1)).astype(int)
-        return probabilities, state_vector
+        return probabilities / np.sum(probabilities, axis=0), state_vector
 
     def simulate(
             self, S, H, probabilities, states_vector, initial_state=None) -> np.ndarray:
@@ -177,4 +177,6 @@ class FullyFlexibleResampling:
             for h in range(H):
                 sim_indices[s, h] = np.random.choice(t, p=probabilities[:, current_state])
                 current_state = states_vector[sim_indices[s, h]]
-        return self._stationary_transformations[sim_indices]
+        stationary_sim = np.swapaxes(
+            self._stationary_transformations[sim_indices], axis1=1, axis2=2)
+        return stationary_sim
