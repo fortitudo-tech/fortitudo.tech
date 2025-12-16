@@ -39,7 +39,7 @@
             fortitudo.tech
           </a>
               <div class="version">
-                v1.1.13
+                v1.2
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -94,6 +94,11 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#simulation">Simulation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#fortitudo.tech.simulation.FullyFlexibleResampling"><code class="docutils literal notranslate"><span class="pre">FullyFlexibleResampling</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#fortitudo.tech.simulation.FullyFlexibleResampling.compute_probabilities"><code class="docutils literal notranslate"><span class="pre">compute_probabilities()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#fortitudo.tech.simulation.FullyFlexibleResampling.simulate"><code class="docutils literal notranslate"><span class="pre">simulate()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="#fortitudo.tech.simulation.exp_decay_probs"><code class="docutils literal notranslate"><span class="pre">exp_decay_probs()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#fortitudo.tech.simulation.normal_exp_decay_calib"><code class="docutils literal notranslate"><span class="pre">normal_exp_decay_calib()</span></code></a></li>
 </ul>
@@ -668,13 +673,77 @@ simulations that are scaled differently, you might need to adjust them.</p>
 </section>
 <section id="simulation">
 <h2>Simulation<a class="headerlink" href="#simulation" title="Link to this heading"></a></h2>
-<p>This package includes a very simple exponential decay simulation model. The
-exponentially decaying probabilities can be used directly with historical
-scenarios, e.g., as a prior probability for Entropy Pooling views / stress-tests,
-or for a normal distribution calibration which new samples can be generated from.</p>
-<p>You can see how to use this functionality in <a class="reference external" href="https://github.com/fortitudo-tech/fortitudo.tech/blob/main/examples/6_SimulationExpDecay.ipynb">the exponential decay modeling
-example</a>.</p>
-<dl class="py function" id="module-fortitudo.tech.simulation">
+<p>This package includes a Fully Flexible Resampling (FFR) method as well as a
+very simple exponential decay simulation model. The FFR functionality, originally
+introduced in the <a class="reference external" href="https://antonvorobets.substack.com/p/pcrm-book">Portfolio Construction and Risk Management book</a>, is only implemented with
+one continous state variable.</p>
+<p>The exponentially decaying probabilities can be used directly with historical
+scenarios, e.g., as a prior probability for Sequential Entropy Pooling (SeqEP)
+views/stress tests, the FFR method, or for a normal distribution calibration
+which new samples can be generated from.</p>
+<dl class="py class" id="module-fortitudo.tech.simulation">
+<dt class="sig sig-object py" id="fortitudo.tech.simulation.FullyFlexibleResampling">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">FullyFlexibleResampling</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stationary_transformations</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fortitudo.tech.simulation.FullyFlexibleResampling" title="Link to this definition"></a></dt>
+<dd><p>Fully Flexible Resampling (FFR) class for simulaton with one state variable.</p>
+<p>The Fully Flexible Resampling (FFR) method was first introduced in Chapter 3 of
+the Portfolio Construction and Risk Management book.</p>
+<p>It is an instance of the more general Time and State-Dependent Resampling
+class documented in Kristensen and Vorobets (2025).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>stationary_transformations</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>]</span>) – data containing the stationary transformations
+with shape (T_tilde, N_tilde).</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="fortitudo.tech.simulation.FullyFlexibleResampling.compute_probabilities">
+<span class="sig-name descname"><span class="pre">compute_probabilities</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state_variable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">conditioning_values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">half_life</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fortitudo.tech.simulation.FullyFlexibleResampling.compute_probabilities" title="Link to this definition"></a></dt>
+<dd><p>Method for computing the Fully Flexible Resampling probabilities.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>state_variable</strong> – time series for the state variable with shape (T_tilde, 1).</p></li>
+<li><p><strong>conditioning_values</strong> – conditioning values used to define the crisp probability bands.</p></li>
+<li><p><strong>half_life</strong> – half life parameter for exponentially decaying prior probabilities.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>]</span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Matrix with Fully Flexible Resampling probabilities and historical
+states vector.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fortitudo.tech.simulation.FullyFlexibleResampling.simulate">
+<span class="sig-name descname"><span class="pre">simulate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">S</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">H</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">probabilities</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state_vector</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial_state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fortitudo.tech.simulation.FullyFlexibleResampling.simulate" title="Link to this definition"></a></dt>
+<dd><p>Simulation method for Fully Flexible Resampling.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>S</strong> – number of simulated future paths.</p></li>
+<li><p><strong>H</strong> – simulation horizon.</p></li>
+<li><p><strong>probabilities</strong> – the resampling probabilities for each state.</p></li>
+<li><p><strong>state_vector</strong> – vector containing the historical states.</p></li>
+<li><p><strong>initial_state</strong> – optional initial state. If given none, the latest
+state is used by default.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Resampled stationary transformations simulations with shape (S, I, H).</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="fortitudo.tech.simulation.exp_decay_probs">
 <span class="sig-name descname"><span class="pre">exp_decay_probs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">R</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">half_life</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fortitudo.tech.simulation.exp_decay_probs" title="Link to this definition"></a></dt>
 <dd><p>Function for computing exponential decay probabilities.</p>

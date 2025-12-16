@@ -35,8 +35,8 @@ Disclaimer
 ----------
 
 This package is completely separate from our proprietary solutions and therefore
-not representative of the quality and functionality offered by the Investment Simulation
-and Investment Analysis modules.
+not representative of the quality and functionality offered by the `Investment Simulation
+and Investment Analysis modules <https://fortitudo.tech/solutions>`_.
 
 For a short comparison of which CVaR problems the Investment Analysis module can solve
 and at what speed, see the

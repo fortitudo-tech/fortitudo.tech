@@ -142,14 +142,16 @@ simulations that are scaled differently, you might need to adjust them.
 Simulation
 ----------
 
-This package includes a very simple exponential decay simulation model. The
-exponentially decaying probabilities can be used directly with historical
-scenarios, e.g., as a prior probability for Entropy Pooling views / stress-tests,
-or for a normal distribution calibration which new samples can be generated from.
+This package includes a Fully Flexible Resampling (FFR) method as well as a
+very simple exponential decay simulation model. The FFR functionality, originally
+introduced in the `Portfolio Construction and Risk Management book
+<https://antonvorobets.substack.com/p/pcrm-book>`_, is only implemented with
+one continous state variable.
 
-You can see how to use this functionality in `the exponential decay modeling
-example <https://github.com/fortitudo-tech/fortitudo.tech/blob/main/examples/
-6_SimulationExpDecay.ipynb>`_.
+The exponentially decaying probabilities can be used directly with historical
+scenarios, e.g., as a prior probability for Sequential Entropy Pooling (SeqEP)
+views/stress tests, the FFR method, or for a normal distribution calibration
+which new samples can be generated from.
 
 .. automodule:: fortitudo.tech.simulation
    :members:
