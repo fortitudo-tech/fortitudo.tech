@@ -60,6 +60,16 @@
 <li class="toctree-l3"><a class="reference internal" href="#fortitudo.tech.data.plot_vol_surface"><code class="docutils literal notranslate"><span class="pre">plot_vol_surface()</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="#simulation">Simulation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#fortitudo.tech.simulation.FullyFlexibleResampling"><code class="docutils literal notranslate"><span class="pre">FullyFlexibleResampling</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#fortitudo.tech.simulation.FullyFlexibleResampling.compute_probabilities"><code class="docutils literal notranslate"><span class="pre">compute_probabilities()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#fortitudo.tech.simulation.FullyFlexibleResampling.simulate"><code class="docutils literal notranslate"><span class="pre">simulate()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#fortitudo.tech.simulation.exp_decay_probs"><code class="docutils literal notranslate"><span class="pre">exp_decay_probs()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#fortitudo.tech.simulation.normal_exp_decay_calib"><code class="docutils literal notranslate"><span class="pre">normal_exp_decay_calib()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#entropy-pooling">Entropy Pooling</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#fortitudo.tech.entropy_pooling.entropy_pooling"><code class="docutils literal notranslate"><span class="pre">entropy_pooling()</span></code></a></li>
 </ul>
@@ -91,16 +101,6 @@
 <li class="toctree-l4"><a class="reference internal" href="#fortitudo.tech.optimization.MeanVariance.efficient_portfolio"><code class="docutils literal notranslate"><span class="pre">efficient_portfolio()</span></code></a></li>
 </ul>
 </li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#simulation">Simulation</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#fortitudo.tech.simulation.FullyFlexibleResampling"><code class="docutils literal notranslate"><span class="pre">FullyFlexibleResampling</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#fortitudo.tech.simulation.FullyFlexibleResampling.compute_probabilities"><code class="docutils literal notranslate"><span class="pre">compute_probabilities()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#fortitudo.tech.simulation.FullyFlexibleResampling.simulate"><code class="docutils literal notranslate"><span class="pre">simulate()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#fortitudo.tech.simulation.exp_decay_probs"><code class="docutils literal notranslate"><span class="pre">exp_decay_probs()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#fortitudo.tech.simulation.normal_exp_decay_calib"><code class="docutils literal notranslate"><span class="pre">normal_exp_decay_calib()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -143,12 +143,12 @@ that returns follow a log-normal distribution, while the parameters are
 given by <a class="reference external" href="https://www.afkastforventninger.dk/en/common-return-expectations/">the Danish common return expectations for the 2nd half of 2021</a>.</p>
 <p>The parameters and P&amp;L simulation are used in the examples and allow you to
 immediately start exploring the functionality of this package. You can also
-use it to test your understanding of the theory by replicating results, e.g.,
-the sequential Entropy Pooling results from <span id="id3">Vorobets [<a class="reference internal" href="references.html#id3" title="A. Vorobets. Sequential entropy pooling heuristics. SSRN, 2021. URL: https://ssrn.com/abstract=3936392.">2021</a>]</span>.</p>
+use it to test your understanding of the theory by replicating results, for
+example, the sequential Entropy Pooling results from <span id="id3">Vorobets [<a class="reference internal" href="references.html#id3" title="A. Vorobets. Sequential entropy pooling heuristics. SSRN, 2021. URL: https://ssrn.com/abstract=3936392.">2021</a>]</span>.</p>
 <p>In addition to the above, simulated time series of an equity index, an
 associated implied volatility surface, a risk-free zero-coupon curve, and
 a credit spread curve is included. You can use this time series data to,
-e.g., validate your risk modeling approach. See <a class="reference external" href="https://github.com/fortitudo-tech/fortitudo.tech/blob/main/examples/4_TimeSeries.ipynb">this introduction example</a> and <a class="reference external" href="https://github.com/fortitudo-tech/fortitudo.tech/blob/main/examples/7_RiskFactorViews.ipynb">this modeling example</a> for an example
+for example, validate your risk modeling approach. See <a class="reference external" href="https://github.com/fortitudo-tech/fortitudo.tech/blob/main/examples/4_TimeSeries.ipynb">this introduction example</a> and <a class="reference external" href="https://github.com/fortitudo-tech/fortitudo.tech/blob/main/examples/7_RiskFactorViews.ipynb">this modeling example</a> for an example
 of how to use the data with a very simple risk model as well as Entropy Pooling
 views on risk factors.</p>
 <dl class="py function" id="module-fortitudo.tech.data">
@@ -231,6 +231,121 @@ in <a class="reference external" href="https://ssrn.com/abstract=4444291">https:
 </dd></dl>
 
 </section>
+<section id="simulation">
+<h2>Simulation<a class="headerlink" href="#simulation" title="Link to this heading"></a></h2>
+<p>This package includes a Fully Flexible Resampling (FFR) method as well as a
+very simple exponential decay simulation model. The FFR functionality, originally
+introduced in the <a class="reference external" href="https://antonvorobets.substack.com/p/pcrm-book">Portfolio Construction and Risk Management book</a>, is only implemented with
+one continous state variable.</p>
+<p>For detailed proofs of all the nice properties of the Fully Flexible Resampling
+method, see <span id="id4">Kristensen and Vorobets [<a class="reference internal" href="references.html#id11" title="L. Kristensen and A. Vorobets. Time- and state-dependent resampling. SSRN, 2025. URL: https://ssrn.com/abstract=5117589.">2025</a>]</span>.</p>
+<p>The exponentially decaying probabilities can be used directly with historical
+scenarios, for example, as a prior probability for Sequential Entropy Pooling (SeqEP)
+views/stress tests, the FFR method, or for a normal distribution calibration
+which new samples can be generated from.</p>
+<dl class="py class" id="module-fortitudo.tech.simulation">
+<dt class="sig sig-object py" id="fortitudo.tech.simulation.FullyFlexibleResampling">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">FullyFlexibleResampling</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stationary_transformations</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fortitudo.tech.simulation.FullyFlexibleResampling" title="Link to this definition"></a></dt>
+<dd><p>Fully Flexible Resampling (FFR) class for simulaton with one state variable.</p>
+<p>The Fully Flexible Resampling (FFR) method was first introduced in Chapter 3 of
+the Portfolio Construction and Risk Management book.</p>
+<p>It is an instance of the more general Time and State-Dependent Resampling
+class documented: <a class="reference external" href="https://ssrn.com/abstract=5117589">https://ssrn.com/abstract=5117589</a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>stationary_transformations</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>]</span>) – data containing the stationary transformations
+with shape (T_tilde, N_tilde).</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="fortitudo.tech.simulation.FullyFlexibleResampling.compute_probabilities">
+<span class="sig-name descname"><span class="pre">compute_probabilities</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state_variable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">conditioning_values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">half_life</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fortitudo.tech.simulation.FullyFlexibleResampling.compute_probabilities" title="Link to this definition"></a></dt>
+<dd><p>Method for computing the Fully Flexible Resampling probabilities.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>state_variable</strong> – time series for the state variable with shape (T_tilde, 1).</p></li>
+<li><p><strong>conditioning_values</strong> – conditioning values used to define the crisp probability bands.</p></li>
+<li><p><strong>half_life</strong> – half life parameter for exponentially decaying prior probabilities.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>]</span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Matrix with Fully Flexible Resampling probabilities and historical
+states vector.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fortitudo.tech.simulation.FullyFlexibleResampling.simulate">
+<span class="sig-name descname"><span class="pre">simulate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">S</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">H</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">probabilities</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">states_vector</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial_state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fortitudo.tech.simulation.FullyFlexibleResampling.simulate" title="Link to this definition"></a></dt>
+<dd><p>Simulation method for Fully Flexible Resampling.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>S</strong> – number of simulated future paths.</p></li>
+<li><p><strong>H</strong> – simulation horizon.</p></li>
+<li><p><strong>probabilities</strong> – the resampling probabilities for each state.</p></li>
+<li><p><strong>states_vector</strong> – vector containing the historical states.</p></li>
+<li><p><strong>initial_state</strong> – optional initial state. If given none, the latest
+state is used by default.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Resampled stationary transformations simulations with shape (S, I, H).</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="fortitudo.tech.simulation.exp_decay_probs">
+<span class="sig-name descname"><span class="pre">exp_decay_probs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">R</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">half_life</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fortitudo.tech.simulation.exp_decay_probs" title="Link to this definition"></a></dt>
+<dd><p>Function for computing exponential decay probabilities.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>R</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>]</span>) – P&amp;L / risk factor simulation with shape (T, I).</p></li>
+<li><p><strong>half_life</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span>) – Exponential decay half life.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Exponentially decaying probabilities vector with shape (T, 1).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="fortitudo.tech.simulation.normal_exp_decay_calib">
+<span class="sig-name descname"><span class="pre">normal_exp_decay_calib</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">R</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">half_life</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fortitudo.tech.simulation.normal_exp_decay_calib" title="Link to this definition"></a></dt>
+<dd><p>Function for computing exponential decay mean vector and covariance matrix.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>R</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>]</span>) – P&amp;L / risk factor simulation with shape (T, I).</p></li>
+<li><p><strong>half_life</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span>) – Exponential decay half life.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>], <code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code>]]</span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Mean vector with shape (I, 1) and covariance matrix with shape (I, I).</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
 <section id="entropy-pooling">
 <h2>Entropy Pooling<a class="headerlink" href="#entropy-pooling" title="Link to this heading"></a></h2>
 <p>The Entropy Pooling approach solves the problem</p>
@@ -239,10 +354,10 @@ in <a class="reference external" href="https://ssrn.com/abstract=4444291">https:
 <p>subject to the constraints</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}Ax=b, \\Gx\leq h.\end{split}\]</div>
-<p>The approach was first introduced by <span id="id4">Meucci [<a class="reference internal" href="references.html#id2" title="A. Meucci. Fully flexible views: theory and practice. Risk, 21(10):97-102, 2008. URL: https://ssrn.com/abstract=1213325.">2008</a>]</span>, while the
-code is implemented using notation from <span id="id5">Vorobets [<a class="reference internal" href="references.html#id3" title="A. Vorobets. Sequential entropy pooling heuristics. SSRN, 2021. URL: https://ssrn.com/abstract=3936392.">2021</a>]</span>. For an
+<p>The approach was first introduced by <span id="id5">Meucci [<a class="reference internal" href="references.html#id2" title="A. Meucci. Fully flexible views: theory and practice. Risk, 21(10):97-102, 2008. URL: https://ssrn.com/abstract=1213325.">2008</a>]</span>, while the
+code is implemented using notation from <span id="id6">Vorobets [<a class="reference internal" href="references.html#id3" title="A. Vorobets. Sequential entropy pooling heuristics. SSRN, 2021. URL: https://ssrn.com/abstract=3936392.">2021</a>]</span>. For an
 introduction to Entropy Pooling, see <a class="reference external" href="https://youtu.be/qk_5l4ICXfY">this video</a>
-or <a class="reference external" href="https://open.substack.com/pub/antonvorobets/p/entropy-pooling-vs-black-litterman-abb608b810cd">this Substack post</a>.</p>
+or <a class="reference external" href="https://antonvorobets.substack.com/p/entropy-pooling-collection">this Substack post</a>.</p>
 <dl class="py function" id="module-fortitudo.tech.entropy_pooling">
 <dt class="sig sig-object py" id="fortitudo.tech.entropy_pooling.entropy_pooling">
 <span class="sig-name descname"><span class="pre">entropy_pooling</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">A</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">G</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fortitudo.tech.entropy_pooling.entropy_pooling" title="Link to this definition"></a></dt>
@@ -270,7 +385,7 @@ or <a class="reference external" href="https://open.substack.com/pub/antonvorobe
 </section>
 <section id="functions">
 <h2>Functions<a class="headerlink" href="#functions" title="Link to this heading"></a></h2>
-<p>The functions below are useful when working with Entropy Pooling, e.g.,
+<p>The functions below are useful when working with Entropy Pooling, for example,
 they can be used to calculate posterior moments and correlation matrix
 to verify that views have been implemented correctly. The covariance
 matrix function is useful for mean-variance optimization with Entropy
@@ -502,11 +617,11 @@ Pooling views.</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\mu'e&amp;\geq\mu_{target},\\v'e&amp;=1,\\Ge&amp;\leq h,\\Ae&amp;=b.\end{split}\]</div>
 <p>Here, <span class="math notranslate nohighlight">\(v\in\mathbb{R}^{I}\)</span> is the vector of relative market values introduced
-by <span id="id6">Vorobets [<a class="reference internal" href="references.html#id7" title="A. Vorobets. Portfolio management framework for derivative instruments. SSRN, 2022. URL: https://ssrn.com/abstract=4217884.">2022</a>]</span>. See <a class="reference external" href="https://github.com/fortitudo-tech/fortitudo.tech/blob/main/examples/5_DerivativesFramework.ipynb">this example</a> for how to use this
+by <span id="id7">Vorobets [<a class="reference internal" href="references.html#id7" title="A. Vorobets. Portfolio management framework for derivative instruments. SSRN, 2022. URL: https://ssrn.com/abstract=4217884.">2022</a>]</span>. See <a class="reference external" href="https://github.com/fortitudo-tech/fortitudo.tech/blob/main/examples/5_DerivativesFramework.ipynb">this example</a> for how to use this
 parameter.</p>
-<p>A method for solving the CVaR problem was first introduced by <span id="id7">Rockafellar and Uryasev [<a class="reference internal" href="references.html#id4" title="R. Tyrrell Rockafellar and S. Uryasev. Optimization of conditional value-at-risk. Journal of Risk, 2(3):21-41, 2000. URL: https://doi.org/10.21314/JOR.2000.038.">2000</a>]</span>,
-while the implemented algorithm is based on <span id="id8">Künzi-Bay and Mayer [<a class="reference internal" href="references.html#id5" title="A. Künzi-Bay and J. Mayer. Computational aspects of minimizing conditional value-at-risk. CMS, 3:3–27, 2006. URL: https://doi.org/10.1007/s10287-005-0042-0.">2006</a>]</span>. The notation
-in relation to the P&amp;L simulations <span class="math notranslate nohighlight">\(R\)</span> follows <span id="id9">Vorobets [<a class="reference internal" href="references.html#id3" title="A. Vorobets. Sequential entropy pooling heuristics. SSRN, 2021. URL: https://ssrn.com/abstract=3936392.">2021</a>]</span>.
+<p>A method for solving the CVaR problem was first introduced by <span id="id8">Rockafellar and Uryasev [<a class="reference internal" href="references.html#id4" title="R. Tyrrell Rockafellar and S. Uryasev. Optimization of conditional value-at-risk. Journal of Risk, 2(3):21-41, 2000. URL: https://doi.org/10.21314/JOR.2000.038.">2000</a>]</span>,
+while the implemented algorithm is based on <span id="id9">Künzi-Bay and Mayer [<a class="reference internal" href="references.html#id5" title="A. Künzi-Bay and J. Mayer. Computational aspects of minimizing conditional value-at-risk. CMS, 3:3–27, 2006. URL: https://doi.org/10.1007/s10287-005-0042-0.">2006</a>]</span>. The notation
+in relation to the P&amp;L simulations <span class="math notranslate nohighlight">\(R\)</span> follows <span id="id10">Vorobets [<a class="reference internal" href="references.html#id3" title="A. Vorobets. Sequential entropy pooling heuristics. SSRN, 2021. URL: https://ssrn.com/abstract=3936392.">2021</a>]</span>.
 For the variance risk measure, a standard quadratic programming solver is used.</p>
 <dl class="py class" id="module-fortitudo.tech.optimization">
 <dt class="sig sig-object py" id="fortitudo.tech.optimization.MeanCVaR">
@@ -670,119 +785,6 @@ or <code class="xref py py-const docutils literal notranslate"><span class="pre"
 with “percentage return” P&amp;L and work well. In most cases, the algorithm stops
 due to relative convergence in less than 100 iterations. If you use P&amp;L
 simulations that are scaled differently, you might need to adjust them.</p>
-</section>
-<section id="simulation">
-<h2>Simulation<a class="headerlink" href="#simulation" title="Link to this heading"></a></h2>
-<p>This package includes a Fully Flexible Resampling (FFR) method as well as a
-very simple exponential decay simulation model. The FFR functionality, originally
-introduced in the <a class="reference external" href="https://antonvorobets.substack.com/p/pcrm-book">Portfolio Construction and Risk Management book</a>, is only implemented with
-one continous state variable.</p>
-<p>The exponentially decaying probabilities can be used directly with historical
-scenarios, e.g., as a prior probability for Sequential Entropy Pooling (SeqEP)
-views/stress tests, the FFR method, or for a normal distribution calibration
-which new samples can be generated from.</p>
-<dl class="py class" id="module-fortitudo.tech.simulation">
-<dt class="sig sig-object py" id="fortitudo.tech.simulation.FullyFlexibleResampling">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">FullyFlexibleResampling</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stationary_transformations</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fortitudo.tech.simulation.FullyFlexibleResampling" title="Link to this definition"></a></dt>
-<dd><p>Fully Flexible Resampling (FFR) class for simulaton with one state variable.</p>
-<p>The Fully Flexible Resampling (FFR) method was first introduced in Chapter 3 of
-the Portfolio Construction and Risk Management book.</p>
-<p>It is an instance of the more general Time and State-Dependent Resampling
-class documented in Kristensen and Vorobets (2025).</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>stationary_transformations</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>]</span>) – data containing the stationary transformations
-with shape (T_tilde, N_tilde).</p>
-</dd>
-</dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="fortitudo.tech.simulation.FullyFlexibleResampling.compute_probabilities">
-<span class="sig-name descname"><span class="pre">compute_probabilities</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state_variable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">conditioning_values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">half_life</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fortitudo.tech.simulation.FullyFlexibleResampling.compute_probabilities" title="Link to this definition"></a></dt>
-<dd><p>Method for computing the Fully Flexible Resampling probabilities.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>state_variable</strong> – time series for the state variable with shape (T_tilde, 1).</p></li>
-<li><p><strong>conditioning_values</strong> – conditioning values used to define the crisp probability bands.</p></li>
-<li><p><strong>half_life</strong> – half life parameter for exponentially decaying prior probabilities.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>]</span></p>
-</dd>
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Matrix with Fully Flexible Resampling probabilities and historical
-states vector.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="fortitudo.tech.simulation.FullyFlexibleResampling.simulate">
-<span class="sig-name descname"><span class="pre">simulate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">S</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">H</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">probabilities</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state_vector</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial_state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fortitudo.tech.simulation.FullyFlexibleResampling.simulate" title="Link to this definition"></a></dt>
-<dd><p>Simulation method for Fully Flexible Resampling.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>S</strong> – number of simulated future paths.</p></li>
-<li><p><strong>H</strong> – simulation horizon.</p></li>
-<li><p><strong>probabilities</strong> – the resampling probabilities for each state.</p></li>
-<li><p><strong>state_vector</strong> – vector containing the historical states.</p></li>
-<li><p><strong>initial_state</strong> – optional initial state. If given none, the latest
-state is used by default.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></span></p>
-</dd>
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Resampled stationary transformations simulations with shape (S, I, H).</p>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="fortitudo.tech.simulation.exp_decay_probs">
-<span class="sig-name descname"><span class="pre">exp_decay_probs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">R</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">half_life</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fortitudo.tech.simulation.exp_decay_probs" title="Link to this definition"></a></dt>
-<dd><p>Function for computing exponential decay probabilities.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>R</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>]</span>) – P&amp;L / risk factor simulation with shape (T, I).</p></li>
-<li><p><strong>half_life</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span>) – Exponential decay half life.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></span></p>
-</dd>
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Exponentially decaying probabilities vector with shape (T, 1).</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="fortitudo.tech.simulation.normal_exp_decay_calib">
-<span class="sig-name descname"><span class="pre">normal_exp_decay_calib</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">R</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">half_life</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fortitudo.tech.simulation.normal_exp_decay_calib" title="Link to this definition"></a></dt>
-<dd><p>Function for computing exponential decay mean vector and covariance matrix.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>R</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>]</span>) – P&amp;L / risk factor simulation with shape (T, I).</p></li>
-<li><p><strong>half_life</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span>) – Exponential decay half life.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>], <code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code>]]</span></p>
-</dd>
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Mean vector with shape (I, 1) and covariance matrix with shape (I, I).</p>
-</dd>
-</dl>
-</dd></dl>
-
 </section>
 </section>
 

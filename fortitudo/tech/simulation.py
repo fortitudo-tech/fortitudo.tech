@@ -67,7 +67,7 @@ class FullyFlexibleResampling:
     the Portfolio Construction and Risk Management book.
 
     It is an instance of the more general Time and State-Dependent Resampling
-    class documented in Kristensen and Vorobets (2025).
+    class documented: https://ssrn.com/abstract=5117589.
 
     Args:
         stationary_transformations: data containing the stationary transformations
