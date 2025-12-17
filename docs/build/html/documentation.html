@@ -253,7 +253,7 @@ the Portfolio Construction and Risk Management book.</p>
 class documented: <a class="reference external" href="https://ssrn.com/abstract=5117589">https://ssrn.com/abstract=5117589</a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>stationary_transformations</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>]</span>) – data containing the stationary transformations
+<dd class="field-odd"><p><strong>stationary_transformations</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>]</span>) – Data containing the stationary transformations
 with shape (T_tilde, N_tilde).</p>
 </dd>
 </dl>
@@ -264,9 +264,10 @@ with shape (T_tilde, N_tilde).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>state_variable</strong> – time series for the state variable with shape (T_tilde, 1).</p></li>
-<li><p><strong>conditioning_values</strong> – conditioning values used to define the crisp probability bands.</p></li>
-<li><p><strong>half_life</strong> – half life parameter for exponentially decaying prior probabilities.</p></li>
+<li><p><strong>state_variable</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></span>) – Time series for the state variable with shape (T_tilde, 1).</p></li>
+<li><p><strong>conditioning_values</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></span>) – Conditioning values used to define the crisp probability bands.</p></li>
+<li><p><strong>half_life</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span>) – Half life parameter for exponentially decaying prior probabilities.
+Default: uniform probabilities.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -286,12 +287,11 @@ states vector.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>S</strong> – number of simulated future paths.</p></li>
-<li><p><strong>H</strong> – simulation horizon.</p></li>
-<li><p><strong>probabilities</strong> – the resampling probabilities for each state.</p></li>
-<li><p><strong>states_vector</strong> – vector containing the historical states.</p></li>
-<li><p><strong>initial_state</strong> – optional initial state. If given none, the latest
-state is used by default.</p></li>
+<li><p><strong>S</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span>) – Number of simulated future paths.</p></li>
+<li><p><strong>H</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span>) – Simulation horizon.</p></li>
+<li><p><strong>probabilities</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></span>) – The resampling probabilities for each state.</p></li>
+<li><p><strong>states_vector</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></span>) – Vector containing the historical states.</p></li>
+<li><p><strong>initial_state</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span>) – Optional initial state. Default: the latest state.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -398,7 +398,7 @@ Pooling views.</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>R</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>]</span>) – P&amp;L / risk factor simulation with shape (S, I).</p></li>
-<li><p><strong>p</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></span>) – probability vector with shape (S, 1). Default np.ones((S, 1)) / S.</p></li>
+<li><p><strong>p</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></span>) – probability vector with shape (S, 1). Default: np.ones((S, 1)) / S.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -418,7 +418,7 @@ Pooling views.</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>R</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>]</span>) – P&amp;L / risk factor simulation with shape (S, I).</p></li>
-<li><p><strong>p</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></span>) – probability vector with shape (S, 1). Default np.ones((S, 1)) / S.</p></li>
+<li><p><strong>p</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></span>) – probability vector with shape (S, 1). Default: np.ones((S, 1)) / S.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -502,7 +502,7 @@ Pooling views.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>e</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></span>) – Vector / matrix of portfolio exposures with shape (I, num_portfolios).</p></li>
 <li><p><strong>R</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>]</span>) – P&amp;L / risk factor simulation with shape (S, I).</p></li>
-<li><p><strong>p</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></span>) – probability vector with shape (S, 1). Default np.ones((S, 1)) / S.</p></li>
+<li><p><strong>p</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></span>) – probability vector with shape (S, 1). Default: np.ones((S, 1)) / S.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -522,7 +522,7 @@ Pooling views.</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>R</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>]</span>) – P&amp;L / risk factor simulation with shape (S, I).</p></li>
-<li><p><strong>p</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></span>) – probability vector with shape (S, 1). Default np.ones((S, 1)) / S.</p></li>
+<li><p><strong>p</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></span>) – probability vector with shape (S, 1). Default: np.ones((S, 1)) / S.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
