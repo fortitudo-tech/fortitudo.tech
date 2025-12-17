@@ -70,7 +70,7 @@ class FullyFlexibleResampling:
     class documented: https://ssrn.com/abstract=5117589.
 
     Args:
-        stationary_transformations: data containing the stationary transformations
+        stationary_transformations: Data containing the stationary transformations
             with shape (T_tilde, N_tilde).
     """
     def __init__(self, stationary_transformations: Union[pd.DataFrame, np.ndarray]):
@@ -129,14 +129,15 @@ class FullyFlexibleResampling:
         return individual_probabilities
 
     def compute_probabilities(
-            self, state_variable, conditioning_values, half_life=None
+            self, state_variable: np.ndarray, conditioning_values: list, half_life: int = None
             ) -> Tuple[np.ndarray, np.ndarray]:
         """Method for computing the Fully Flexible Resampling probabilities.
 
         Args:
-            state_variable: time series for the state variable with shape (T_tilde, 1).
-            conditioning_values: conditioning values used to define the crisp probability bands.
-            half_life: half life parameter for exponentially decaying prior probabilities.
+            state_variable: Time series for the state variable with shape (T_tilde, 1).
+            conditioning_values: Conditioning values used to define the crisp probability bands.
+            half_life: Half life parameter for exponentially decaying prior probabilities.
+                Default: uniform probabilities.
 
         Returns:
             Matrix with Fully Flexible Resampling probabilities and historical
@@ -153,16 +154,16 @@ class FullyFlexibleResampling:
         return probabilities / np.sum(probabilities, axis=0), state_vector
 
     def simulate(
-            self, S, H, probabilities, states_vector, initial_state=None) -> np.ndarray:
+            self, S: int, H: int, probabilities: np.ndarray, states_vector: np.ndarray,
+            initial_state: int = None) -> np.ndarray:
         """Simulation method for Fully Flexible Resampling.
 
         Args:
-            S: number of simulated future paths.
-            H: simulation horizon.
-            probabilities: the resampling probabilities for each state.
-            states_vector: vector containing the historical states.
-            initial_state: optional initial state. If given none, the latest
-                state is used by default.
+            S: Number of simulated future paths.
+            H: Simulation horizon.
+            probabilities: The resampling probabilities for each state.
+            states_vector: Vector containing the historical states.
+            initial_state: Optional initial state. Default: the latest state.
 
         Returns:
             Resampled stationary transformations simulations with shape (S, I, H).
