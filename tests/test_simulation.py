@@ -16,7 +16,10 @@
 
 import numpy as np
 import pandas as pd
-from context import R, exp_decay_probs, normal_exp_decay_calib, covariance_matrix
+from context import (
+    R, exp_decay_probs, normal_exp_decay_calib, covariance_matrix,
+    FullyFlexibleResampling, time_series)
+from pytest import raises
 
 T, I = R.shape
 simulation_names = R.columns
@@ -26,6 +29,22 @@ p = exp_decay_probs(R, T / 2)
 p1 = exp_decay_probs(R.values, T / 2)
 mean, cov_matrix = normal_exp_decay_calib(R, T / 2)
 mean1, cov_matrix1 = normal_exp_decay_calib(R.values, T / 2)
+
+equity_vol_data = np.hstack((
+    time_series.values[:, 0][:, np.newaxis], time_series.values[:, 34:69]))
+log_changes = np.diff(np.log(equity_vol_data), axis=0)
+imp_vol_state = time_series['1m100'].values[1:]
+S = 10
+H = 5
+T_tilde, N = log_changes.shape
+
+ffr = FullyFlexibleResampling(log_changes)
+ffr2 = FullyFlexibleResampling(pd.DataFrame(log_changes))
+probs, states = ffr.compute_probabilities(imp_vol_state, np.percentile(imp_vol_state, [25, 75]))
+probs2, states2 = ffr2.compute_probabilities(
+    imp_vol_state, np.percentile(imp_vol_state, [25, 75]), T_tilde / 2)
+log_changes_sim = ffr.simulate(S, H, probs, states)
+log_changes_sim2 = ffr2.simulate(S, H, probs2, states2)
 
 
 def test_exp_decay_probs():
@@ -51,3 +70,19 @@ def test_normal_exp_decay_calib():
 def test_relation():
     assert np.all(np.abs(mean1 - R.values.T @ p)) <= tol
     assert np.all(np.abs(cov_matrix - covariance_matrix(R, p))) <= tol
+
+
+def test_fullyflexibleresampling():
+    assert log_changes_sim.shape == (S, N, H)
+    assert log_changes_sim2.shape == (S, N, H)
+    with raises(ValueError):
+        FullyFlexibleResampling(log_changes[:, :, np.newaxis])
+    with raises(ValueError):
+        ffr.compute_probabilities(
+            imp_vol_state, [np.min(imp_vol_state) - tol, np.percentile(imp_vol_state, 75)])
+    with raises(ValueError):
+        ffr.compute_probabilities(
+            imp_vol_state, [np.percentile(imp_vol_state, 25), np.max(imp_vol_state)])
+    with raises(ValueError):
+        ffr.compute_probabilities(
+            imp_vol_state, np.percentile(imp_vol_state, [25, 25]))

@@ -35,6 +35,8 @@ The repository contains the following examples:
 12) The accompanied code for :cite:t:`Vorobets2025` that performs tests
     for normality of US equity index returns and rejects the Aggregational
     Gaussianity hypothesis
+13) High-dimensional CVaR portfolio optimization code, where a portfolio of
+    2000 stocks is optimized over 10000 joint scenarios.
 
 Watch this `YouTube playlist <https://www.youtube.com/playlist?list=PLfI2BKNVj_b2rurUsCtc2F8lqtPWqcs2K>`_
 for a walkthrough of the package's functionality and examples. The examples are

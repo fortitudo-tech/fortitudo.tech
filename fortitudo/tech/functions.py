@@ -53,7 +53,7 @@ def simulation_moments(R: Union[pd.DataFrame, np.ndarray], p: np.ndarray = None)
 
     Args:
         R: P&L / risk factor simulation with shape (S, I).
-        p: probability vector with shape (S, 1). Default np.ones((S, 1)) / S.
+        p: probability vector with shape (S, 1). Default: np.ones((S, 1)) / S.
 
     Returns:
         DataFrame with shape (I, 4) containing simulation moments.
@@ -76,7 +76,7 @@ def covariance_matrix(R: Union[pd.DataFrame, np.ndarray], p: np.ndarray = None) 
 
     Args:
         R: P&L / risk factor simulation with shape (S, I).
-        p: probability vector with shape (S, 1). Default np.ones((S, 1)) / S.
+        p: probability vector with shape (S, 1). Default: np.ones((S, 1)) / S.
 
     Returns:
         Covariance matrix with shape (I, I).
@@ -91,7 +91,7 @@ def correlation_matrix(R: Union[pd.DataFrame, np.ndarray], p: np.ndarray = None)
 
     Args:
         R: P&L / risk factor simulation with shape (S, I).
-        p: probability vector with shape (S, 1). Default np.ones((S, 1)) / S.
+        p: probability vector with shape (S, 1). Default: np.ones((S, 1)) / S.
 
     Returns:
         Correlation matrix with shape (I, I).
@@ -185,7 +185,7 @@ def portfolio_vol(
     Args:
         e: Vector / matrix of portfolio exposures with shape (I, num_portfolios).
         R: P&L / risk factor simulation with shape (S, I).
-        p: probability vector with shape (S, 1). Default np.ones((S, 1)) / S.
+        p: probability vector with shape (S, 1). Default: np.ones((S, 1)) / S.
 
     Returns:
         Portfolio volatility / volatilities.

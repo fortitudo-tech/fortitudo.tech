@@ -13,7 +13,8 @@ Fortitudo Technologies Open Source
 ==================================
 
 This package allows you to explore open-source implementations of some of our
-fundamental methods, e.g., Entropy Pooling and CVaR optimization in Python.
+fundamental methods, for example, Sequential Entropy Pooling (SeqEP), CVaR optimization,
+and Fully Flexible Resampling (FFR) in Python.
 
 You can watch this `YouTube playlist <https://www.youtube.com/playlist?list=PLfI2BKNVj_b2rurUsCtc2F8lqtPWqcs2K>`_
 for a walkthrough of the package's functionality and examples.
@@ -35,13 +36,6 @@ portfolio constraints and Entropy Pooling views using matrices and vectors.
 This gives full flexibility in relation to working with these technologies.
 Hence, input checking is intentionally kept to a minimum.
 
-Company
--------
-
-Fortitudo Technologies offers novel investment software as well as quantitative
-and digitalization consultancy to the investment management industry. For more
-information, please visit our `website <https://fortitudo.tech>`_.
-
 Installation Instructions
 -------------------------
 
@@ -59,7 +53,7 @@ package using pip. You can do this by following these steps::
    pip install fortitudo.tech
 
 The examples might require you to install additional packages, e.g., seaborn and
-ipykernel / notebook / jupyterlab if you want to run the notebooks. Using pip to
+ipykernel/notebook/jupyterlab if you want to run the notebooks. Using pip to
 install these packages should not cause any dependency issues.
 
 You can also explore the examples in the cloud without any local installations using
@@ -69,6 +63,13 @@ some of the optimized routines this package uses. If you want access to a stable
 and optimized environment with persistent storage, please subscribe to our Data
 Science Server.
 
+Company
+-------
+
+Fortitudo Technologies offers novel investment software as well as quantitative
+and digitalization consultancy to the investment management industry. For more
+information, please visit our `website <https://fortitudo.tech>`_.
+
 Disclaimer
 ----------
 
@@ -76,7 +77,7 @@ This package is completely separate from our proprietary solutions and therefore
 not representative of the quality and functionality offered by the Investment Simulation
 and Investment Analysis modules.
 
-For a short comparison of which CVaR problems the Investment Analysis module can solve
+For a short presentation of which CVaR problems the Investment Analysis module can solve
 and at what speed, see the
 `cvar-optimization-benchmarks repository <https://github.com/fortitudo-tech/cvar-optimization-benchmarks>`_.
 

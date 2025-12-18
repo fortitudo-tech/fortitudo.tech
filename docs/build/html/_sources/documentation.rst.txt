@@ -12,13 +12,13 @@ given by `the Danish common return expectations for the 2nd half of 2021
 
 The parameters and P&L simulation are used in the examples and allow you to
 immediately start exploring the functionality of this package. You can also
-use it to test your understanding of the theory by replicating results, e.g.,
-the sequential Entropy Pooling results from :cite:t:`Vorobets2021`.
+use it to test your understanding of the theory by replicating results, for
+example, the sequential Entropy Pooling results from :cite:t:`Vorobets2021`.
 
 In addition to the above, simulated time series of an equity index, an
 associated implied volatility surface, a risk-free zero-coupon curve, and
 a credit spread curve is included. You can use this time series data to,
-e.g., validate your risk modeling approach. See `this introduction example
+for example, validate your risk modeling approach. See `this introduction example
 <https://github.com/fortitudo-tech/fortitudo.tech/blob/main/examples/4_TimeSeries
 .ipynb>`_ and `this modeling example <https://github.com/fortitudo-tech/
 fortitudo.tech/blob/main/examples/7_RiskFactorViews.ipynb>`_ for an example
@@ -26,6 +26,26 @@ of how to use the data with a very simple risk model as well as Entropy Pooling
 views on risk factors.
 
 .. automodule:: fortitudo.tech.data
+   :members:
+
+Simulation
+----------
+
+This package includes a Fully Flexible Resampling (FFR) method as well as a
+very simple exponential decay simulation model. The FFR functionality, originally
+introduced in the `Portfolio Construction and Risk Management book
+<https://antonvorobets.substack.com/p/pcrm-book>`_, is only implemented with
+one continous state variable.
+
+For detailed proofs of all the nice properties of the Fully Flexible Resampling
+method, see :cite:t:`KristensenVorobets2025`.
+
+The exponentially decaying probabilities can be used directly with historical
+scenarios, for example, as a prior probability for Sequential Entropy Pooling (SeqEP)
+views/stress tests, the FFR method, or for a normal distribution calibration
+which new samples can be generated from.
+
+.. automodule:: fortitudo.tech.simulation
    :members:
 
 Entropy Pooling
@@ -42,7 +62,7 @@ subject to the constraints
 The approach was first introduced by :cite:t:`EntropyPooling`, while the
 code is implemented using notation from :cite:t:`Vorobets2021`. For an
 introduction to Entropy Pooling, see `this video <https://youtu.be/qk_5l4ICXfY>`_
-or `this Substack post <https://open.substack.com/pub/antonvorobets/p/entropy-pooling-vs-black-litterman-abb608b810cd>`_.
+or `this Substack post <https://antonvorobets.substack.com/p/entropy-pooling-collection>`_.
 
 .. automodule:: fortitudo.tech.entropy_pooling
    :members:
@@ -50,7 +70,7 @@ or `this Substack post <https://open.substack.com/pub/antonvorobets/p/entropy-po
 Functions
 ---------
 
-The functions below are useful when working with Entropy Pooling, e.g.,
+The functions below are useful when working with Entropy Pooling, for example,
 they can be used to calculate posterior moments and correlation matrix
 to verify that views have been implemented correctly. The covariance
 matrix function is useful for mean-variance optimization with Entropy
@@ -138,18 +158,3 @@ or :const:`'abstol'` conditions are satisfied. The parameters have been tested
 with "percentage return" P&L and work well. In most cases, the algorithm stops
 due to relative convergence in less than 100 iterations. If you use P&L
 simulations that are scaled differently, you might need to adjust them.
-
-Simulation
-----------
-
-This package includes a very simple exponential decay simulation model. The
-exponentially decaying probabilities can be used directly with historical
-scenarios, e.g., as a prior probability for Entropy Pooling views / stress-tests,
-or for a normal distribution calibration which new samples can be generated from.
-
-You can see how to use this functionality in `the exponential decay modeling
-example <https://github.com/fortitudo-tech/fortitudo.tech/blob/main/examples/
-6_SimulationExpDecay.ipynb>`_.
-
-.. automodule:: fortitudo.tech.simulation
-   :members:
