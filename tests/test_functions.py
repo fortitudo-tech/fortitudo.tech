@@ -80,12 +80,14 @@ vars = portfolio_var(pfs, R, p1)
 
 def test_portfolio_cvar():
     assert cvar_low < cvar_high
+    assert cvars.shape == (1, 2)
     assert np.abs(cvars[0, 0] - cvar_low) <= tol
     assert np.abs(cvars[0, 1] - cvar_high) <= tol
 
 
 def test_portfolio_var():
     assert var_low < var_high
+    assert vars.shape == (1, 2)
     assert np.abs(vars[0, 0] - var_low) <= tol
     assert np.abs(vars[0, 1] - var_high) <= tol
 

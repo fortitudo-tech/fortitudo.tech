@@ -140,20 +140,23 @@ def portfolio_cvar(
         Portfolio alpha-CVaR.
     """
     pf_pnl, p, alpha = _var_cvar_preprocess(e, R, p, alpha, demean)
-    var = _var_calc(pf_pnl, p, alpha)
-    num_portfolios = e.shape[1]
+    losses = -pf_pnl
+    num_portfolios = pf_pnl.shape[1]
     cvar = np.full((1, num_portfolios), np.nan)
     for port in range(num_portfolios):
-        cvar_idx = pf_pnl[:, port] <= var[0, port]
-        total_prob = np.sum(p[cvar_idx, 0])
-        if np.abs(1 - alpha - total_prob) >= cvar_tol:
-            idx = np.argsort(pf_pnl[~cvar_idx, port])[0]  # Index of largest loss below VaR
-            cvar[0, port] = ((p[cvar_idx, 0].T @ pf_pnl[cvar_idx, port]
-                              + (1 - alpha - total_prob) * pf_pnl[idx, port])
-                             / (1 - alpha))
+        worst_losses_inds = np.flip(np.argsort(losses[:, port]))  # Worst losses first
+        probs_sorted_cumsum = np.cumsum(p[worst_losses_inds])
+        losses_sorted = losses[worst_losses_inds, port]
+        var_index = np.searchsorted(probs_sorted_cumsum, 1 - alpha, 'right')
+        probs_total = probs_sorted_cumsum[var_index - 1]
+        if 1 - alpha - probs_total <= 1e-8:
+            cvar[0, port] = (losses_sorted[:var_index] @ p[worst_losses_inds][:var_index]
+                             / probs_total)[0]
         else:
-            cvar[0, port] = p[cvar_idx, 0].T @ pf_pnl[cvar_idx, port] / total_prob
-    return _return_portfolio_risk(-cvar)
+            cvar[0, port] = ((losses_sorted[:var_index] @ p[worst_losses_inds][:var_index]
+                              + (1 - alpha - probs_total) * losses_sorted[var_index])
+                             / (1 - alpha))[0]
+    return cvar
 
 
 def _var_calc(pf_pnl: np.ndarray, p: np.ndarray, alpha: float) -> np.ndarray:
