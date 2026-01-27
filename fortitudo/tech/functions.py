@@ -149,14 +149,10 @@ def portfolio_cvar(
         losses_sorted = losses[worst_losses_inds, port]
         var_index = np.searchsorted(probs_sorted_cumsum, 1 - alpha, 'right')
         probs_total = probs_sorted_cumsum[var_index - 1]
-        if 1 - alpha - probs_total <= 1e-8:
-            cvar[0, port] = (losses_sorted[:var_index] @ p[worst_losses_inds][:var_index]
-                             / probs_total)[0]
-        else:
-            cvar[0, port] = ((losses_sorted[:var_index] @ p[worst_losses_inds][:var_index]
-                              + (1 - alpha - probs_total) * losses_sorted[var_index])
-                             / (1 - alpha))[0]
-    return cvar
+        cvar[0, port] = ((losses_sorted[:var_index] @ p[worst_losses_inds][:var_index]
+                          + (1 - alpha - probs_total) * losses_sorted[var_index])
+                         / (1 - alpha))[0]
+    return _return_portfolio_risk(cvar)
 
 
 def _var_calc(pf_pnl: np.ndarray, p: np.ndarray, alpha: float) -> np.ndarray:
