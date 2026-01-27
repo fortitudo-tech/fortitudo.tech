@@ -22,7 +22,7 @@ from cvxopt.solvers import qp
 from typing import Tuple, Union
 
 
-var_tol = 1e-8
+cvar_tol = 1e-8
 
 
 def _simulation_check(
@@ -145,7 +145,14 @@ def portfolio_cvar(
     cvar = np.full((1, num_portfolios), np.nan)
     for port in range(num_portfolios):
         cvar_idx = pf_pnl[:, port] <= var[0, port]
-        cvar[0, port] = p[cvar_idx, 0].T @ pf_pnl[cvar_idx, port] / np.sum(p[cvar_idx, 0])
+        total_prob = np.sum(p[cvar_idx, 0])
+        if np.abs(1 - alpha - total_prob) >= cvar_tol:
+            idx = np.argsort(pf_pnl[~cvar_idx, port])[0]  # Index of largest loss below VaR
+            cvar[0, port] = ((p[cvar_idx, 0].T @ pf_pnl[cvar_idx, port]
+                              + (1 - alpha - total_prob) * pf_pnl[idx, port])
+                             / (1 - alpha))
+        else:
+            cvar[0, port] = p[cvar_idx, 0].T @ pf_pnl[cvar_idx, port] / total_prob
     return _return_portfolio_risk(-cvar)
 
 
