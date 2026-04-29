@@ -37,6 +37,8 @@ The repository contains the following examples:
     Gaussianity hypothesis
 13) High-dimensional CVaR portfolio optimization code, where a portfolio of
     2000 stocks is optimized over 10000 joint scenarios.
+14) The accompanied code for the Conditional Maximum Loss (CML) Portfolio
+    Optimization article by :cite:t:`KristensenVorobets2026`
 
 Watch this `YouTube playlist <https://www.youtube.com/playlist?list=PLfI2BKNVj_b2rurUsCtc2F8lqtPWqcs2K>`_
 for a walkthrough of the package's functionality and examples. The examples are

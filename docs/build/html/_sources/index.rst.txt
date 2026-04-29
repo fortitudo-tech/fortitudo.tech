@@ -2,7 +2,8 @@ Fortitudo Technologies Open Source
 ==================================
 
 This package allows you to explore open-source implementations of some of our
-fundamental methods, for example, Sequential Entropy Pooling (SeqEP), CVaR optimization,
+fundamental methods, for example, Sequential Entropy Pooling (SeqEP), Conditional
+Value-at-Risk (CVaR) as well as Conditional Maximum Loss (CML) optimization,
 and Fully Flexible Resampling (FFR) in Python.
 
 You can watch this `YouTube playlist <https://www.youtube.com/playlist?list=PLfI2BKNVj_b2rurUsCtc2F8lqtPWqcs2K>`_
