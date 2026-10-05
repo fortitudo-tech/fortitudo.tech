@@ -39,6 +39,9 @@ The repository contains the following examples:
     2000 stocks is optimized over 10000 joint scenarios.
 14) The accompanied code for the Conditional Maximum Loss (CML) Portfolio
     Optimization article by :cite:t:`KristensenVorobets2026`
+15) The accompanied code for the Multi-Period Entropy Pooling article by
+    :cite:t:`KristensenVorobets2026a`. Note that this code uses the
+    `Investment Analysis module <https://fortitudo.tech/solutions>`_.
 
 Watch this `YouTube playlist <https://www.youtube.com/playlist?list=PLfI2BKNVj_b2rurUsCtc2F8lqtPWqcs2K>`_
 for a walkthrough of the package's functionality and examples. The examples are
@@ -48,7 +51,7 @@ For a high-level introduction to the investment framework, see this `YouTube vid
 and `Substack post <https://open.substack.com/pub/antonvorobets/p/entropy-pooling-and-cvar-portfolio-optimization-in-python-ffed736a8347>`_.
 
 For a mathematical introduction to the investment framework, see these
-`SSRN articles <https://ssrn.com/author=2738420>`_.
+`Substack articles <https://antonvorobets.substack.com/t/science>`_.
 
 For a pedagogical and deep presentation of the investment framework, see the
 `Portfolio Construction and Risk Management Book <https://antonvorobets.substack.com/p/pcrm-book>`_.
